@@ -1,0 +1,85 @@
+/* Lifted from nameplate-prototype.html's sheet/overlay + add/settings CSS. */
+
+.sheet-wrap{
+  position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;
+  padding:18px;background:rgba(10,11,14,.5);backdrop-filter:blur(2px);
+}
+.sheet{
+  width:100%;max-width:434px;background:var(--plate);border-radius:14px;border:1px solid var(--hair);
+  padding:20px;position:relative;
+  display:flex;flex-direction:column;gap:14px;max-height:86vh;overflow-y:auto;
+  box-shadow:var(--shadow);animation:rise .24s cubic-bezier(.2,.8,.3,1);
+}
+@keyframes rise{from{transform:translateY(28px);opacity:0}to{transform:none;opacity:1}}
+.sheet-x{
+  position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:8px;
+  display:grid;place-items:center;font-size:19px;line-height:1;color:var(--muted);
+}
+.sheet-x:hover{background:var(--plate-2);color:var(--ink)}
+.sheet-name{font-family:var(--f-display);font-size:clamp(34px,11vw,46px);font-weight:500;line-height:1;letter-spacing:-.02em}
+.sheet-lead{margin:9px 0 0;font-size:13px;line-height:1.5;color:var(--muted);max-width:40ch}
+.sheet-actions{display:flex;gap:8px}
+.sheet-actions button{flex:1}
+
+.field{display:flex;flex-direction:column;gap:7px}
+.field label{font-family:var(--f-data);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.field input, .pair input{
+  font-family:var(--f-display);font-size:24px;font-weight:500;padding:11px 13px;
+  border:1px solid var(--hair);border-radius:8px;background:var(--plate-2);color:var(--ink);
+  width:100%;min-width:0;
+}
+.field input.small, .pair input.small{font-family:var(--f-ui);font-size:15px;font-weight:400}
+.field input::placeholder, .pair input::placeholder{color:var(--muted);opacity:.6}
+
+.solid-btn{
+  background:var(--claret);color:var(--claret-ink);border-radius:8px;padding:13px;
+  font-family:var(--f-data);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+}
+.solid-btn[disabled]{opacity:.35;cursor:not-allowed}
+.ghost-btn{
+  flex:1;border:1px solid var(--hair);border-radius:8px;padding:10px 12px;
+  font-family:var(--f-data);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  transition:border-color .15s,color .15s,background .15s;
+}
+.ghost-btn:hover{border-color:var(--ink);color:var(--ink)}
+
+.preview{
+  border:1px dashed var(--hair);border-radius:10px;padding:15px 14px;text-align:center;background:var(--plate-2);
+}
+.preview .full{font-family:var(--f-display);font-size:clamp(22px,7vw,30px);font-weight:500;line-height:1.15;text-wrap:balance}
+.preview small{
+  display:block;margin-top:8px;font-family:var(--f-data);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);
+}
+.full-variants{display:flex;flex-direction:column;gap:3px}
+.full-variants .full{font-size:clamp(17px,5.2vw,21px)}
+
+.who-block{display:flex;flex-direction:column;gap:8px}
+.who-label{
+  font-family:var(--f-data);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chips button{
+  border:1px solid var(--hair);border-radius:999px;padding:9px 14px;min-height:38px;
+  font-family:var(--f-data);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);background:var(--plate-2);transition:all .15s;
+}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--plate);border-color:var(--ink)}
+
+.kv{display:grid;grid-template-columns:auto 1fr;gap:9px 16px;align-items:baseline}
+.kv dt{font-family:var(--f-data);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.kv dd{margin:0;font-size:14px;line-height:1.45;color:var(--ink-soft)}
+.kv dd.serif{font-family:var(--f-display);font-style:italic;font-size:16px;color:var(--ink)}
+
+.linkish{
+  font-family:var(--f-data);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);text-decoration:underline;text-underline-offset:3px;align-self:flex-start;
+}
+.addrow{
+  display:flex;align-items:center;gap:11px;width:100%;padding:15px 18px;
+  border-bottom:1px solid var(--hair-soft);color:var(--claret);transition:background .12s;
+}
+.addrow:hover{background:var(--claret-wash)}
+.addrow svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.addrow span{font-family:var(--f-data);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase}

@@ -1,0 +1,17 @@
+node_modules/
+client/dist/
+
+# The whole directory, not just *.db -- data/backup-pre-round-wipe/ holds a
+# nested nameplate.db-wal that a plain data/*.db pattern would miss entirely.
+# CO-4 §1.2/§1.3/§11: this is the single most destructive mistake available
+# in this repo. Moves outside the clone permanently per CO-4 §7; ignored
+# here in the meantime so it can never end up in a commit by accident.
+data/
+
+*.log
+
+# Python server (CO-4)
+server/__pycache__/
+server/**/__pycache__/
+server/.pytest_cache/
+server/*.pyc

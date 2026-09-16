@@ -1,0 +1,67 @@
+/* Lifted from nameplate-prototype.html's list-screen + top-nav CSS. */
+
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:calc(14px + env(safe-area-inset-top)) 18px 12px;border-bottom:1px solid var(--hair);
+  flex:0 0 auto;background:var(--plate);
+}
+.topbar-mark{
+  font-family:var(--f-data);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);padding:5px 9px;border:1px solid var(--hair);border-radius:999px;
+  background:var(--plate-2);
+}
+.backbtn{
+  display:flex;align-items:center;gap:7px;min-height:40px;padding:6px 12px 6px 8px;
+  margin-left:-8px;border-radius:8px;
+  font-family:var(--f-data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--claret);transition:background .15s;
+}
+.backbtn:hover{background:var(--claret-wash)}
+.backbtn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+.scroll{overflow-y:auto;flex:1 1 auto;-webkit-overflow-scrolling:touch}
+
+.tabs{display:flex;border-bottom:1px solid var(--hair);flex:0 0 auto}
+.tabs button{
+  flex:1;padding:13px 6px 11px;font-family:var(--f-data);font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;
+}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--claret)}
+.tabs button .n{font-variant-numeric:tabular-nums;opacity:.6}
+
+.section-note{
+  padding:14px 18px 4px;font-size:12.5px;line-height:1.5;color:var(--muted);
+  border-bottom:1px solid var(--hair-soft);padding-bottom:14px;
+}
+.section-note b{color:var(--ink-soft);font-weight:600}
+
+.row{
+  display:grid;grid-template-columns:30px 1fr auto auto;align-items:center;gap:11px;
+  padding:13px 18px;border-bottom:1px solid var(--hair-soft);width:100%;text-align:left;
+  transition:background .12s;
+}
+.row:hover{background:var(--plate-2)}
+.row-rank{font-family:var(--f-data);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.row-main{display:flex;flex-direction:column;gap:3px;min-width:0}
+.row-name{font-family:var(--f-display);font-size:23px;font-weight:500;line-height:1.05;letter-spacing:-.01em}
+.row-sub{font-family:var(--f-data);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.row-side{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.row-go{font-family:var(--f-display);font-size:19px;color:var(--muted);opacity:.5;line-height:1;padding-left:2px}
+/* Change Order 1: no strike-out any more — a name in the "Out" tab just
+   reads a touch quieter than one still in, no line-through (spec §6:
+   "There is no strike-out; a name leaves by failing to be kept"). */
+.row.out .row-name{color:var(--muted)}
+
+.chip{
+  font-family:var(--f-data);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 7px;border-radius:3px;white-space:nowrap;
+}
+.chip.kept{background:var(--brass-wash);color:var(--brass);border:1px solid var(--brass)}
+
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.stat{padding:16px 10px;text-align:center;border-right:1px solid var(--hair-soft)}
+.stat:last-child{border-right:none}
+.stat b{display:block;font-family:var(--f-data);font-size:21px;font-weight:500;font-variant-numeric:tabular-nums}
+.stat span{font-family:var(--f-data);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+.pad{padding:20px 18px;display:flex;flex-direction:column;gap:16px}

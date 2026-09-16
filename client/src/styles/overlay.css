@@ -1,0 +1,49 @@
+/* takeover + toast lifted from nameplate-prototype.html */
+.takeover{
+  position:fixed;inset:0;z-index:60;background:var(--paper);color:var(--ink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
+  padding:34px;text-align:center;animation:fade .3s ease;
+}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.takeover .kicker{
+  font-family:var(--f-data);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--brass-bright);
+}
+.takeover .big{
+  font-family:var(--f-display);font-size:clamp(44px,16vw,74px);font-weight:500;line-height:.95;letter-spacing:-.02em;
+  animation:settle .7s cubic-bezier(.2,.9,.3,1);
+}
+@keyframes settle{from{letter-spacing:.22em;opacity:0}to{letter-spacing:-.02em;opacity:1}}
+.takeover .sub{font-family:var(--f-display);font-style:italic;font-size:16px;opacity:.7;max-width:26ch;line-height:1.5}
+.takeover .rule{width:46px;height:1px;background:var(--brass-bright)}
+.coach-lines{display:flex;flex-direction:column;gap:18px;max-width:22ch}
+.coach-lines p{
+  margin:0;font-family:var(--f-display);font-size:clamp(21px,6.5vw,26px);line-height:1.25;
+}
+.coach-lines em{font-style:italic;color:var(--brass-bright)}
+.takeover button{
+  border:1px solid var(--hair);border-radius:8px;padding:11px 26px;color:var(--ink);
+  font-family:var(--f-data);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+}
+
+.toast{
+  position:fixed;left:14px;right:14px;top:14px;max-width:436px;margin:0 auto;z-index:50;
+  background:var(--ink);color:var(--paper);border-radius:9px;padding:11px 14px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:var(--shadow);
+  animation:rise .2s ease;
+}
+@keyframes rise{from{transform:translateY(-10px);opacity:0}to{transform:none;opacity:1}}
+.toast span{font-size:13px}
+.toast button{
+  font-family:var(--f-data);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--brass-bright);white-space:nowrap;
+}
+
+/* claim screen — not in the prototype (it faked identity with a demo switcher,
+   spec §8 forbids shipping that); styled to match the takeover's ink-overlay language */
+.claim-options{display:flex;flex-direction:column;gap:12px;width:100%;max-width:280px}
+.claim-btn{
+  border:1px solid var(--hair);border-radius:10px;padding:16px;color:var(--ink);
+  font-family:var(--f-display);font-size:22px;
+}
+.claim-btn:not(:disabled):hover{background:var(--plate-2)}
+.claim-btn:disabled{opacity:.35;cursor:not-allowed}

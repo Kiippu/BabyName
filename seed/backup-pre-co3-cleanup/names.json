@@ -1,0 +1,3502 @@
+[
+ {
+  "name": "Oliver",
+  "origin": "Latin",
+  "meaning": "olive tree",
+  "rank": 1,
+  "group": null
+ },
+ {
+  "name": "Theodore",
+  "origin": "Greek",
+  "meaning": "gift of God",
+  "rank": 3,
+  "group": "theo"
+ },
+ {
+  "name": "Henry",
+  "origin": "Germanic",
+  "meaning": "home ruler",
+  "rank": 4,
+  "group": "henry"
+ },
+ {
+  "name": "Leo",
+  "origin": "Latin",
+  "meaning": "lion",
+  "rank": 6,
+  "group": null
+ },
+ {
+  "name": "Hudson",
+  "origin": "English",
+  "meaning": "son of Hudde",
+  "rank": 7,
+  "group": null
+ },
+ {
+  "name": "Charlie",
+  "origin": "English",
+  "meaning": "free man",
+  "rank": 8,
+  "group": "charles"
+ },
+ {
+  "name": "William",
+  "origin": "Germanic",
+  "meaning": "resolute protector",
+  "rank": 10,
+  "group": "william"
+ },
+ {
+  "name": "Archie",
+  "origin": "Germanic",
+  "meaning": "truly bold",
+  "rank": 15,
+  "group": "archibald"
+ },
+ {
+  "name": "Oscar",
+  "origin": "Irish",
+  "meaning": "friend of deer",
+  "rank": 16,
+  "group": null
+ },
+ {
+  "name": "Harvey",
+  "origin": "Breton",
+  "meaning": "battle worthy",
+  "rank": 17,
+  "group": null
+ },
+ {
+  "name": "Arthur",
+  "origin": "Celtic",
+  "meaning": "bear",
+  "rank": 19,
+  "group": null
+ },
+ {
+  "name": "Kai",
+  "origin": "Hawaiian",
+  "meaning": "sea",
+  "rank": 20,
+  "group": null
+ },
+ {
+  "name": "George",
+  "origin": "Greek",
+  "meaning": "farmer, earth-worker",
+  "rank": 21,
+  "group": null
+ },
+ {
+  "name": "Alexander",
+  "origin": "Greek",
+  "meaning": "defender of men",
+  "rank": 22,
+  "group": "alexander"
+ },
+ {
+  "name": "Liam",
+  "origin": "Irish",
+  "meaning": "resolute protector",
+  "rank": 23,
+  "group": "william"
+ },
+ {
+  "name": "Harrison",
+  "origin": "English",
+  "meaning": "son of Harry",
+  "rank": 24,
+  "group": null
+ },
+ {
+  "name": "Archer",
+  "origin": "English",
+  "meaning": "bowman",
+  "rank": 25,
+  "group": null
+ },
+ {
+  "name": "Hugo",
+  "origin": "Germanic",
+  "meaning": "mind, spirit",
+  "rank": 26,
+  "group": "hugh"
+ },
+ {
+  "name": "Sebastian",
+  "origin": "Greek",
+  "meaning": "venerable",
+  "rank": 27,
+  "group": null
+ },
+ {
+  "name": "Harry",
+  "origin": "Germanic",
+  "meaning": "home ruler",
+  "rank": 28,
+  "group": "henry"
+ },
+ {
+  "name": "Beau",
+  "origin": "French",
+  "meaning": "handsome",
+  "rank": 29,
+  "group": null
+ },
+ {
+  "name": "Arlo",
+  "origin": "English",
+  "meaning": "fortified hill",
+  "rank": 30,
+  "group": null
+ },
+ {
+  "name": "Max",
+  "origin": "Latin",
+  "meaning": "greatest",
+  "rank": 31,
+  "group": "max"
+ },
+ {
+  "name": "Cooper",
+  "origin": "English",
+  "meaning": "barrel maker",
+  "rank": 33,
+  "group": null
+ },
+ {
+  "name": "Xavier",
+  "origin": "Basque",
+  "meaning": "the new house",
+  "rank": 34,
+  "group": "xavier"
+ },
+ {
+  "name": "Lachlan",
+  "origin": "Scottish",
+  "meaning": "from the land of lakes",
+  "rank": 36,
+  "group": "lachlan"
+ },
+ {
+  "name": "Austin",
+  "origin": "Latin",
+  "meaning": "venerable",
+  "rank": 37,
+  "group": "august"
+ },
+ {
+  "name": "Muhammad",
+  "origin": "Arabic",
+  "meaning": "praiseworthy",
+  "rank": 38,
+  "group": null
+ },
+ {
+  "name": "Mason",
+  "origin": "English",
+  "meaning": "stone worker",
+  "rank": 39,
+  "group": null
+ },
+ {
+  "name": "Hunter",
+  "origin": "English",
+  "meaning": "one who hunts",
+  "rank": 40,
+  "group": null
+ },
+ {
+  "name": "Theo",
+  "origin": "Greek",
+  "meaning": "gift of God",
+  "rank": 41,
+  "group": "theo"
+ },
+ {
+  "name": "Edward",
+  "origin": "English",
+  "meaning": "wealthy guardian",
+  "rank": 42,
+  "group": "edward"
+ },
+ {
+  "name": "Finn",
+  "origin": "Irish",
+  "meaning": "fair, white",
+  "rank": 43,
+  "group": "finn"
+ },
+ {
+  "name": "Louis",
+  "origin": "Germanic",
+  "meaning": "renowned warrior",
+  "rank": 44,
+  "group": "louis"
+ },
+ {
+  "name": "Sonny",
+  "origin": "English",
+  "meaning": "little son",
+  "rank": 45,
+  "group": null
+ },
+ {
+  "name": "Patrick",
+  "origin": "Latin",
+  "meaning": "nobleman",
+  "rank": 49,
+  "group": "patrick"
+ },
+ {
+  "name": "Jasper",
+  "origin": "Persian",
+  "meaning": "treasurer",
+  "rank": 51,
+  "group": "jasper"
+ },
+ {
+  "name": "Miles",
+  "origin": "Latin",
+  "meaning": "soldier",
+  "rank": 52,
+  "group": "miles"
+ },
+ {
+  "name": "Riley",
+  "origin": "Irish",
+  "meaning": "valiant",
+  "rank": 55,
+  "group": null
+ },
+ {
+  "name": "Angus",
+  "origin": "Gaelic",
+  "meaning": "one strength",
+  "rank": 56,
+  "group": null
+ },
+ {
+  "name": "Lincoln",
+  "origin": "English",
+  "meaning": "settlement by the pool",
+  "rank": 57,
+  "group": null
+ },
+ {
+  "name": "Billy",
+  "origin": "Germanic",
+  "meaning": "resolute protector",
+  "rank": 59,
+  "group": "william"
+ },
+ {
+  "name": "Felix",
+  "origin": "Latin",
+  "meaning": "fortunate, happy",
+  "rank": 62,
+  "group": null
+ },
+ {
+  "name": "Bodhi",
+  "origin": "Sanskrit",
+  "meaning": "awakening",
+  "rank": 63,
+  "group": null
+ },
+ {
+  "name": "Carter",
+  "origin": "English",
+  "meaning": "cart driver",
+  "rank": 64,
+  "group": null
+ },
+ {
+  "name": "Jackson",
+  "origin": "English",
+  "meaning": "son of Jack",
+  "rank": 66,
+  "group": "jackson"
+ },
+ {
+  "name": "Parker",
+  "origin": "English",
+  "meaning": "park keeper",
+  "rank": 67,
+  "group": null
+ },
+ {
+  "name": "Darcy",
+  "origin": "French",
+  "meaning": "from Arcy",
+  "rank": 68,
+  "group": null
+ },
+ {
+  "name": "Spencer",
+  "origin": "English",
+  "meaning": "steward",
+  "rank": 69,
+  "group": null
+ },
+ {
+  "name": "Myles",
+  "origin": "Latin",
+  "meaning": "soldier",
+  "rank": 70,
+  "group": "miles"
+ },
+ {
+  "name": "Ryan",
+  "origin": "Irish",
+  "meaning": "little king",
+  "rank": 71,
+  "group": null
+ },
+ {
+  "name": "Roman",
+  "origin": "Latin",
+  "meaning": "of Rome",
+  "rank": 72,
+  "group": null
+ },
+ {
+  "name": "Leon",
+  "origin": "Greek",
+  "meaning": "lion",
+  "rank": 73,
+  "group": null
+ },
+ {
+  "name": "Flynn",
+  "origin": "Irish",
+  "meaning": "son of the red-haired one",
+  "rank": 75,
+  "group": null
+ },
+ {
+  "name": "Jayden",
+  "origin": "Modern",
+  "meaning": "a modern coinage",
+  "rank": 76,
+  "group": null
+ },
+ {
+  "name": "Logan",
+  "origin": "Scottish",
+  "meaning": "little hollow",
+  "rank": 77,
+  "group": null
+ },
+ {
+  "name": "Vincent",
+  "origin": "Latin",
+  "meaning": "conquering",
+  "rank": 80,
+  "group": "vincent"
+ },
+ {
+  "name": "River",
+  "origin": "English",
+  "meaning": "a river",
+  "rank": 81,
+  "group": null
+ },
+ {
+  "name": "Remy",
+  "origin": "French",
+  "meaning": "oarsman",
+  "rank": 82,
+  "group": null
+ },
+ {
+  "name": "Ali",
+  "origin": "Arabic",
+  "meaning": "exalted",
+  "rank": 83,
+  "group": null
+ },
+ {
+  "name": "Koa",
+  "origin": "Hawaiian",
+  "meaning": "warrior, brave",
+  "rank": 84,
+  "group": null
+ },
+ {
+  "name": "Fletcher",
+  "origin": "English",
+  "meaning": "arrow-maker",
+  "rank": 86,
+  "group": null
+ },
+ {
+  "name": "Grayson",
+  "origin": "English",
+  "meaning": "son of the steward",
+  "rank": 88,
+  "group": null
+ },
+ {
+  "name": "Aiden",
+  "origin": "Irish",
+  "meaning": "little fire",
+  "rank": 89,
+  "group": "aidan"
+ },
+ {
+  "name": "Alfie",
+  "origin": "Germanic",
+  "meaning": "elf counsel",
+  "rank": 92,
+  "group": "alfred"
+ },
+ {
+  "name": "Finley",
+  "origin": "Scottish",
+  "meaning": "fair warrior",
+  "rank": 93,
+  "group": "finn"
+ },
+ {
+  "name": "Julian",
+  "origin": "Latin",
+  "meaning": "youthful",
+  "rank": 94,
+  "group": "julius"
+ },
+ {
+  "name": "Leonardo",
+  "origin": "Germanic",
+  "meaning": "brave as a lion",
+  "rank": 96,
+  "group": "leonard"
+ },
+ {
+  "name": "Lennox",
+  "origin": "Scottish",
+  "meaning": "elm grove",
+  "rank": 97,
+  "group": null
+ },
+ {
+  "name": "Rory",
+  "origin": "Irish",
+  "meaning": "red king",
+  "rank": 98,
+  "group": null
+ },
+ {
+  "name": "Maverick",
+  "origin": "English",
+  "meaning": "independent, unbranded",
+  "rank": 99,
+  "group": null
+ },
+ {
+  "name": "Ace",
+  "origin": "English",
+  "meaning": "one, unity",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Adrian",
+  "origin": "Latin",
+  "meaning": "from Hadria",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Aidan",
+  "origin": "Irish",
+  "meaning": "little fire",
+  "rank": null,
+  "group": "aidan"
+ },
+ {
+  "name": "Alaric",
+  "origin": "Germanic",
+  "meaning": "ruler of all",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Albert",
+  "origin": "Germanic",
+  "meaning": "noble and bright",
+  "rank": null,
+  "group": "albert"
+ },
+ {
+  "name": "Albie",
+  "origin": "Germanic",
+  "meaning": "noble and bright",
+  "rank": null,
+  "group": "albert"
+ },
+ {
+  "name": "Alden",
+  "origin": "English",
+  "meaning": "old friend",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Alec",
+  "origin": "Greek",
+  "meaning": "defender of men",
+  "rank": null,
+  "group": "alexander"
+ },
+ {
+  "name": "Alessio",
+  "origin": "Italian",
+  "meaning": "defender",
+  "rank": null,
+  "group": "alexander"
+ },
+ {
+  "name": "Alfred",
+  "origin": "Germanic",
+  "meaning": "elf counsel",
+  "rank": null,
+  "group": "alfred"
+ },
+ {
+  "name": "Alistair",
+  "origin": "Scottish",
+  "meaning": "defender of men",
+  "rank": null,
+  "group": "alexander"
+ },
+ {
+  "name": "Alonso",
+  "origin": "Spanish",
+  "meaning": "noble and ready",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Alvaro",
+  "origin": "Spanish",
+  "meaning": "guardian of all",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Ambrose",
+  "origin": "Greek",
+  "meaning": "immortal",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Anderson",
+  "origin": "English",
+  "meaning": "son of Andrew",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Ansel",
+  "origin": "Germanic",
+  "meaning": "helmet of God",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Anselm",
+  "origin": "Germanic",
+  "meaning": "helmet of God",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Anthony",
+  "origin": "Latin",
+  "meaning": "priceless",
+  "rank": null,
+  "group": "anthony"
+ },
+ {
+  "name": "Apollo",
+  "origin": "Greek",
+  "meaning": "god of light and music",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Arden",
+  "origin": "English",
+  "meaning": "high, eagle valley",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Ari",
+  "origin": "Hebrew",
+  "meaning": "lion",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Arjun",
+  "origin": "Sanskrit",
+  "meaning": "bright, shining",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Armando",
+  "origin": "Spanish",
+  "meaning": "bold soldier",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Armani",
+  "origin": "Italian",
+  "meaning": "free man",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Arturo",
+  "origin": "Italian",
+  "meaning": "bear",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Ashton",
+  "origin": "English",
+  "meaning": "ash tree settlement",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Atlas",
+  "origin": "Greek",
+  "meaning": "to bear, to endure",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Atticus",
+  "origin": "Latin",
+  "meaning": "from Attica",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Auden",
+  "origin": "English",
+  "meaning": "old friend",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "August",
+  "origin": "Latin",
+  "meaning": "venerable",
+  "rank": null,
+  "group": "august"
+ },
+ {
+  "name": "Augustus",
+  "origin": "Latin",
+  "meaning": "venerable, exalted",
+  "rank": null,
+  "group": "august"
+ },
+ {
+  "name": "Aurelius",
+  "origin": "Latin",
+  "meaning": "golden",
+  "rank": null,
+  "group": "aurelius"
+ },
+ {
+  "name": "Avery",
+  "origin": "English",
+  "meaning": "elf counsel",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Axel",
+  "origin": "Scandinavian",
+  "meaning": "father of peace",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Bailey",
+  "origin": "English",
+  "meaning": "bailiff",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Banjo",
+  "origin": "Australian",
+  "meaning": "for the bush poet",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Barrett",
+  "origin": "English",
+  "meaning": "bear strength",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Barton",
+  "origin": "English",
+  "meaning": "barley settlement",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Baxter",
+  "origin": "English",
+  "meaning": "baker",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Bear",
+  "origin": "English",
+  "meaning": "the animal",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Beckett",
+  "origin": "English",
+  "meaning": "bee cottage",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Bellamy",
+  "origin": "French",
+  "meaning": "fine friend",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Benedict",
+  "origin": "Latin",
+  "meaning": "blessed",
+  "rank": null,
+  "group": "benedict"
+ },
+ {
+  "name": "Bennett",
+  "origin": "Latin",
+  "meaning": "blessed",
+  "rank": null,
+  "group": "benedict"
+ },
+ {
+  "name": "Bentley",
+  "origin": "English",
+  "meaning": "meadow of bent grass",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Birch",
+  "origin": "English",
+  "meaning": "the tree",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Blaine",
+  "origin": "Irish",
+  "meaning": "slender",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Blaise",
+  "origin": "Latin",
+  "meaning": "lisping, stammering",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Blake",
+  "origin": "English",
+  "meaning": "dark, or pale",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Blaze",
+  "origin": "English",
+  "meaning": "flame",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Bo",
+  "origin": "Scandinavian",
+  "meaning": "to live",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Boris",
+  "origin": "Slavic",
+  "meaning": "wolf, snow leopard",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Boyd",
+  "origin": "Gaelic",
+  "meaning": "yellow-haired",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Brady",
+  "origin": "Irish",
+  "meaning": "spirited",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Bramwell",
+  "origin": "English",
+  "meaning": "bramble spring",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Brandon",
+  "origin": "English",
+  "meaning": "broom-covered hill",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Braxton",
+  "origin": "English",
+  "meaning": "Brock's settlement",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Brendan",
+  "origin": "Irish",
+  "meaning": "prince",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Brett",
+  "origin": "Breton",
+  "meaning": "a Breton",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Briggs",
+  "origin": "English",
+  "meaning": "of the bridge",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Brock",
+  "origin": "English",
+  "meaning": "badger",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Brodie",
+  "origin": "Scottish",
+  "meaning": "muddy place",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Bronson",
+  "origin": "English",
+  "meaning": "son of the brown one",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Bruno",
+  "origin": "Germanic",
+  "meaning": "brown",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Bryce",
+  "origin": "Scottish",
+  "meaning": "speckled",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Bryson",
+  "origin": "English",
+  "meaning": "son of Brice",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Byron",
+  "origin": "English",
+  "meaning": "at the cattle sheds",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Cade",
+  "origin": "English",
+  "meaning": "round, barrel",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Callan",
+  "origin": "Gaelic",
+  "meaning": "battle, rock",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Callum",
+  "origin": "Gaelic",
+  "meaning": "dove",
+  "rank": null,
+  "group": "callum"
+ },
+ {
+  "name": "Calvin",
+  "origin": "Latin",
+  "meaning": "bald",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Camden",
+  "origin": "Scottish",
+  "meaning": "winding valley",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Campbell",
+  "origin": "Scottish",
+  "meaning": "crooked mouth",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Carl",
+  "origin": "Germanic",
+  "meaning": "free man",
+  "rank": null,
+  "group": "charles"
+ },
+ {
+  "name": "Carlo",
+  "origin": "Italian",
+  "meaning": "free man",
+  "rank": null,
+  "group": "charles"
+ },
+ {
+  "name": "Carson",
+  "origin": "Scottish",
+  "meaning": "son of the marsh dwellers",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Casimir",
+  "origin": "Slavic",
+  "meaning": "destroyer of peace",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Cassian",
+  "origin": "Latin",
+  "meaning": "hollow",
+  "rank": null,
+  "group": "cassius"
+ },
+ {
+  "name": "Cassius",
+  "origin": "Latin",
+  "meaning": "hollow",
+  "rank": null,
+  "group": "cassius"
+ },
+ {
+  "name": "Castor",
+  "origin": "Greek",
+  "meaning": "the beaver; a twin star",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Cathal",
+  "origin": "Irish",
+  "meaning": "battle ruler",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Cato",
+  "origin": "Latin",
+  "meaning": "all-knowing",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Cedric",
+  "origin": "Celtic",
+  "meaning": "bounty",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Cesare",
+  "origin": "Italian",
+  "meaning": "head of hair",
+  "rank": null,
+  "group": "caesar"
+ },
+ {
+  "name": "Charles",
+  "origin": "Germanic",
+  "meaning": "free man",
+  "rank": null,
+  "group": "charles"
+ },
+ {
+  "name": "Chase",
+  "origin": "French",
+  "meaning": "hunter",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Chester",
+  "origin": "Latin",
+  "meaning": "fortified camp",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Christian",
+  "origin": "Latin",
+  "meaning": "follower of Christ",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Christopher",
+  "origin": "Greek",
+  "meaning": "bearer of Christ",
+  "rank": null,
+  "group": "christopher"
+ },
+ {
+  "name": "Cillian",
+  "origin": "Irish",
+  "meaning": "little church",
+  "rank": null,
+  "group": "killian"
+ },
+ {
+  "name": "Clancy",
+  "origin": "Irish",
+  "meaning": "red warrior",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Clark",
+  "origin": "English",
+  "meaning": "scribe, cleric",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Claude",
+  "origin": "Latin",
+  "meaning": "enclosure",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Clay",
+  "origin": "English",
+  "meaning": "clay worker",
+  "rank": null,
+  "group": "clayton"
+ },
+ {
+  "name": "Clayton",
+  "origin": "English",
+  "meaning": "clay settlement",
+  "rank": null,
+  "group": "clayton"
+ },
+ {
+  "name": "Clive",
+  "origin": "English",
+  "meaning": "by the cliff",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Clyde",
+  "origin": "Scottish",
+  "meaning": "the river Clyde",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Cole",
+  "origin": "English",
+  "meaning": "swarthy, coal-black",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Colin",
+  "origin": "Gaelic",
+  "meaning": "young pup",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Colton",
+  "origin": "English",
+  "meaning": "coal town",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Conall",
+  "origin": "Irish",
+  "meaning": "strong wolf",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Conan",
+  "origin": "Irish",
+  "meaning": "little wolf",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Connor",
+  "origin": "Irish",
+  "meaning": "lover of hounds",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Conrad",
+  "origin": "Germanic",
+  "meaning": "bold counsel",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Corbin",
+  "origin": "French",
+  "meaning": "little crow",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Cormac",
+  "origin": "Irish",
+  "meaning": "charioteer",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Cosmo",
+  "origin": "Greek",
+  "meaning": "order, harmony",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Craig",
+  "origin": "Gaelic",
+  "meaning": "rock",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Crawford",
+  "origin": "English",
+  "meaning": "ford of the crows",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Cruz",
+  "origin": "Spanish",
+  "meaning": "cross",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Cullen",
+  "origin": "Irish",
+  "meaning": "holly",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Curtis",
+  "origin": "French",
+  "meaning": "courteous",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Cyrus",
+  "origin": "Persian",
+  "meaning": "sun, lord",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Dale",
+  "origin": "English",
+  "meaning": "valley",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Dalton",
+  "origin": "English",
+  "meaning": "valley town",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Damian",
+  "origin": "Greek",
+  "meaning": "to tame",
+  "rank": null,
+  "group": "damian"
+ },
+ {
+  "name": "Damon",
+  "origin": "Greek",
+  "meaning": "to tame",
+  "rank": null,
+  "group": "damian"
+ },
+ {
+  "name": "Dane",
+  "origin": "English",
+  "meaning": "from Denmark",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Dante",
+  "origin": "Latin",
+  "meaning": "enduring",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Dario",
+  "origin": "Italian",
+  "meaning": "possessing goodness",
+  "rank": null,
+  "group": "darius"
+ },
+ {
+  "name": "Darius",
+  "origin": "Persian",
+  "meaning": "possessing goodness",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Darwin",
+  "origin": "English",
+  "meaning": "dear friend",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Davis",
+  "origin": "English",
+  "meaning": "son of David",
+  "rank": null,
+  "group": "david"
+ },
+ {
+  "name": "Dean",
+  "origin": "English",
+  "meaning": "valley",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Declan",
+  "origin": "Irish",
+  "meaning": "man of prayer",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Demetrius",
+  "origin": "Greek",
+  "meaning": "devoted to Demeter",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Denzel",
+  "origin": "Cornish",
+  "meaning": "from Denzell",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Desmond",
+  "origin": "Irish",
+  "meaning": "from South Munster",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Dexter",
+  "origin": "Latin",
+  "meaning": "right-handed, skilful",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Dieter",
+  "origin": "Germanic",
+  "meaning": "warrior of the people",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Digby",
+  "origin": "Norse",
+  "meaning": "settlement by the ditch",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Dominic",
+  "origin": "Latin",
+  "meaning": "of the Lord",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Donovan",
+  "origin": "Irish",
+  "meaning": "dark chieftain",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Dorian",
+  "origin": "Greek",
+  "meaning": "of the Dorians",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Douglas",
+  "origin": "Scottish",
+  "meaning": "dark water",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Duncan",
+  "origin": "Scottish",
+  "meaning": "brown warrior",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Dustin",
+  "origin": "Norse",
+  "meaning": "Thor's stone",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Dylan",
+  "origin": "Welsh",
+  "meaning": "great tide",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Eamon",
+  "origin": "Irish",
+  "meaning": "wealthy guardian",
+  "rank": null,
+  "group": "edward"
+ },
+ {
+  "name": "Easton",
+  "origin": "English",
+  "meaning": "east settlement",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Edgar",
+  "origin": "English",
+  "meaning": "wealthy spear",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Edmund",
+  "origin": "English",
+  "meaning": "wealthy protector",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Edwin",
+  "origin": "English",
+  "meaning": "wealthy friend",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Egan",
+  "origin": "Irish",
+  "meaning": "little fire",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Ellery",
+  "origin": "English",
+  "meaning": "dweller by the alder",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Ellis",
+  "origin": "Welsh",
+  "meaning": "benevolent",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Emerson",
+  "origin": "Germanic",
+  "meaning": "son of Emery",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Emiliano",
+  "origin": "Spanish",
+  "meaning": "rival",
+  "rank": null,
+  "group": "emil"
+ },
+ {
+  "name": "Emilio",
+  "origin": "Italian",
+  "meaning": "rival",
+  "rank": null,
+  "group": "emil"
+ },
+ {
+  "name": "Emmett",
+  "origin": "Germanic",
+  "meaning": "universal, whole",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Emory",
+  "origin": "Germanic",
+  "meaning": "brave power",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Enzo",
+  "origin": "Italian",
+  "meaning": "ruler of the home",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Eric",
+  "origin": "Norse",
+  "meaning": "eternal ruler",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Errol",
+  "origin": "Scottish",
+  "meaning": "wanderer",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Euan",
+  "origin": "Gaelic",
+  "meaning": "born of the yew",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Evander",
+  "origin": "Greek",
+  "meaning": "good man",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Everett",
+  "origin": "Germanic",
+  "meaning": "brave as a boar",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Fabian",
+  "origin": "Latin",
+  "meaning": "bean grower",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Fabio",
+  "origin": "Italian",
+  "meaning": "bean grower",
+  "rank": null,
+  "group": "fabian"
+ },
+ {
+  "name": "Fenton",
+  "origin": "English",
+  "meaning": "marsh settlement",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Fergus",
+  "origin": "Gaelic",
+  "meaning": "man of vigour",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Fernando",
+  "origin": "Spanish",
+  "meaning": "bold voyager",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Finch",
+  "origin": "English",
+  "meaning": "the small bird",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Finnegan",
+  "origin": "Irish",
+  "meaning": "fair",
+  "rank": null,
+  "group": "finn"
+ },
+ {
+  "name": "Flinders",
+  "origin": "Australian",
+  "meaning": "for the navigator",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Flint",
+  "origin": "English",
+  "meaning": "hard stone",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Ford",
+  "origin": "English",
+  "meaning": "river crossing",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Forrest",
+  "origin": "French",
+  "meaning": "of the woods",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Foster",
+  "origin": "English",
+  "meaning": "forester",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Fox",
+  "origin": "English",
+  "meaning": "the animal",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Francis",
+  "origin": "Latin",
+  "meaning": "Frenchman",
+  "rank": null,
+  "group": "francis"
+ },
+ {
+  "name": "Frank",
+  "origin": "Germanic",
+  "meaning": "free man",
+  "rank": null,
+  "group": "francis"
+ },
+ {
+  "name": "Franklin",
+  "origin": "English",
+  "meaning": "free landholder",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Fraser",
+  "origin": "Scottish",
+  "meaning": "strawberry flower",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Freddie",
+  "origin": "Germanic",
+  "meaning": "peaceful ruler",
+  "rank": null,
+  "group": "frederick"
+ },
+ {
+  "name": "Frederick",
+  "origin": "Germanic",
+  "meaning": "peaceful ruler",
+  "rank": null,
+  "group": "frederick"
+ },
+ {
+  "name": "Frost",
+  "origin": "English",
+  "meaning": "freezing, hoar frost",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Gareth",
+  "origin": "Welsh",
+  "meaning": "gentle",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Garrett",
+  "origin": "Germanic",
+  "meaning": "spear strength",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Garrick",
+  "origin": "Germanic",
+  "meaning": "spear ruler",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Gavin",
+  "origin": "Welsh",
+  "meaning": "white hawk",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Geoffrey",
+  "origin": "Germanic",
+  "meaning": "peace of God",
+  "rank": null,
+  "group": "geoffrey"
+ },
+ {
+  "name": "Gerald",
+  "origin": "Germanic",
+  "meaning": "spear ruler",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Giles",
+  "origin": "Greek",
+  "meaning": "young goat",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Gino",
+  "origin": "Italian",
+  "meaning": "well born",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Giulio",
+  "origin": "Italian",
+  "meaning": "youthful",
+  "rank": null,
+  "group": "julius"
+ },
+ {
+  "name": "Glenn",
+  "origin": "Gaelic",
+  "meaning": "valley",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Goran",
+  "origin": "Slavic",
+  "meaning": "mountain man",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Gordon",
+  "origin": "Scottish",
+  "meaning": "great hill",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Grady",
+  "origin": "Irish",
+  "meaning": "noble",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Graham",
+  "origin": "Scottish",
+  "meaning": "gravelly homestead",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Granger",
+  "origin": "English",
+  "meaning": "farm steward",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Grant",
+  "origin": "French",
+  "meaning": "great, tall",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Gregory",
+  "origin": "Greek",
+  "meaning": "watchful",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Griffin",
+  "origin": "Welsh",
+  "meaning": "strong lord",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Gunnar",
+  "origin": "Norse",
+  "meaning": "bold warrior",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Guy",
+  "origin": "French",
+  "meaning": "guide",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Hadley",
+  "origin": "English",
+  "meaning": "heather meadow",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Hank",
+  "origin": "Germanic",
+  "meaning": "home ruler",
+  "rank": null,
+  "group": "henry"
+ },
+ {
+  "name": "Harley",
+  "origin": "English",
+  "meaning": "hare meadow",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Harold",
+  "origin": "Norse",
+  "meaning": "army ruler",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Hartley",
+  "origin": "English",
+  "meaning": "stag meadow",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Hawke",
+  "origin": "English",
+  "meaning": "the bird of prey",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Hayden",
+  "origin": "English",
+  "meaning": "hay valley",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Heath",
+  "origin": "English",
+  "meaning": "heathland",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Hector",
+  "origin": "Greek",
+  "meaning": "holding fast",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Hendrix",
+  "origin": "Germanic",
+  "meaning": "son of Hendrik",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Holden",
+  "origin": "English",
+  "meaning": "deep valley",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Hollis",
+  "origin": "English",
+  "meaning": "by the holly",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Horatio",
+  "origin": "Latin",
+  "meaning": "timekeeper",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Hugh",
+  "origin": "Germanic",
+  "meaning": "mind, spirit",
+  "rank": null,
+  "group": "hugh"
+ },
+ {
+  "name": "Idris",
+  "origin": "Welsh",
+  "meaning": "ardent lord",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Igor",
+  "origin": "Russian",
+  "meaning": "Ing's warrior",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Ivo",
+  "origin": "Germanic",
+  "meaning": "yew wood",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Ivor",
+  "origin": "Norse",
+  "meaning": "yew warrior",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Jace",
+  "origin": "Greek",
+  "meaning": "healer",
+  "rank": null,
+  "group": "jason"
+ },
+ {
+  "name": "Jai",
+  "origin": "Sanskrit",
+  "meaning": "victory",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Jarrah",
+  "origin": "Noongar",
+  "meaning": "the eucalypt",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Jarvis",
+  "origin": "Germanic",
+  "meaning": "spear servant",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Jason",
+  "origin": "Greek",
+  "meaning": "healer",
+  "rank": null,
+  "group": "jason"
+ },
+ {
+  "name": "Javier",
+  "origin": "Spanish",
+  "meaning": "the new house",
+  "rank": null,
+  "group": "xavier"
+ },
+ {
+  "name": "Jaxon",
+  "origin": "English",
+  "meaning": "son of Jack",
+  "rank": null,
+  "group": "jackson"
+ },
+ {
+  "name": "Jerome",
+  "origin": "Greek",
+  "meaning": "sacred name",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Jett",
+  "origin": "English",
+  "meaning": "jet black, swift",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Jules",
+  "origin": "French",
+  "meaning": "youthful",
+  "rank": null,
+  "group": "julius"
+ },
+ {
+  "name": "Julius",
+  "origin": "Latin",
+  "meaning": "youthful",
+  "rank": null,
+  "group": "julius"
+ },
+ {
+  "name": "Justin",
+  "origin": "Latin",
+  "meaning": "just, fair",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Kane",
+  "origin": "Irish",
+  "meaning": "little battler",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Keaton",
+  "origin": "English",
+  "meaning": "hawk town",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Keegan",
+  "origin": "Irish",
+  "meaning": "little fiery one",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Keith",
+  "origin": "Scottish",
+  "meaning": "wood",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Kellan",
+  "origin": "Irish",
+  "meaning": "slender",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Kenneth",
+  "origin": "Gaelic",
+  "meaning": "handsome, born of fire",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Kestrel",
+  "origin": "English",
+  "meaning": "the small falcon",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Kevin",
+  "origin": "Irish",
+  "meaning": "kind, gentle",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Kian",
+  "origin": "Irish",
+  "meaning": "ancient",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Kieran",
+  "origin": "Irish",
+  "meaning": "little dark one",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Killian",
+  "origin": "Irish",
+  "meaning": "little church",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Kingsley",
+  "origin": "English",
+  "meaning": "king's meadow",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Kirby",
+  "origin": "Norse",
+  "meaning": "church settlement",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Kit",
+  "origin": "Greek",
+  "meaning": "bearer of Christ",
+  "rank": null,
+  "group": "christopher"
+ },
+ {
+  "name": "Knox",
+  "origin": "Scottish",
+  "meaning": "round hill",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Kurt",
+  "origin": "Germanic",
+  "meaning": "bold counsel",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Kyle",
+  "origin": "Gaelic",
+  "meaning": "narrow strait",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Lance",
+  "origin": "Germanic",
+  "meaning": "land",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Landon",
+  "origin": "English",
+  "meaning": "long hill",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Lane",
+  "origin": "English",
+  "meaning": "narrow road",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Langley",
+  "origin": "English",
+  "meaning": "long meadow",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Lars",
+  "origin": "Scandinavian",
+  "meaning": "crowned with laurel",
+  "rank": null,
+  "group": "laurence"
+ },
+ {
+  "name": "Laurence",
+  "origin": "Latin",
+  "meaning": "from Laurentum",
+  "rank": null,
+  "group": "laurence"
+ },
+ {
+  "name": "Lawson",
+  "origin": "English",
+  "meaning": "son of Lawrence",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Leander",
+  "origin": "Greek",
+  "meaning": "lion man",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Leif",
+  "origin": "Norse",
+  "meaning": "heir, descendant",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Lennart",
+  "origin": "Germanic",
+  "meaning": "brave as a lion",
+  "rank": null,
+  "group": "leonard"
+ },
+ {
+  "name": "Lennon",
+  "origin": "Irish",
+  "meaning": "little cloak",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Leonard",
+  "origin": "Germanic",
+  "meaning": "brave as a lion",
+  "rank": null,
+  "group": "leonard"
+ },
+ {
+  "name": "Leopold",
+  "origin": "Germanic",
+  "meaning": "bold people",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Leroy",
+  "origin": "French",
+  "meaning": "the king",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Lewis",
+  "origin": "Germanic",
+  "meaning": "renowned warrior",
+  "rank": null,
+  "group": "louis"
+ },
+ {
+  "name": "Linus",
+  "origin": "Greek",
+  "meaning": "flax",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Lionel",
+  "origin": "Latin",
+  "meaning": "little lion",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Lloyd",
+  "origin": "Welsh",
+  "meaning": "grey, sacred",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Lorcan",
+  "origin": "Irish",
+  "meaning": "little fierce one",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Lorenzo",
+  "origin": "Italian",
+  "meaning": "from Laurentum",
+  "rank": null,
+  "group": "laurence"
+ },
+ {
+  "name": "Lucian",
+  "origin": "Latin",
+  "meaning": "light",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Luciano",
+  "origin": "Italian",
+  "meaning": "light",
+  "rank": null,
+  "group": "lucian"
+ },
+ {
+  "name": "Ludwig",
+  "origin": "Germanic",
+  "meaning": "renowned warrior",
+  "rank": null,
+  "group": "louis"
+ },
+ {
+  "name": "Lysander",
+  "origin": "Greek",
+  "meaning": "liberator",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Maddox",
+  "origin": "Welsh",
+  "meaning": "son of Madoc",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Magnus",
+  "origin": "Latin",
+  "meaning": "great",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Malcolm",
+  "origin": "Gaelic",
+  "meaning": "devotee of Columba",
+  "rank": null,
+  "group": "callum"
+ },
+ {
+  "name": "Mallory",
+  "origin": "French",
+  "meaning": "unlucky, ill-fated",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Marcel",
+  "origin": "French",
+  "meaning": "little warrior",
+  "rank": null,
+  "group": "marcus"
+ },
+ {
+  "name": "Marco",
+  "origin": "Italian",
+  "meaning": "of Mars",
+  "rank": null,
+  "group": "marcus"
+ },
+ {
+  "name": "Marcus",
+  "origin": "Latin",
+  "meaning": "of Mars",
+  "rank": null,
+  "group": "marcus"
+ },
+ {
+  "name": "Mario",
+  "origin": "Italian",
+  "meaning": "of Mars",
+  "rank": null,
+  "group": "marcus"
+ },
+ {
+  "name": "Marius",
+  "origin": "Latin",
+  "meaning": "of Mars",
+  "rank": null,
+  "group": "marcus"
+ },
+ {
+  "name": "Marlon",
+  "origin": "French",
+  "meaning": "little hawk",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Marlow",
+  "origin": "English",
+  "meaning": "driftwood by the lake",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Marshall",
+  "origin": "French",
+  "meaning": "horse keeper",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Martin",
+  "origin": "Latin",
+  "meaning": "of Mars",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Marvin",
+  "origin": "Welsh",
+  "meaning": "sea friend",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Massimo",
+  "origin": "Italian",
+  "meaning": "greatest",
+  "rank": null,
+  "group": "max"
+ },
+ {
+  "name": "Maurice",
+  "origin": "Latin",
+  "meaning": "dark-skinned, Moorish",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Maxim",
+  "origin": "Latin",
+  "meaning": "greatest",
+  "rank": null,
+  "group": "max"
+ },
+ {
+  "name": "Maximilian",
+  "origin": "Latin",
+  "meaning": "greatest",
+  "rank": null,
+  "group": "max"
+ },
+ {
+  "name": "Maximus",
+  "origin": "Latin",
+  "meaning": "greatest",
+  "rank": null,
+  "group": "max"
+ },
+ {
+  "name": "Maxwell",
+  "origin": "Scottish",
+  "meaning": "Mack's stream",
+  "rank": null,
+  "group": "max"
+ },
+ {
+  "name": "Mercer",
+  "origin": "French",
+  "meaning": "merchant",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Merrick",
+  "origin": "Welsh",
+  "meaning": "fame, power",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Milan",
+  "origin": "Slavic",
+  "meaning": "gracious, dear",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Miller",
+  "origin": "English",
+  "meaning": "grinder of grain",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Milo",
+  "origin": "Germanic",
+  "meaning": "merciful",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Milos",
+  "origin": "Slavic",
+  "meaning": "gracious",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Mirko",
+  "origin": "Slavic",
+  "meaning": "peace, glory",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Monty",
+  "origin": "French",
+  "meaning": "from the mountain",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Morgan",
+  "origin": "Welsh",
+  "meaning": "sea born",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Murphy",
+  "origin": "Irish",
+  "meaning": "sea warrior",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Murray",
+  "origin": "Scottish",
+  "meaning": "settlement by the sea",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Nash",
+  "origin": "English",
+  "meaning": "at the ash tree",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Ned",
+  "origin": "English",
+  "meaning": "wealthy guardian",
+  "rank": null,
+  "group": "edward"
+ },
+ {
+  "name": "Neil",
+  "origin": "Gaelic",
+  "meaning": "champion",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Nicholas",
+  "origin": "Greek",
+  "meaning": "victory of the people",
+  "rank": null,
+  "group": "nicholas"
+ },
+ {
+  "name": "Nico",
+  "origin": "Greek",
+  "meaning": "victory of the people",
+  "rank": null,
+  "group": "nicholas"
+ },
+ {
+  "name": "Nikolai",
+  "origin": "Greek",
+  "meaning": "victory of the people",
+  "rank": null,
+  "group": "nicholas"
+ },
+ {
+  "name": "Noel",
+  "origin": "French",
+  "meaning": "Christmas",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Nolan",
+  "origin": "Irish",
+  "meaning": "champion",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Oakes",
+  "origin": "English",
+  "meaning": "by the oaks",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Oakley",
+  "origin": "English",
+  "meaning": "oak meadow",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Octavian",
+  "origin": "Latin",
+  "meaning": "the eighth",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Odin",
+  "origin": "Norse",
+  "meaning": "fury, inspiration",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Oisin",
+  "origin": "Irish",
+  "meaning": "little deer",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Oleg",
+  "origin": "Norse",
+  "meaning": "holy, blessed",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Ollie",
+  "origin": "Latin",
+  "meaning": "olive tree",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Omar",
+  "origin": "Arabic",
+  "meaning": "flourishing, long-lived",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Orion",
+  "origin": "Greek",
+  "meaning": "the hunter",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Orlando",
+  "origin": "Italian",
+  "meaning": "famous land",
+  "rank": null,
+  "group": "roland"
+ },
+ {
+  "name": "Orson",
+  "origin": "Latin",
+  "meaning": "bear cub",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Osborne",
+  "origin": "Norse",
+  "meaning": "divine bear",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Otis",
+  "origin": "Germanic",
+  "meaning": "wealth",
+  "rank": null,
+  "group": "otto"
+ },
+ {
+  "name": "Otto",
+  "origin": "Germanic",
+  "meaning": "wealth, prosperity",
+  "rank": null,
+  "group": "otto"
+ },
+ {
+  "name": "Owen",
+  "origin": "Welsh",
+  "meaning": "young warrior",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Pascal",
+  "origin": "French",
+  "meaning": "of Easter",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Paterson",
+  "origin": "Australian",
+  "meaning": "for the bush balladeer",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Paxton",
+  "origin": "English",
+  "meaning": "peace town",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Penn",
+  "origin": "English",
+  "meaning": "hill, enclosure",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Percival",
+  "origin": "French",
+  "meaning": "pierce the valley",
+  "rank": null,
+  "group": "percy"
+ },
+ {
+  "name": "Percy",
+  "origin": "French",
+  "meaning": "pierce the valley",
+  "rank": null,
+  "group": "percy"
+ },
+ {
+  "name": "Perry",
+  "origin": "English",
+  "meaning": "pear tree",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Perseus",
+  "origin": "Greek",
+  "meaning": "to destroy",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Phoenix",
+  "origin": "Greek",
+  "meaning": "the risen bird",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Prescott",
+  "origin": "English",
+  "meaning": "priest's cottage",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Preston",
+  "origin": "English",
+  "meaning": "priest's town",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Quentin",
+  "origin": "Latin",
+  "meaning": "the fifth",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Quinn",
+  "origin": "Irish",
+  "meaning": "counsel, wisdom",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Quintus",
+  "origin": "Latin",
+  "meaning": "the fifth",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Radek",
+  "origin": "Slavic",
+  "meaning": "glad, eager",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Rafferty",
+  "origin": "Irish",
+  "meaning": "flood-tide, abundance",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Ragnar",
+  "origin": "Norse",
+  "meaning": "warrior of judgement",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Raiden",
+  "origin": "Japanese",
+  "meaning": "thunder and lightning",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Rainer",
+  "origin": "Germanic",
+  "meaning": "wise army",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Ralph",
+  "origin": "Norse",
+  "meaning": "wolf counsel",
+  "rank": null,
+  "group": "ralph"
+ },
+ {
+  "name": "Raul",
+  "origin": "Spanish",
+  "meaning": "wolf counsel",
+  "rank": null,
+  "group": "ralph"
+ },
+ {
+  "name": "Raymond",
+  "origin": "Germanic",
+  "meaning": "wise protector",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Reece",
+  "origin": "Welsh",
+  "meaning": "ardour, enthusiasm",
+  "rank": null,
+  "group": "rhys"
+ },
+ {
+  "name": "Reeve",
+  "origin": "English",
+  "meaning": "bailiff",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Regan",
+  "origin": "Irish",
+  "meaning": "little king",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Reggie",
+  "origin": "Germanic",
+  "meaning": "ruler's counsel",
+  "rank": null,
+  "group": "reginald"
+ },
+ {
+  "name": "Reginald",
+  "origin": "Germanic",
+  "meaning": "ruler's counsel",
+  "rank": null,
+  "group": "reginald"
+ },
+ {
+  "name": "Reid",
+  "origin": "English",
+  "meaning": "red-haired",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Rene",
+  "origin": "French",
+  "meaning": "reborn",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Renzo",
+  "origin": "Italian",
+  "meaning": "from Laurentum",
+  "rank": null,
+  "group": "laurence"
+ },
+ {
+  "name": "Rex",
+  "origin": "Latin",
+  "meaning": "king",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Rhett",
+  "origin": "Dutch",
+  "meaning": "advice",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Rhys",
+  "origin": "Welsh",
+  "meaning": "ardour, enthusiasm",
+  "rank": null,
+  "group": "rhys"
+ },
+ {
+  "name": "Richard",
+  "origin": "Germanic",
+  "meaning": "brave ruler",
+  "rank": null,
+  "group": "richard"
+ },
+ {
+  "name": "Rick",
+  "origin": "Germanic",
+  "meaning": "brave ruler",
+  "rank": null,
+  "group": "richard"
+ },
+ {
+  "name": "Ridge",
+  "origin": "English",
+  "meaning": "the crest of a hill",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Rio",
+  "origin": "Spanish",
+  "meaning": "river",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Ripley",
+  "origin": "English",
+  "meaning": "strip of clearing",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Robert",
+  "origin": "Germanic",
+  "meaning": "bright fame",
+  "rank": null,
+  "group": "robert"
+ },
+ {
+  "name": "Robin",
+  "origin": "Germanic",
+  "meaning": "bright fame",
+  "rank": null,
+  "group": "robert"
+ },
+ {
+  "name": "Rocco",
+  "origin": "Italian",
+  "meaning": "rest",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Roderick",
+  "origin": "Germanic",
+  "meaning": "famous ruler",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Rodrigo",
+  "origin": "Spanish",
+  "meaning": "famous ruler",
+  "rank": null,
+  "group": "roderick"
+ },
+ {
+  "name": "Roger",
+  "origin": "Germanic",
+  "meaning": "famous spear",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Rohan",
+  "origin": "Sanskrit",
+  "meaning": "ascending",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Roland",
+  "origin": "Germanic",
+  "meaning": "famous land",
+  "rank": null,
+  "group": "roland"
+ },
+ {
+  "name": "Rolf",
+  "origin": "Germanic",
+  "meaning": "wolf counsel",
+  "rank": null,
+  "group": "ralph"
+ },
+ {
+  "name": "Ronald",
+  "origin": "Norse",
+  "meaning": "ruler's counsel",
+  "rank": null,
+  "group": "ronald"
+ },
+ {
+  "name": "Ronan",
+  "origin": "Irish",
+  "meaning": "little seal",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Ronnie",
+  "origin": "Norse",
+  "meaning": "ruler's counsel",
+  "rank": null,
+  "group": "ronald"
+ },
+ {
+  "name": "Roscoe",
+  "origin": "Norse",
+  "meaning": "deer wood",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Rowan",
+  "origin": "Irish",
+  "meaning": "little red one",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Roy",
+  "origin": "Gaelic",
+  "meaning": "red",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Royce",
+  "origin": "English",
+  "meaning": "son of Royse",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Rudy",
+  "origin": "Germanic",
+  "meaning": "famous wolf",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Rufus",
+  "origin": "Latin",
+  "meaning": "red-haired",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Rune",
+  "origin": "Norse",
+  "meaning": "secret lore",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Rupert",
+  "origin": "Germanic",
+  "meaning": "bright fame",
+  "rank": null,
+  "group": "robert"
+ },
+ {
+  "name": "Russell",
+  "origin": "French",
+  "meaning": "little red one",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Ryder",
+  "origin": "English",
+  "meaning": "horseman",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Sage",
+  "origin": "Latin",
+  "meaning": "wise one; the herb",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Sawyer",
+  "origin": "English",
+  "meaning": "woodcutter",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Scott",
+  "origin": "English",
+  "meaning": "a Scot",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Selby",
+  "origin": "Norse",
+  "meaning": "willow farm",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Sergio",
+  "origin": "Italian",
+  "meaning": "attendant, servant",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Shepherd",
+  "origin": "English",
+  "meaning": "sheep herder",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Stanley",
+  "origin": "English",
+  "meaning": "stony meadow",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Sterling",
+  "origin": "English",
+  "meaning": "of high quality",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Stuart",
+  "origin": "Scottish",
+  "meaning": "steward",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Sullivan",
+  "origin": "Irish",
+  "meaning": "dark eyes",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Sylvester",
+  "origin": "Latin",
+  "meaning": "of the forest",
+  "rank": null,
+  "group": "silas"
+ },
+ {
+  "name": "Tadhg",
+  "origin": "Irish",
+  "meaning": "poet",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Tanner",
+  "origin": "English",
+  "meaning": "leather worker",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Tate",
+  "origin": "Norse",
+  "meaning": "cheerful",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Taylor",
+  "origin": "English",
+  "meaning": "tailor",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Thatcher",
+  "origin": "English",
+  "meaning": "roof thatcher",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Thor",
+  "origin": "Norse",
+  "meaning": "thunder",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Tiernan",
+  "origin": "Irish",
+  "meaning": "little lord",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Todd",
+  "origin": "English",
+  "meaning": "fox",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Torsten",
+  "origin": "Norse",
+  "meaning": "Thor's stone",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Trent",
+  "origin": "English",
+  "meaning": "the river Trent",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Trevor",
+  "origin": "Welsh",
+  "meaning": "large settlement",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Tristan",
+  "origin": "Celtic",
+  "meaning": "tumult, noise",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Troy",
+  "origin": "Irish",
+  "meaning": "descendant of the foot soldier",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Tucker",
+  "origin": "English",
+  "meaning": "cloth fuller",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Turner",
+  "origin": "English",
+  "meaning": "lathe worker",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Tyler",
+  "origin": "English",
+  "meaning": "tile maker",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Tyson",
+  "origin": "French",
+  "meaning": "firebrand",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Valentine",
+  "origin": "Latin",
+  "meaning": "strong, healthy",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Vaughn",
+  "origin": "Welsh",
+  "meaning": "small",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Vernon",
+  "origin": "French",
+  "meaning": "alder grove",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Victor",
+  "origin": "Latin",
+  "meaning": "conqueror",
+  "rank": null,
+  "group": "victor"
+ },
+ {
+  "name": "Vince",
+  "origin": "Latin",
+  "meaning": "conquering",
+  "rank": null,
+  "group": "vincent"
+ },
+ {
+  "name": "Wade",
+  "origin": "English",
+  "meaning": "at the river crossing",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Walker",
+  "origin": "English",
+  "meaning": "cloth walker",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Wallace",
+  "origin": "Scottish",
+  "meaning": "foreigner, Welshman",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Walter",
+  "origin": "Germanic",
+  "meaning": "ruler of the army",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Warren",
+  "origin": "Germanic",
+  "meaning": "protector",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Wesley",
+  "origin": "English",
+  "meaning": "west meadow",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Weston",
+  "origin": "English",
+  "meaning": "west settlement",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Wilder",
+  "origin": "English",
+  "meaning": "untamed",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Wilson",
+  "origin": "English",
+  "meaning": "son of Will",
+  "rank": null,
+  "group": "william"
+ },
+ {
+  "name": "Winston",
+  "origin": "English",
+  "meaning": "joyful stone",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Wolfgang",
+  "origin": "Germanic",
+  "meaning": "wolf path",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Wyatt",
+  "origin": "English",
+  "meaning": "brave in war",
+  "rank": null,
+  "group": null
+ },
+ {
+  "name": "Xander",
+  "origin": "Greek",
+  "meaning": "defender of men",
+  "rank": null,
+  "group": "alexander"
+ },
+ {
+  "name": "Zephyr",
+  "origin": "Greek",
+  "meaning": "the west wind",
+  "rank": null,
+  "group": null
+ }
+]

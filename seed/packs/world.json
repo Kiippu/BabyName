@@ -1,0 +1,2126 @@
+{
+ "pack": {
+  "slug": "world",
+  "title": "The Wider World",
+  "blurb": "Beyond Europe: the Middle East, Asia, the Pacific and Africa.",
+  "bundled": true,
+  "sku": null,
+  "version": 2,
+  "sortOrder": 3
+ },
+ "themes": [
+  {
+   "slug": "mideast",
+   "title": "Middle East & Persia",
+   "blurb": "Arabic, Persian and Turkish",
+   "kind": "region",
+   "parent": null
+  },
+  {
+   "slug": "southasia",
+   "title": "South Asia",
+   "blurb": "Sanskrit roots",
+   "kind": "region",
+   "parent": null
+  },
+  {
+   "slug": "eastasia",
+   "title": "East Asia",
+   "blurb": "Japan, Korea, China",
+   "kind": "region",
+   "parent": null
+  },
+  {
+   "slug": "pacific",
+   "title": "Pacific",
+   "blurb": "Māori, Hawaiian and the islands",
+   "kind": "region",
+   "parent": null
+  },
+  {
+   "slug": "africa",
+   "title": "Africa",
+   "blurb": "Yoruba, Swahili, Zulu, Igbo, Akan, Amharic",
+   "kind": "region",
+   "parent": null
+  },
+  {
+   "slug": "c-arabic",
+   "title": "Arabic",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "mideast"
+  },
+  {
+   "slug": "c-persian",
+   "title": "Persian",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "mideast"
+  },
+  {
+   "slug": "c-turkish",
+   "title": "Turkish",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "mideast"
+  },
+  {
+   "slug": "c-hebrew",
+   "title": "Hebrew",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "mideast"
+  },
+  {
+   "slug": "c-sanskrit",
+   "title": "Sanskrit",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "southasia"
+  },
+  {
+   "slug": "c-japanese",
+   "title": "Japanese",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "eastasia"
+  },
+  {
+   "slug": "c-korean",
+   "title": "Korean",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "eastasia"
+  },
+  {
+   "slug": "c-chinese",
+   "title": "Chinese",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "eastasia"
+  },
+  {
+   "slug": "c-hawaiian",
+   "title": "Hawaiian",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "pacific"
+  },
+  {
+   "slug": "c-maori",
+   "title": "Māori",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "pacific"
+  },
+  {
+   "slug": "c-samoan",
+   "title": "Samoan",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "pacific"
+  },
+  {
+   "slug": "c-tongan",
+   "title": "Tongan",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "pacific"
+  },
+  {
+   "slug": "c-yoruba",
+   "title": "Yoruba",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "africa"
+  },
+  {
+   "slug": "c-swahili",
+   "title": "Swahili",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "africa"
+  },
+  {
+   "slug": "c-zulu",
+   "title": "Zulu",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "africa"
+  },
+  {
+   "slug": "c-akan",
+   "title": "Akan",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "africa"
+  },
+  {
+   "slug": "c-amharic",
+   "title": "Amharic",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "africa"
+  },
+  {
+   "slug": "c-igbo",
+   "title": "Igbo",
+   "blurb": null,
+   "kind": "culture",
+   "parent": "africa"
+  }
+ ],
+ "names": [
+  {
+   "name": "Amani",
+   "origin": "Swahili",
+   "meaning": "peace",
+   "themes": [
+    "c-swahili"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Anele",
+   "origin": "Zulu",
+   "meaning": "enough, sufficient",
+   "themes": [
+    "c-zulu"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Ayo",
+   "origin": "Yoruba",
+   "meaning": "joy",
+   "themes": [
+    "c-yoruba"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Baraka",
+   "origin": "Swahili",
+   "meaning": "blessing",
+   "themes": [
+    "c-swahili"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Bayo",
+   "origin": "Yoruba",
+   "meaning": "joy is found",
+   "themes": [
+    "c-yoruba"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Bonga",
+   "origin": "Zulu",
+   "meaning": "be grateful",
+   "themes": [
+    "c-zulu"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Dare",
+   "origin": "Yoruba",
+   "meaning": "thrive, prosper",
+   "themes": [
+    "c-yoruba"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Dele",
+   "origin": "Yoruba",
+   "meaning": "one who comes home",
+   "themes": [
+    "c-yoruba"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Desta",
+   "origin": "Amharic",
+   "meaning": "joy",
+   "themes": [
+    "c-amharic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Emeka",
+   "origin": "Igbo",
+   "meaning": "great deeds",
+   "themes": [
+    "c-igbo"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Femi",
+   "origin": "Yoruba",
+   "meaning": "love me",
+   "themes": [
+    "c-yoruba"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Fikru",
+   "origin": "Amharic",
+   "meaning": "his love",
+   "themes": [
+    "c-amharic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Hodari",
+   "origin": "Swahili",
+   "meaning": "capable, strong",
+   "themes": [
+    "c-swahili"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Imara",
+   "origin": "Swahili",
+   "meaning": "firm, resolute",
+   "themes": [
+    "c-swahili"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Jabari",
+   "origin": "Swahili",
+   "meaning": "brave one",
+   "themes": [
+    "c-swahili"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kayode",
+   "origin": "Yoruba",
+   "meaning": "he brought joy",
+   "themes": [
+    "c-yoruba"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kofi",
+   "origin": "Akan",
+   "meaning": "born on a Friday",
+   "themes": [
+    "c-akan"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kojo",
+   "origin": "Akan",
+   "meaning": "born on a Monday",
+   "themes": [
+    "c-akan"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kunle",
+   "origin": "Yoruba",
+   "meaning": "the home is filled",
+   "themes": [
+    "c-yoruba"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kwame",
+   "origin": "Akan",
+   "meaning": "born on a Saturday",
+   "themes": [
+    "c-akan"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kwezi",
+   "origin": "Zulu",
+   "meaning": "morning star",
+   "themes": [
+    "c-zulu"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Lwazi",
+   "origin": "Zulu",
+   "meaning": "knowledge",
+   "themes": [
+    "c-zulu"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Nnamdi",
+   "origin": "Igbo",
+   "meaning": "my father lives",
+   "themes": [
+    "c-igbo"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Nuru",
+   "origin": "Swahili",
+   "meaning": "light",
+   "themes": [
+    "c-swahili"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Obi",
+   "origin": "Igbo",
+   "meaning": "the heart",
+   "themes": [
+    "c-igbo"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Sefu",
+   "origin": "Swahili",
+   "meaning": "sword",
+   "themes": [
+    "c-swahili"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Segun",
+   "origin": "Yoruba",
+   "meaning": "conqueror",
+   "themes": [
+    "c-yoruba"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Simba",
+   "origin": "Swahili",
+   "meaning": "lion",
+   "themes": [
+    "c-swahili"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Sipho",
+   "origin": "Zulu",
+   "meaning": "a gift",
+   "themes": [
+    "c-zulu"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Sizwe",
+   "origin": "Zulu",
+   "meaning": "the nation",
+   "themes": [
+    "c-zulu"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Tafari",
+   "origin": "Amharic",
+   "meaning": "one who inspires awe",
+   "themes": [
+    "c-amharic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Themba",
+   "origin": "Zulu",
+   "meaning": "hope, trust",
+   "themes": [
+    "c-zulu"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Tobi",
+   "origin": "Yoruba",
+   "meaning": "great",
+   "themes": [
+    "c-yoruba"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Tunde",
+   "origin": "Yoruba",
+   "meaning": "the king returns",
+   "themes": [
+    "c-yoruba"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Wale",
+   "origin": "Yoruba",
+   "meaning": "come home",
+   "themes": [
+    "c-yoruba"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Yaw",
+   "origin": "Akan",
+   "meaning": "born on a Thursday",
+   "themes": [
+    "c-akan"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Zolani",
+   "origin": "Zulu",
+   "meaning": "peace, calm",
+   "themes": [
+    "c-zulu"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Zuberi",
+   "origin": "Swahili",
+   "meaning": "strong",
+   "themes": [
+    "c-swahili"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kai",
+   "origin": "Hawaiian",
+   "meaning": "sea",
+   "themes": [
+    "c-hawaiian"
+   ],
+   "variantFamily": null,
+   "auRank": 20
+  },
+  {
+   "name": "Muhammad",
+   "origin": "Arabic",
+   "meaning": "praiseworthy",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": 38
+  },
+  {
+   "name": "Jasper",
+   "origin": "Persian",
+   "meaning": "treasurer",
+   "themes": [
+    "c-persian"
+   ],
+   "variantFamily": "jasper",
+   "auRank": 51
+  },
+  {
+   "name": "Bodhi",
+   "origin": "Sanskrit",
+   "meaning": "awakening",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": 63
+  },
+  {
+   "name": "Ali",
+   "origin": "Arabic",
+   "meaning": "exalted",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": 83
+  },
+  {
+   "name": "Koa",
+   "origin": "Hawaiian",
+   "meaning": "warrior, brave",
+   "themes": [
+    "c-hawaiian"
+   ],
+   "variantFamily": null,
+   "auRank": 84
+  },
+  {
+   "name": "Akio",
+   "origin": "Japanese",
+   "meaning": "bright man",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Chen",
+   "origin": "Chinese",
+   "meaning": "morning, dawn",
+   "themes": [
+    "c-chinese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Daiki",
+   "origin": "Japanese",
+   "meaning": "great radiance",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Doyun",
+   "origin": "Korean",
+   "meaning": "path of allowing",
+   "themes": [
+    "c-korean"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Haneul",
+   "origin": "Korean",
+   "meaning": "the sky",
+   "themes": [
+    "c-korean"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Hao",
+   "origin": "Chinese",
+   "meaning": "vast, grand",
+   "themes": [
+    "c-chinese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Haru",
+   "origin": "Japanese",
+   "meaning": "spring, sunlight",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Haruki",
+   "origin": "Japanese",
+   "meaning": "shining brightly",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Hyun",
+   "origin": "Korean",
+   "meaning": "virtuous, worthy",
+   "themes": [
+    "c-korean"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Isamu",
+   "origin": "Japanese",
+   "meaning": "courage",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Jae",
+   "origin": "Korean",
+   "meaning": "talent, ability",
+   "themes": [
+    "c-korean"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Jian",
+   "origin": "Chinese",
+   "meaning": "strong, healthy",
+   "themes": [
+    "c-chinese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Jiho",
+   "origin": "Korean",
+   "meaning": "wisdom and greatness",
+   "themes": [
+    "c-korean"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Joon",
+   "origin": "Korean",
+   "meaning": "handsome, talented",
+   "themes": [
+    "c-korean"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Jun",
+   "origin": "Chinese",
+   "meaning": "handsome, talented",
+   "themes": [
+    "c-chinese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kaito",
+   "origin": "Japanese",
+   "meaning": "ocean flying",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kazuki",
+   "origin": "Japanese",
+   "meaning": "harmonious hope",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kenji",
+   "origin": "Japanese",
+   "meaning": "intelligent second son",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kenzo",
+   "origin": "Japanese",
+   "meaning": "strong and healthy",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Makoto",
+   "origin": "Japanese",
+   "meaning": "sincerity",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Ming",
+   "origin": "Chinese",
+   "meaning": "bright, clear",
+   "themes": [
+    "c-chinese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Minjun",
+   "origin": "Korean",
+   "meaning": "clever and talented",
+   "themes": [
+    "c-korean"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Osamu",
+   "origin": "Japanese",
+   "meaning": "discipline, study",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Raiden",
+   "origin": "Japanese",
+   "meaning": "thunder and lightning",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Ren",
+   "origin": "Japanese",
+   "meaning": "lotus",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Riku",
+   "origin": "Japanese",
+   "meaning": "land",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Satoshi",
+   "origin": "Japanese",
+   "meaning": "wise, quick-witted",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Seojun",
+   "origin": "Korean",
+   "meaning": "auspicious and handsome",
+   "themes": [
+    "c-korean"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Shin",
+   "origin": "Japanese",
+   "meaning": "true, real",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Sora",
+   "origin": "Japanese",
+   "meaning": "the sky",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Sota",
+   "origin": "Japanese",
+   "meaning": "sudden, swift",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Tae",
+   "origin": "Korean",
+   "meaning": "great, exalted",
+   "themes": [
+    "c-korean"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Takumi",
+   "origin": "Japanese",
+   "meaning": "artisan",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Taro",
+   "origin": "Japanese",
+   "meaning": "eldest son",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Toshi",
+   "origin": "Japanese",
+   "meaning": "wise, alert",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Wei",
+   "origin": "Chinese",
+   "meaning": "great, mighty",
+   "themes": [
+    "c-chinese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Yuki",
+   "origin": "Japanese",
+   "meaning": "snow, happiness",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Yuto",
+   "origin": "Japanese",
+   "meaning": "gentle, superior",
+   "themes": [
+    "c-japanese"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Amir",
+   "origin": "Arabic",
+   "meaning": "prince",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Ammar",
+   "origin": "Arabic",
+   "meaning": "long-lived, prosperous",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Anwar",
+   "origin": "Arabic",
+   "meaning": "luminous",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Arash",
+   "origin": "Persian",
+   "meaning": "the bright archer",
+   "themes": [
+    "c-persian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Arda",
+   "origin": "Turkish",
+   "meaning": "the river",
+   "themes": [
+    "c-turkish"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Ari",
+   "origin": "Hebrew",
+   "meaning": "lion",
+   "themes": [
+    "c-hebrew"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Arman",
+   "origin": "Persian",
+   "meaning": "wish, hope",
+   "themes": [
+    "c-persian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Baris",
+   "origin": "Turkish",
+   "meaning": "peace",
+   "themes": [
+    "c-turkish"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Basim",
+   "origin": "Arabic",
+   "meaning": "smiling",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Behrouz",
+   "origin": "Persian",
+   "meaning": "fortunate",
+   "themes": [
+    "c-persian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Berk",
+   "origin": "Turkish",
+   "meaning": "solid, firm",
+   "themes": [
+    "c-turkish"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Bijan",
+   "origin": "Persian",
+   "meaning": "hero",
+   "themes": [
+    "c-persian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Cyrus",
+   "origin": "Persian",
+   "meaning": "sun, lord",
+   "themes": [
+    "c-persian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Darius",
+   "origin": "Persian",
+   "meaning": "possessing goodness",
+   "themes": [
+    "c-persian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Deniz",
+   "origin": "Turkish",
+   "meaning": "the sea",
+   "themes": [
+    "c-turkish"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Efe",
+   "origin": "Turkish",
+   "meaning": "elder brother, warrior",
+   "themes": [
+    "c-turkish"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Emre",
+   "origin": "Turkish",
+   "meaning": "friend, companion",
+   "themes": [
+    "c-turkish"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Farhad",
+   "origin": "Persian",
+   "meaning": "happiness",
+   "themes": [
+    "c-persian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Faris",
+   "origin": "Arabic",
+   "meaning": "knight, horseman",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Hakim",
+   "origin": "Arabic",
+   "meaning": "wise, judicious",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Jamal",
+   "origin": "Arabic",
+   "meaning": "beauty",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kaan",
+   "origin": "Turkish",
+   "meaning": "ruler, khan",
+   "themes": [
+    "c-turkish"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kamal",
+   "origin": "Arabic",
+   "meaning": "perfection",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Karim",
+   "origin": "Arabic",
+   "meaning": "generous",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kaveh",
+   "origin": "Persian",
+   "meaning": "the blacksmith hero",
+   "themes": [
+    "c-persian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kerem",
+   "origin": "Turkish",
+   "meaning": "generosity",
+   "themes": [
+    "c-turkish"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Khalid",
+   "origin": "Arabic",
+   "meaning": "eternal",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Laith",
+   "origin": "Arabic",
+   "meaning": "lion",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Malik",
+   "origin": "Arabic",
+   "meaning": "king",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Mert",
+   "origin": "Turkish",
+   "meaning": "brave, manly",
+   "themes": [
+    "c-turkish"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Nabil",
+   "origin": "Arabic",
+   "meaning": "noble",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Nadir",
+   "origin": "Arabic",
+   "meaning": "rare, precious",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Nasir",
+   "origin": "Arabic",
+   "meaning": "helper, protector",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Nima",
+   "origin": "Persian",
+   "meaning": "just, fair",
+   "themes": [
+    "c-persian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Omar",
+   "origin": "Arabic",
+   "meaning": "flourishing, long-lived",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Ozan",
+   "origin": "Turkish",
+   "meaning": "bard, minstrel",
+   "themes": [
+    "c-turkish"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Parsa",
+   "origin": "Persian",
+   "meaning": "pure",
+   "themes": [
+    "c-persian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Qasim",
+   "origin": "Arabic",
+   "meaning": "one who distributes",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Rami",
+   "origin": "Arabic",
+   "meaning": "archer",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Rashid",
+   "origin": "Arabic",
+   "meaning": "rightly guided",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Rostam",
+   "origin": "Persian",
+   "meaning": "the great champion",
+   "themes": [
+    "c-persian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Sami",
+   "origin": "Arabic",
+   "meaning": "elevated, sublime",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Siavash",
+   "origin": "Persian",
+   "meaning": "one with black horses",
+   "themes": [
+    "c-persian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Sinan",
+   "origin": "Turkish",
+   "meaning": "spearhead",
+   "themes": [
+    "c-turkish"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Sohrab",
+   "origin": "Persian",
+   "meaning": "illustrious",
+   "themes": [
+    "c-persian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Tariq",
+   "origin": "Arabic",
+   "meaning": "the morning star",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Volkan",
+   "origin": "Turkish",
+   "meaning": "volcano",
+   "themes": [
+    "c-turkish"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Wasim",
+   "origin": "Arabic",
+   "meaning": "handsome",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Yigit",
+   "origin": "Turkish",
+   "meaning": "brave young man",
+   "themes": [
+    "c-turkish"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Zayd",
+   "origin": "Arabic",
+   "meaning": "growth, abundance",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Ziyad",
+   "origin": "Arabic",
+   "meaning": "abundance",
+   "themes": [
+    "c-arabic"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Akamai",
+   "origin": "Hawaiian",
+   "meaning": "clever, wise",
+   "themes": [
+    "c-hawaiian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Hoku",
+   "origin": "Hawaiian",
+   "meaning": "star",
+   "themes": [
+    "c-hawaiian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Ikaika",
+   "origin": "Hawaiian",
+   "meaning": "strong, powerful",
+   "themes": [
+    "c-hawaiian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kahu",
+   "origin": "Maori",
+   "meaning": "hawk; cloak of honour",
+   "themes": [
+    "c-maori"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kaimana",
+   "origin": "Hawaiian",
+   "meaning": "the power of the ocean",
+   "themes": [
+    "c-hawaiian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kanoa",
+   "origin": "Hawaiian",
+   "meaning": "the free one",
+   "themes": [
+    "c-hawaiian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kauri",
+   "origin": "Maori",
+   "meaning": "the great tree",
+   "themes": [
+    "c-maori"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Keanu",
+   "origin": "Hawaiian",
+   "meaning": "the cool breeze",
+   "themes": [
+    "c-hawaiian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kekoa",
+   "origin": "Hawaiian",
+   "meaning": "the warrior",
+   "themes": [
+    "c-hawaiian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Lani",
+   "origin": "Hawaiian",
+   "meaning": "sky, heaven",
+   "themes": [
+    "c-hawaiian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Makani",
+   "origin": "Hawaiian",
+   "meaning": "the wind",
+   "themes": [
+    "c-hawaiian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Makoa",
+   "origin": "Hawaiian",
+   "meaning": "fearless",
+   "themes": [
+    "c-hawaiian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Malosi",
+   "origin": "Samoan",
+   "meaning": "strong",
+   "themes": [
+    "c-samoan"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Manaia",
+   "origin": "Maori",
+   "meaning": "guardian spirit",
+   "themes": [
+    "c-maori"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Manu",
+   "origin": "Hawaiian",
+   "meaning": "bird",
+   "themes": [
+    "c-hawaiian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Nalu",
+   "origin": "Hawaiian",
+   "meaning": "the wave",
+   "themes": [
+    "c-hawaiian"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Nikau",
+   "origin": "Maori",
+   "meaning": "the native palm",
+   "themes": [
+    "c-maori"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Rewi",
+   "origin": "Maori",
+   "meaning": "of the chief",
+   "themes": [
+    "c-maori"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Rimu",
+   "origin": "Maori",
+   "meaning": "the red pine",
+   "themes": [
+    "c-maori"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Tahi",
+   "origin": "Maori",
+   "meaning": "one, the first",
+   "themes": [
+    "c-maori"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Tama",
+   "origin": "Maori",
+   "meaning": "son, young man",
+   "themes": [
+    "c-maori"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Tavui",
+   "origin": "Samoan",
+   "meaning": "the gathering",
+   "themes": [
+    "c-samoan"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Toa",
+   "origin": "Maori",
+   "meaning": "warrior, brave",
+   "themes": [
+    "c-maori"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Totara",
+   "origin": "Maori",
+   "meaning": "the great tree",
+   "themes": [
+    "c-maori"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Vaea",
+   "origin": "Samoan",
+   "meaning": "chief",
+   "themes": [
+    "c-samoan"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Viliami",
+   "origin": "Tongan",
+   "meaning": "resolute protector",
+   "themes": [
+    "c-tongan"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Wiremu",
+   "origin": "Maori",
+   "meaning": "resolute protector",
+   "themes": [
+    "c-maori"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Aarav",
+   "origin": "Sanskrit",
+   "meaning": "peaceful, calm",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Aditya",
+   "origin": "Sanskrit",
+   "meaning": "the sun",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Ansh",
+   "origin": "Sanskrit",
+   "meaning": "portion, part",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Arjun",
+   "origin": "Sanskrit",
+   "meaning": "bright, shining",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Arnav",
+   "origin": "Sanskrit",
+   "meaning": "the ocean",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Chandra",
+   "origin": "Sanskrit",
+   "meaning": "the moon",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Darsh",
+   "origin": "Sanskrit",
+   "meaning": "sight, vision",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Dev",
+   "origin": "Sanskrit",
+   "meaning": "divine",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Gaurav",
+   "origin": "Sanskrit",
+   "meaning": "pride, honour",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Ishaan",
+   "origin": "Sanskrit",
+   "meaning": "the sun",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Jai",
+   "origin": "Sanskrit",
+   "meaning": "victory",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kabir",
+   "origin": "Sanskrit",
+   "meaning": "great",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Karan",
+   "origin": "Sanskrit",
+   "meaning": "helper, generous",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kavi",
+   "origin": "Sanskrit",
+   "meaning": "poet",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Kiran",
+   "origin": "Sanskrit",
+   "meaning": "a ray of light",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Lakshya",
+   "origin": "Sanskrit",
+   "meaning": "aim, target",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Manav",
+   "origin": "Sanskrit",
+   "meaning": "human",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Neel",
+   "origin": "Sanskrit",
+   "meaning": "blue, sapphire",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Nikhil",
+   "origin": "Sanskrit",
+   "meaning": "complete, whole",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Nirav",
+   "origin": "Sanskrit",
+   "meaning": "quiet, silent",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Ojas",
+   "origin": "Sanskrit",
+   "meaning": "vigour, lustre",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Pranav",
+   "origin": "Sanskrit",
+   "meaning": "the sacred syllable",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Raghav",
+   "origin": "Sanskrit",
+   "meaning": "of the Raghu line",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Ravi",
+   "origin": "Sanskrit",
+   "meaning": "the sun",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Rishi",
+   "origin": "Sanskrit",
+   "meaning": "sage, seer",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Rohan",
+   "origin": "Sanskrit",
+   "meaning": "ascending",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Sahil",
+   "origin": "Sanskrit",
+   "meaning": "the shore",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Samar",
+   "origin": "Sanskrit",
+   "meaning": "battle",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Shaan",
+   "origin": "Sanskrit",
+   "meaning": "pride, dignity",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Tarun",
+   "origin": "Sanskrit",
+   "meaning": "young",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Ved",
+   "origin": "Sanskrit",
+   "meaning": "knowledge",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Vihaan",
+   "origin": "Sanskrit",
+   "meaning": "the dawn",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Viraj",
+   "origin": "Sanskrit",
+   "meaning": "splendour",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Vivaan",
+   "origin": "Sanskrit",
+   "meaning": "full of life",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  },
+  {
+   "name": "Yash",
+   "origin": "Sanskrit",
+   "meaning": "fame, glory",
+   "themes": [
+    "c-sanskrit"
+   ],
+   "variantFamily": null,
+   "auRank": null
+  }
+ ]
+}

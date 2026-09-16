@@ -1,0 +1,24 @@
+/* Themes screen — Change Order 3 build order step 6. */
+
+.theme-pack{border-bottom:1px solid var(--hair)}
+.theme-pack-head{padding:16px 18px 6px;display:flex;flex-direction:column;gap:3px}
+.theme-pack-title{font-family:var(--f-display);font-size:19px;font-weight:500}
+.theme-pack-blurb{font-family:var(--f-data);font-size:9.5px;color:var(--muted);letter-spacing:.02em}
+
+.theme-row{display:flex;align-items:center;gap:11px;padding:11px 18px;border-top:1px solid var(--hair-soft)}
+.theme-row.child{padding-left:36px;background:var(--plate-2)}
+.theme-main{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.theme-title{font-size:14.5px;color:var(--ink-soft)}
+.theme-sub{font-family:var(--f-data);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+.theme-switch{
+  flex:0 0 auto;width:38px;height:22px;border-radius:999px;background:var(--hair);
+  position:relative;transition:background .15s;padding:2px;
+}
+.theme-switch .knob{
+  display:block;width:18px;height:18px;border-radius:50%;background:var(--plate);
+  box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s;
+}
+.theme-switch.on{background:var(--claret)}
+.theme-switch.on .knob{transform:translateX(16px)}
+.theme-switch[disabled]{opacity:.5;cursor:default}

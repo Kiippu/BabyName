@@ -1,0 +1,73 @@
+import type {
+  BabySurnameMode,
+  ListRow,
+  ListTab,
+  Me,
+  NameCard,
+  NameDetail,
+  PersonSettings,
+  RoundPayload,
+  RoundResultPayload,
+  Settings,
+  SetLockResult,
+  Stats,
+  ThemePack,
+} from "./types";
+
+export interface MatchEvent extends NameCard {
+  matchDepth: number;
+}
+
+// Sessions are short-lived and slide forward on use (server/src/identity.js)
+// — but if the app sits untouched for 5+ minutes and then makes a request,
+// the server comes back 401. Rather than every screen having to know what
+// that means, broadcast it once here so App.tsx can react centrally by
+// dropping back to "which one of you is this?" instead of a raw error.
+export const SESSION_EXPIRED_EVENT = "nameplate:session-expired";
+
+async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(path, {
+    credentials: "include",
+    headers: init?.body ? { "Content-Type": "application/json" } : undefined,
+    ...init,
+  });
+  if (!res.ok) {
+    if (res.status === 401) window.dispatchEvent(new Event(SESSION_EXPIRED_EVENT));
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.error || `${res.status} ${res.statusText}`);
+  }
+  return res.json();
+}
+
+export const api = {
+  getMe: () => request<Me>("/api/me"),
+  claim: (userId: number) =>
+    request<Me>("/api/me", { method: "POST", body: JSON.stringify({ userId }) }),
+  getList: (tab: ListTab) => request<ListRow[]>(`/api/list?tab=${tab}`),
+  getStats: () => request<Stats>("/api/stats"),
+  getSettings: () => request<Settings>("/api/settings"),
+  updateSettings: (settings: { father: PersonSettings; mother: PersonSettings; babySurname: BabySurnameMode }) =>
+    request<Settings>("/api/settings", { method: "PUT", body: JSON.stringify(settings) }),
+  addName: (name: string, note: string) =>
+    request<NameCard>("/api/names", { method: "POST", body: JSON.stringify({ name, note }) }),
+  getNameDetail: (id: number) => request<NameDetail>(`/api/names/${id}`),
+  getRound: () => request<RoundPayload>("/api/round"),
+  lockSet: (roundId: number, setIndex: number, keptIds: number[]) =>
+    request<SetLockResult>("/api/set", {
+      method: "POST",
+      body: JSON.stringify({ roundId, setIndex, keptIds }),
+    }),
+  getRoundResult: (roundId: number) => request<RoundResultPayload>(`/api/round/${roundId}/result`),
+  ackRound: (roundId: number) => request<RoundPayload>(`/api/round/${roundId}/ack`, { method: "POST" }),
+  getThemes: () => request<ThemePack[]>("/api/themes"),
+  setThemeEnabled: (id: number, enabled: boolean) =>
+    request<ThemePack[]>(`/api/themes/${id}`, { method: "PUT", body: JSON.stringify({ enabled }) }),
+};
+
+/** Opens the SSE channel for match takeovers (spec §5/§7). Returns a closer. */
+export function openMatchStream(onMatch: (match: MatchEvent) => void): () => void {
+  const source = new EventSource("/api/stream", { withCredentials: true });
+  const handleMatch = (e: MessageEvent) => onMatch(JSON.parse(e.data));
+  source.addEventListener("match", handleMatch);
+  return () => source.close();
+}

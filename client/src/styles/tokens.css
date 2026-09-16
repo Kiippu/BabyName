@@ -1,0 +1,60 @@
+/* Lifted verbatim from nameplate-prototype.html — the signed-off token block. */
+:root{
+  --paper:#ECEDEF;
+  --plate:#FFFFFF;
+  --plate-2:#F6F7F8;
+  --ink:#16181D;
+  --ink-soft:#3D424D;
+  --muted:#707784;
+  --hair:#D6D9DE;
+  --hair-soft:#E4E6EA;
+  --claret:#8E1F35;
+  --claret-ink:#FFFFFF;
+  --claret-wash:#F6E9EC;
+  --brass:#9A6F16;
+  --brass-bright:#B8862B;
+  --brass-wash:#F7EFDC;
+  --gone:#8A9099;
+  --shadow:0 1px 0 rgba(22,24,29,.04), 0 12px 28px -18px rgba(22,24,29,.35);
+  --f-display:"Bodoni Moda", "Didot", "Times New Roman", serif;
+  --f-ui:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-data:"IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0D0F13;
+    --plate:#191C22;
+    --plate-2:#20242B;
+    --ink:#ECEDEF;
+    --ink-soft:#BFC5CE;
+    --muted:#8A919E;
+    --hair:#2C313A;
+    --hair-soft:#242830;
+    --claret:#D9556E;
+    --claret-ink:#1A0A0E;
+    --claret-wash:#2A161B;
+    --brass:#D9A94A;
+    --brass-bright:#EFC26A;
+    --brass-wash:#2A2213;
+    --gone:#6A717C;
+    --shadow:0 1px 0 rgba(0,0,0,.4), 0 16px 32px -20px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0D0F13;
+  --plate:#191C22;
+  --plate-2:#20242B;
+  --ink:#ECEDEF;
+  --ink-soft:#BFC5CE;
+  --muted:#8A919E;
+  --hair:#2C313A;
+  --hair-soft:#242830;
+  --claret:#D9556E;
+  --claret-ink:#1A0A0E;
+  --claret-wash:#2A161B;
+  --brass:#D9A94A;
+  --brass-bright:#EFC26A;
+  --brass-wash:#2A2213;
+  --gone:#6A717C;
+  --shadow:0 1px 0 rgba(0,0,0,.4), 0 16px 32px -20px rgba(0,0,0,.9);
+}

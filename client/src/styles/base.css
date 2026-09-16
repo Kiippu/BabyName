@@ -1,0 +1,29 @@
+html, body { margin: 0; }
+[hidden] { display: none !important; }
+
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--f-ui);
+  -webkit-font-smoothing:antialiased;
+  display:flex;justify-content:center;
+  min-height:100vh;min-height:100dvh;
+}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+:focus-visible{outline:2px solid var(--claret);outline-offset:2px;border-radius:2px}
+
+/* app shell — caps width on desktop-monitor-wide screens, disappears into the
+   edges on an actual phone viewport in either orientation (spec §3: served on
+   a home LAN, opened on a phone). 470px was too narrow: a phone held in
+   landscape (or a wider handset) exceeds it, showing gutters down the sides. */
+.shell{
+  width:100%;max-width:900px;background:var(--plate);
+  display:flex;flex-direction:column;
+  min-height:100vh;min-height:100dvh;position:relative;overflow:hidden;
+  border-left:1px solid var(--hair);border-right:1px solid var(--hair);
+}
+@media (max-width:900px){ .shell{border-left:none;border-right:none} }
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}

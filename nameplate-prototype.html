@@ -1,0 +1,1327 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Nameplate — head-to-head baby name ranking. Signed-off design prototype.">
+<style>
+  :root { color-scheme: light dark; }
+  html, body { margin: 0; }
+  body { font: 14px system-ui, sans-serif; background: #ECEDEF; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+<title>Nameplate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --paper:#ECEDEF;
+  --plate:#FFFFFF;
+  --plate-2:#F6F7F8;
+  --ink:#16181D;
+  --ink-soft:#3D424D;
+  --muted:#707784;
+  --hair:#D6D9DE;
+  --hair-soft:#E4E6EA;
+  --claret:#8E1F35;
+  --claret-ink:#FFFFFF;
+  --claret-wash:#F6E9EC;
+  --brass:#9A6F16;
+  --brass-bright:#B8862B;
+  --brass-wash:#F7EFDC;
+  --shadow:0 1px 0 rgba(22,24,29,.04), 0 12px 28px -18px rgba(22,24,29,.35);
+  --f-display:"Bodoni Moda", "Didot", "Times New Roman", serif;
+  --f-ui:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-data:"IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0D0F13;
+    --plate:#191C22;
+    --plate-2:#20242B;
+    --ink:#ECEDEF;
+    --ink-soft:#BFC5CE;
+    --muted:#8A919E;
+    --hair:#2C313A;
+    --hair-soft:#242830;
+    --claret:#D9556E;
+    --claret-ink:#1A0A0E;
+    --claret-wash:#2A161B;
+    --brass:#D9A94A;
+    --brass-bright:#EFC26A;
+    --brass-wash:#2A2213;
+    --shadow:0 1px 0 rgba(0,0,0,.4), 0 16px 32px -20px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0D0F13;
+  --plate:#191C22;
+  --plate-2:#20242B;
+  --ink:#ECEDEF;
+  --ink-soft:#BFC5CE;
+  --muted:#8A919E;
+  --hair:#2C313A;
+  --hair-soft:#242830;
+  --claret:#D9556E;
+  --claret-ink:#1A0A0E;
+  --claret-wash:#2A161B;
+  --brass:#D9A94A;
+  --brass-bright:#EFC26A;
+  --brass-wash:#2A2213;
+  --shadow:0 1px 0 rgba(0,0,0,.4), 0 16px 32px -20px rgba(0,0,0,.9);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--f-ui);
+  -webkit-font-smoothing:antialiased;
+  display:flex;justify-content:center;
+  min-height:100dvh;
+}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+:focus-visible{outline:2px solid var(--claret);outline-offset:2px;border-radius:2px}
+
+/* ---------- shell ---------- */
+.phone{
+  width:100%;max-width:470px;background:var(--plate);
+  display:flex;flex-direction:column;
+  min-height:100dvh;position:relative;overflow:hidden;
+  border-left:1px solid var(--hair);border-right:1px solid var(--hair);
+}
+@media (max-width:480px){ .phone{border-left:none;border-right:none} }
+
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:14px 18px 12px;border-bottom:1px solid var(--hair);
+  flex:0 0 auto;background:var(--plate);z-index:5;
+}
+.wordmark{font-family:var(--f-display);font-size:20px;font-weight:600;letter-spacing:.01em;line-height:1}
+.wordmark em{font-style:italic;color:var(--claret)}
+.who{
+  display:flex;align-items:center;gap:0;border:1px solid var(--hair);border-radius:999px;
+  overflow:hidden;background:var(--plate-2);
+}
+.who button{
+  font-family:var(--f-data);font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  padding:6px 11px;color:var(--muted);transition:background .15s,color .15s;
+}
+.who button[aria-pressed="true"]{background:var(--ink);color:var(--plate)}
+.who-tag{
+  font-family:var(--f-data);font-size:8px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--brass);padding:0 8px 0 10px;white-space:nowrap;
+}
+
+.screen{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
+.screen[hidden]{display:none}
+[hidden]{display:none!important}
+.scroll{overflow-y:auto;flex:1 1 auto;-webkit-overflow-scrolling:touch}
+
+/* ---------- duel: distraction-free mode ---------- */
+.phone.duelling .topbar,
+.phone.duelling .demo-strip,
+.phone.duelling .nav{display:none}
+
+.rater-mark{
+  position:absolute;top:calc(12px + env(safe-area-inset-top));right:16px;z-index:6;
+  font-family:var(--f-data);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);padding:5px 9px;border:1px solid var(--hair);border-radius:999px;
+  background:var(--plate);opacity:.7;transition:opacity .15s;
+}
+.rater-mark:hover{opacity:1}
+.phone:not(.duelling) .rater-mark{display:none}
+
+.duel-bar{
+  flex:0 0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;
+  padding:12px 16px calc(14px + env(safe-area-inset-bottom));
+  border-top:1px solid var(--hair-soft);
+}
+.skip-pill{
+  grid-column:2;justify-self:center;
+  min-height:44px;padding:0 30px;border:1px solid var(--hair);border-radius:999px;
+  display:flex;align-items:center;gap:8px;
+  font-family:var(--f-data);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-soft);background:var(--plate-2);
+  transition:border-color .15s,color .15s,background .15s;
+}
+.skip-pill:hover{border-color:var(--ink-soft);background:var(--plate)}
+.skip-pill svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
+.to-list{
+  grid-column:3;justify-self:end;min-height:44px;display:flex;align-items:center;gap:6px;padding:0 4px;
+  font-family:var(--f-data);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);transition:color .15s;
+}
+.to-list:hover{color:var(--ink)}
+.to-list .count{font-variant-numeric:tabular-nums;opacity:.55}
+
+.arena{flex:1 1 auto;display:flex;flex-direction:column;min-height:0;position:relative}
+.plate{
+  flex:1 1 50%;position:relative;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:10px;
+  padding:20px 22px;text-align:center;min-height:0;
+  background:var(--plate);transition:background .18s ease, transform .18s ease;
+  -webkit-tap-highlight-color:transparent;user-select:none;
+}
+.plate:active{background:var(--plate-2)}
+.plate.win{background:var(--claret-wash)}
+.plate.win::after{
+  content:"chosen";position:absolute;bottom:14px;left:0;right:0;text-align:center;
+  font-family:var(--f-data);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--claret);
+}
+.plate.lose{opacity:.28}
+.plate.vetoing{background:var(--plate-2)}
+
+.plate-name{
+  font-family:var(--f-display);font-weight:500;line-height:.98;
+  font-size:clamp(38px,13vw,60px);letter-spacing:-.015em;text-wrap:balance;
+  transition:letter-spacing .5s ease;
+}
+.plate.vetoing .plate-name{letter-spacing:.06em;text-decoration:line-through;text-decoration-thickness:2px}
+.plate-meta{display:flex;flex-direction:column;gap:5px;align-items:center;max-width:34ch}
+.plate-origin{
+  font-family:var(--f-data);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--claret);
+}
+.plate-meaning{font-family:var(--f-display);font-style:italic;font-size:15px;color:var(--ink-soft);line-height:1.35}
+.plate-rank{
+  position:absolute;top:12px;right:16px;
+  font-family:var(--f-data);font-size:9.5px;letter-spacing:.1em;color:var(--muted);
+  font-variant-numeric:tabular-nums;
+}
+.veto-ring{
+  position:absolute;inset:auto 0 12px;display:flex;justify-content:center;
+  font-family:var(--f-data);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);opacity:0;transition:opacity .2s;
+}
+.plate.vetoing .veto-ring{opacity:1;color:var(--claret)}
+
+.divider{
+  flex:0 0 auto;position:relative;height:1px;background:var(--hair);
+  display:flex;align-items:center;justify-content:center;
+}
+.divider span{
+  position:absolute;background:var(--plate);padding:0 12px;
+  font-family:var(--f-display);font-style:italic;font-size:13px;color:var(--muted);
+}
+
+.ghost-btn{
+  flex:1;border:1px solid var(--hair);border-radius:8px;padding:10px 12px;
+  font-family:var(--f-data);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  transition:border-color .15s,color .15s,background .15s;
+}
+.ghost-btn:hover{border-color:var(--ink);color:var(--ink)}
+
+/* ---------- list screens ---------- */
+.tabs{display:flex;border-bottom:1px solid var(--hair);flex:0 0 auto}
+.tabs button{
+  flex:1;padding:13px 6px 11px;font-family:var(--f-data);font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;
+}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--claret)}
+.tabs button .n{font-variant-numeric:tabular-nums;opacity:.6}
+
+.section-note{
+  padding:14px 18px 4px;font-size:12.5px;line-height:1.5;color:var(--muted);
+  border-bottom:1px solid var(--hair-soft);padding-bottom:14px;
+}
+.section-note b{color:var(--ink-soft);font-weight:600}
+
+.row{
+  display:grid;grid-template-columns:30px 1fr auto auto;align-items:center;gap:11px;
+  padding:13px 18px;border-bottom:1px solid var(--hair-soft);width:100%;text-align:left;
+  transition:background .12s;
+}
+.row:hover{background:var(--plate-2)}
+.row-rank{font-family:var(--f-data);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.row-main{display:flex;flex-direction:column;gap:3px;min-width:0}
+.row-name{font-family:var(--f-display);font-size:23px;font-weight:500;line-height:1.05;letter-spacing:-.01em}
+.row-sub{font-family:var(--f-data);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.row-side{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+
+.bars{display:flex;flex-direction:column;gap:4px;width:76px}
+.bar{display:grid;grid-template-columns:16px 1fr;gap:6px;align-items:center}
+.bar i{font-family:var(--f-data);font-size:8.5px;font-style:normal;color:var(--muted);letter-spacing:.06em}
+.bar u{display:block;height:4px;background:var(--hair);border-radius:2px;text-decoration:none;overflow:hidden}
+.bar u b{display:block;height:100%;background:var(--ink-soft);border-radius:2px}
+.bar.pending u b{background:repeating-linear-gradient(90deg,var(--hair),var(--hair) 3px,transparent 3px,transparent 6px);width:100%!important}
+
+.chip{
+  font-family:var(--f-data);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 7px;border-radius:3px;white-space:nowrap;
+}
+.chip.match{background:var(--brass-wash);color:var(--brass);border:1px solid var(--brass)}
+.chip.veto{background:var(--plate-2);color:var(--muted);border:1px solid var(--hair)}
+.chip.solo{background:var(--claret-wash);color:var(--claret);border:1px solid var(--claret)}
+.row.vetoed .row-name{text-decoration:line-through;color:var(--muted);text-decoration-thickness:1.5px}
+
+.empty{padding:56px 32px;text-align:center;color:var(--muted)}
+.empty p{font-family:var(--f-display);font-style:italic;font-size:17px;line-height:1.5;margin:0 0 6px}
+.empty small{font-family:var(--f-data);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+
+/* ---------- add ---------- */
+.pad{padding:20px 18px;display:flex;flex-direction:column;gap:16px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field label{font-family:var(--f-data);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.field input, .pair input{
+  font-family:var(--f-display);font-size:24px;font-weight:500;padding:11px 13px;
+  border:1px solid var(--hair);border-radius:8px;background:var(--plate-2);color:var(--ink);
+  width:100%;min-width:0;
+}
+.field input.small, .pair input.small{font-family:var(--f-ui);font-size:15px;font-weight:400}
+.field input::placeholder, .pair input::placeholder{color:var(--muted);opacity:.6}
+.solid-btn{
+  background:var(--claret);color:var(--claret-ink);border-radius:8px;padding:13px;
+  font-family:var(--f-data);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+}
+.solid-btn[disabled]{opacity:.35;cursor:not-allowed}
+.preview{
+  border:1px dashed var(--hair);border-radius:10px;padding:20px 16px;text-align:center;background:var(--plate-2);
+}
+.preview .full{font-family:var(--f-display);font-size:clamp(22px,7vw,30px);font-weight:500;line-height:1.15;text-wrap:balance}
+.preview small{
+  display:block;margin-top:8px;font-family:var(--f-data);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);
+}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.stat{padding:16px 10px;text-align:center;border-right:1px solid var(--hair-soft)}
+.stat:last-child{border-right:none}
+.stat b{display:block;font-family:var(--f-data);font-size:21px;font-weight:500;font-variant-numeric:tabular-nums}
+.stat span{font-family:var(--f-data);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.linkish{
+  font-family:var(--f-data);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);text-decoration:underline;text-underline-offset:3px;align-self:flex-start;
+}
+
+/* ---------- top navigation ---------- */
+.backbtn{
+  display:flex;align-items:center;gap:7px;min-height:40px;padding:6px 12px 6px 8px;
+  margin-left:-8px;border-radius:8px;
+  font-family:var(--f-data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--claret);transition:background .15s;
+}
+.backbtn:hover{background:var(--claret-wash)}
+.backbtn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.phone.duelling .backbtn{display:none}
+
+.addrow{
+  display:flex;align-items:center;gap:11px;width:100%;padding:15px 18px;
+  border-bottom:1px solid var(--hair-soft);color:var(--claret);transition:background .12s;
+}
+.addrow:hover{background:var(--claret-wash)}
+.addrow svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.addrow span{font-family:var(--f-data);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase}
+
+.row-go{
+  font-family:var(--f-display);font-size:19px;color:var(--muted);opacity:.5;line-height:1;padding-left:2px;
+}
+
+/* ---------- overlays ---------- */
+/* fixed, not absolute, and centred — a bottom-anchored sheet lands in the
+   strip of the viewport that phone browser chrome eats, i.e. nowhere */
+.sheet-wrap{
+  position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;
+  padding:18px;background:rgba(10,11,14,.5);backdrop-filter:blur(2px);
+}
+.sheet{
+  width:100%;max-width:434px;background:var(--plate);border-radius:14px;border:1px solid var(--hair);
+  padding:20px;position:relative;
+  display:flex;flex-direction:column;gap:14px;max-height:86vh;overflow-y:auto;
+  box-shadow:var(--shadow);animation:rise .24s cubic-bezier(.2,.8,.3,1);
+}
+.sheet-lead{margin:9px 0 0;font-size:13px;line-height:1.5;color:var(--muted);max-width:40ch}
+.who-block{display:flex;flex-direction:column;gap:8px}
+.who-label{
+  font-family:var(--f-data);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chips button{
+  border:1px solid var(--hair);border-radius:999px;padding:9px 14px;min-height:38px;
+  font-family:var(--f-data);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);background:var(--plate-2);transition:all .15s;
+}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--plate);border-color:var(--ink)}
+.full-variants{display:flex;flex-direction:column;gap:3px}
+.full-variants .full{font-size:clamp(17px,5.2vw,21px)}
+.preview{padding:15px 14px}
+.sheet-x{
+  position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:8px;
+  display:grid;place-items:center;font-size:19px;line-height:1;color:var(--muted);
+}
+.sheet-x:hover{background:var(--plate-2);color:var(--ink)}
+@keyframes rise{from{transform:translateY(28px);opacity:0}to{transform:none;opacity:1}}
+.sheet-name{font-family:var(--f-display);font-size:clamp(34px,11vw,46px);font-weight:500;line-height:1;letter-spacing:-.02em}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:9px 16px;align-items:baseline}
+.kv dt{font-family:var(--f-data);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.kv dd{margin:0;font-size:14px;line-height:1.45;color:var(--ink-soft)}
+.kv dd.serif{font-family:var(--f-display);font-style:italic;font-size:16px;color:var(--ink)}
+.sheet-actions{display:flex;gap:8px}
+.sheet-actions button{flex:1}
+
+.takeover{
+  position:fixed;inset:0;z-index:60;background:var(--ink);color:var(--paper);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
+  padding:34px;text-align:center;animation:fade .3s ease;
+}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.takeover .kicker{
+  font-family:var(--f-data);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--brass-bright);
+}
+.takeover .big{
+  font-family:var(--f-display);font-size:clamp(44px,16vw,74px);font-weight:500;line-height:.95;letter-spacing:-.02em;
+  animation:settle .7s cubic-bezier(.2,.9,.3,1);
+}
+@keyframes settle{from{letter-spacing:.22em;opacity:0}to{letter-spacing:-.02em;opacity:1}}
+.takeover .sub{font-family:var(--f-display);font-style:italic;font-size:16px;opacity:.7;max-width:26ch;line-height:1.5}
+.takeover .rule{width:46px;height:1px;background:var(--brass-bright)}
+.coach-lines{display:flex;flex-direction:column;gap:18px;max-width:22ch}
+.coach-lines p{
+  margin:0;font-family:var(--f-display);font-size:clamp(21px,6.5vw,26px);line-height:1.25;
+}
+.coach-lines em{font-style:italic;color:var(--brass-bright)}
+.takeover button{
+  border:1px solid rgba(255,255,255,.28);border-radius:8px;padding:11px 26px;color:var(--paper);
+  font-family:var(--f-data);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+}
+
+.toast{
+  position:fixed;left:14px;right:14px;top:14px;max-width:436px;margin:0 auto;z-index:50;
+  background:var(--ink);color:var(--paper);border-radius:9px;padding:11px 14px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:var(--shadow);
+  animation:rise .2s ease;
+}
+.toast span{font-size:13px}
+.toast button{
+  font-family:var(--f-data);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--brass-bright);white-space:nowrap;
+}
+
+.demo-strip{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:8px 18px;background:var(--brass-wash);border-bottom:1px solid var(--hair);
+  font-family:var(--f-data);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--brass);
+  flex:0 0 auto;
+}
+.demo-strip button{font:inherit;color:var(--brass);text-decoration:underline;text-underline-offset:3px}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+
+<div class="phone">
+  <header class="topbar">
+    <button class="backbtn" id="backBtn">
+      <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+      Keep duelling
+    </button>
+    <div class="who" role="group" aria-label="Demo: view as">
+      <span class="who-tag">Demo · view as</span>
+      <button id="whoA" aria-pressed="true">Dad</button>
+      <button id="whoB" aria-pressed="false">Mum</button>
+    </div>
+  </header>
+
+  <div class="demo-strip">
+    <span id="demoLabel">Demo data · 41 duels pre-played</span>
+    <button id="resetBtn">Start fresh</button>
+  </div>
+
+  <!-- ===== DUEL ===== -->
+  <button class="rater-mark" id="raterMark">Dad</button>
+  <section class="screen" id="screen-duel">
+    <div class="arena">
+      <button class="plate" id="plateA">
+        <span class="plate-name" id="nameA">—</span>
+        <span class="plate-meta">
+          <span class="plate-origin" id="origA"></span>
+          <span class="plate-meaning" id="meanA"></span>
+        </span>
+        <span class="veto-ring">Keep holding to strike out</span>
+      </button>
+      <div class="divider"><span>or</span></div>
+      <button class="plate" id="plateB">
+        <span class="plate-name" id="nameB">—</span>
+        <span class="plate-meta">
+          <span class="plate-origin" id="origB"></span>
+          <span class="plate-meaning" id="meanB"></span>
+        </span>
+        <span class="veto-ring">Keep holding to strike out</span>
+      </button>
+    </div>
+    <div class="duel-bar">
+      <button class="skip-pill" id="skipBtn">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M14 7l5 5-5 5"/></svg>
+        Neither
+      </button>
+      <button class="to-list" id="doneBtn">Shortlist <span class="count" id="cDuels">0</span></button>
+    </div>
+  </section>
+
+  <!-- ===== SHORTLIST ===== -->
+  <section class="screen" id="screen-list" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="ours">Ours <span class="n" id="nOurs"></span></button>
+      <button role="tab" aria-selected="false" data-tab="mine">Mine <span class="n" id="nMine"></span></button>
+      <button role="tab" aria-selected="false" data-tab="out">Struck out <span class="n" id="nOut"></span></button>
+    </div>
+    <div class="scroll">
+      <p class="section-note" id="listNote"></p>
+      <button class="addrow" id="addRow">
+        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        <span>Add a name to the pile</span>
+      </button>
+      <div id="listBody"></div>
+      <div class="stats">
+        <div class="stat"><b id="sDuels">0</b><span>Duels</span></div>
+        <div class="stat"><b id="sMatches">0</b><span>Matches</span></div>
+        <div class="stat"><b id="sAgree">0%</b><span>Agreement</span></div>
+      </div>
+      <div class="pad">
+        <button class="linkish" id="setBtn">Names &amp; surnames</button>
+        <button class="linkish" id="wipeBtn">Clear everything and start over</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ------------------------------------------------------------------
+   NAME POOL — origin + meaning double as type-specimen metadata
+------------------------------------------------------------------ */
+const POOL = [
+["Oliver","Latin","olive tree",1,""],["Theodore","Greek","gift of God",3,"theo"],["Henry","Germanic","home ruler",4,"henry"],
+["Leo","Latin","lion",6,""],["Hudson","English","son of Hudde",7,""],["Charlie","English","free man",8,"charles"],
+["William","Germanic","resolute protector",10,"william"],["Archie","Germanic","truly bold",15,"archibald"],["Oscar","Irish","friend of deer",16,""],
+["Harvey","Breton","battle worthy",17,""],["Arthur","Celtic","bear",19,""],["Kai","Hawaiian","sea",20,""],
+["George","Greek","farmer, earth-worker",21,""],["Alexander","Greek","defender of men",22,"alexander"],["Liam","Irish","resolute protector",23,"william"],
+["Harrison","English","son of Harry",24,""],["Archer","English","bowman",25,""],["Hugo","Germanic","mind, spirit",26,"hugh"],
+["Sebastian","Greek","venerable",27,""],["Harry","Germanic","home ruler",28,"henry"],["Beau","French","handsome",29,""],
+["Arlo","English","fortified hill",30,""],["Max","Latin","greatest",31,"max"],["Cooper","English","barrel maker",33,""],
+["Xavier","Basque","the new house",34,"xavier"],["Lachlan","Scottish","from the land of lakes",36,"lachlan"],["Austin","Latin","venerable",37,"august"],
+["Muhammad","Arabic","praiseworthy",38,""],["Mason","English","stone worker",39,""],["Hunter","English","one who hunts",40,""],
+["Theo","Greek","gift of God",41,"theo"],["Edward","English","wealthy guardian",42,"edward"],["Finn","Irish","fair, white",43,"finn"],
+["Louis","Germanic","renowned warrior",44,"louis"],["Sonny","English","little son",45,""],["Patrick","Latin","nobleman",49,"patrick"],
+["Jasper","Persian","treasurer",51,"jasper"],["Miles","Latin","soldier",52,"miles"],["Riley","Irish","valiant",55,""],
+["Angus","Gaelic","one strength",56,""],["Lincoln","English","settlement by the pool",57,""],["Billy","Germanic","resolute protector",59,"william"],
+["Felix","Latin","fortunate, happy",62,""],["Bodhi","Sanskrit","awakening",63,""],["Carter","English","cart driver",64,""],
+["Jackson","English","son of Jack",66,"jackson"],["Parker","English","park keeper",67,""],["Darcy","French","from Arcy",68,""],
+["Spencer","English","steward",69,""],["Myles","Latin","soldier",70,"miles"],["Ryan","Irish","little king",71,""],
+["Roman","Latin","of Rome",72,""],["Leon","Greek","lion",73,""],["Flynn","Irish","son of the red-haired one",75,""],
+["Jayden","Modern","a modern coinage",76,""],["Logan","Scottish","little hollow",77,""],["Vincent","Latin","conquering",80,"vincent"],
+["River","English","a river",81,""],["Remy","French","oarsman",82,""],["Ali","Arabic","exalted",83,""],
+["Koa","Hawaiian","warrior, brave",84,""],["Fletcher","English","arrow-maker",86,""],["Grayson","English","son of the steward",88,""],
+["Aiden","Irish","little fire",89,"aidan"],["Alfie","Germanic","elf counsel",92,"alfred"],["Finley","Scottish","fair warrior",93,"finn"],
+["Julian","Latin","youthful",94,"julius"],["Leonardo","Germanic","brave as a lion",96,"leonard"],["Lennox","Scottish","elm grove",97,""],
+["Rory","Irish","red king",98,""],["Maverick","English","independent, unbranded",99,""],["Ace","English","one, unity",0,""],
+["Adrian","Latin","from Hadria",0,""],["Aidan","Irish","little fire",0,"aidan"],["Alaric","Germanic","ruler of all",0,""],
+["Albert","Germanic","noble and bright",0,"albert"],["Albie","Germanic","noble and bright",0,"albert"],["Alden","English","old friend",0,""],
+["Alec","Greek","defender of men",0,"alexander"],["Alessio","Italian","defender",0,"alexander"],["Alfred","Germanic","elf counsel",0,"alfred"],
+["Alistair","Scottish","defender of men",0,"alexander"],["Alonso","Spanish","noble and ready",0,""],["Alvaro","Spanish","guardian of all",0,""],
+["Ambrose","Greek","immortal",0,""],["Anderson","English","son of Andrew",0,""],["Ansel","Germanic","helmet of God",0,""],
+["Anselm","Germanic","helmet of God",0,""],["Anthony","Latin","priceless",0,"anthony"],["Apollo","Greek","god of light and music",0,""],
+["Arden","English","high, eagle valley",0,""],["Ari","Hebrew","lion",0,""],["Arjun","Sanskrit","bright, shining",0,""],
+["Armando","Spanish","bold soldier",0,""],["Armani","Italian","free man",0,""],["Arturo","Italian","bear",0,""],
+["Ashton","English","ash tree settlement",0,""],["Atlas","Greek","to bear, to endure",0,""],["Atticus","Latin","from Attica",0,""],
+["Auden","English","old friend",0,""],["August","Latin","venerable",0,"august"],["Augustus","Latin","venerable, exalted",0,"august"],
+["Aurelius","Latin","golden",0,"aurelius"],["Avery","English","elf counsel",0,""],["Axel","Scandinavian","father of peace",0,""],
+["Bailey","English","bailiff",0,""],["Banjo","Australian","for the bush poet",0,""],["Barrett","English","bear strength",0,""],
+["Barton","English","barley settlement",0,""],["Baxter","English","baker",0,""],["Bear","English","the animal",0,""],
+["Beckett","English","bee cottage",0,""],["Bellamy","French","fine friend",0,""],["Benedict","Latin","blessed",0,"benedict"],
+["Bennett","Latin","blessed",0,"benedict"],["Bentley","English","meadow of bent grass",0,""],["Birch","English","the tree",0,""],
+["Blaine","Irish","slender",0,""],["Blaise","Latin","lisping, stammering",0,""],["Blake","English","dark, or pale",0,""],
+["Blaze","English","flame",0,""],["Bo","Scandinavian","to live",0,""],["Boris","Slavic","wolf, snow leopard",0,""],
+["Boyd","Gaelic","yellow-haired",0,""],["Brady","Irish","spirited",0,""],["Bramwell","English","bramble spring",0,""],
+["Brandon","English","broom-covered hill",0,""],["Braxton","English","Brock's settlement",0,""],["Brendan","Irish","prince",0,""],
+["Brett","Breton","a Breton",0,""],["Briggs","English","of the bridge",0,""],["Brock","English","badger",0,""],
+["Brodie","Scottish","muddy place",0,""],["Bronson","English","son of the brown one",0,""],["Bruno","Germanic","brown",0,""],
+["Bryce","Scottish","speckled",0,""],["Bryson","English","son of Brice",0,""],["Byron","English","at the cattle sheds",0,""],
+["Cade","English","round, barrel",0,""],["Callan","Gaelic","battle, rock",0,""],["Callum","Gaelic","dove",0,"callum"],
+["Calvin","Latin","bald",0,""],["Camden","Scottish","winding valley",0,""],["Campbell","Scottish","crooked mouth",0,""],
+["Carl","Germanic","free man",0,"charles"],["Carlo","Italian","free man",0,"charles"],["Carson","Scottish","son of the marsh dwellers",0,""],
+["Casimir","Slavic","destroyer of peace",0,""],["Cassian","Latin","hollow",0,"cassius"],["Cassius","Latin","hollow",0,"cassius"],
+["Castor","Greek","the beaver; a twin star",0,""],["Cathal","Irish","battle ruler",0,""],["Cato","Latin","all-knowing",0,""],
+["Cedric","Celtic","bounty",0,""],["Cesare","Italian","head of hair",0,"caesar"],["Charles","Germanic","free man",0,"charles"],
+["Chase","French","hunter",0,""],["Chester","Latin","fortified camp",0,""],["Christian","Latin","follower of Christ",0,""],
+["Christopher","Greek","bearer of Christ",0,"christopher"],["Cillian","Irish","little church",0,"killian"],["Clancy","Irish","red warrior",0,""],
+["Clark","English","scribe, cleric",0,""],["Claude","Latin","enclosure",0,""],["Clay","English","clay worker",0,"clayton"],
+["Clayton","English","clay settlement",0,"clayton"],["Clive","English","by the cliff",0,""],["Clyde","Scottish","the river Clyde",0,""],
+["Cole","English","swarthy, coal-black",0,""],["Colin","Gaelic","young pup",0,""],["Colton","English","coal town",0,""],
+["Conall","Irish","strong wolf",0,""],["Conan","Irish","little wolf",0,""],["Connor","Irish","lover of hounds",0,""],
+["Conrad","Germanic","bold counsel",0,""],["Corbin","French","little crow",0,""],["Cormac","Irish","charioteer",0,""],
+["Cosmo","Greek","order, harmony",0,""],["Craig","Gaelic","rock",0,""],["Crawford","English","ford of the crows",0,""],
+["Cruz","Spanish","cross",0,""],["Cullen","Irish","holly",0,""],["Curtis","French","courteous",0,""],
+["Cyrus","Persian","sun, lord",0,""],["Dale","English","valley",0,""],["Dalton","English","valley town",0,""],
+["Damian","Greek","to tame",0,"damian"],["Damon","Greek","to tame",0,"damian"],["Dane","English","from Denmark",0,""],
+["Dante","Latin","enduring",0,""],["Dario","Italian","possessing goodness",0,"darius"],["Darius","Persian","possessing goodness",0,""],
+["Darwin","English","dear friend",0,""],["Davis","English","son of David",0,"david"],["Dean","English","valley",0,""],
+["Declan","Irish","man of prayer",0,""],["Demetrius","Greek","devoted to Demeter",0,""],["Denzel","Cornish","from Denzell",0,""],
+["Desmond","Irish","from South Munster",0,""],["Dexter","Latin","right-handed, skilful",0,""],["Dieter","Germanic","warrior of the people",0,""],
+["Digby","Norse","settlement by the ditch",0,""],["Dominic","Latin","of the Lord",0,""],["Donovan","Irish","dark chieftain",0,""],
+["Dorian","Greek","of the Dorians",0,""],["Douglas","Scottish","dark water",0,""],["Duncan","Scottish","brown warrior",0,""],
+["Dustin","Norse","Thor's stone",0,""],["Dylan","Welsh","great tide",0,""],["Eamon","Irish","wealthy guardian",0,"edward"],
+["Easton","English","east settlement",0,""],["Edgar","English","wealthy spear",0,""],["Edmund","English","wealthy protector",0,""],
+["Edwin","English","wealthy friend",0,""],["Egan","Irish","little fire",0,""],["Ellery","English","dweller by the alder",0,""],
+["Ellis","Welsh","benevolent",0,""],["Emerson","Germanic","son of Emery",0,""],["Emiliano","Spanish","rival",0,"emil"],
+["Emilio","Italian","rival",0,"emil"],["Emmett","Germanic","universal, whole",0,""],["Emory","Germanic","brave power",0,""],
+["Enzo","Italian","ruler of the home",0,""],["Eric","Norse","eternal ruler",0,""],["Errol","Scottish","wanderer",0,""],
+["Euan","Gaelic","born of the yew",0,""],["Evander","Greek","good man",0,""],["Everett","Germanic","brave as a boar",0,""],
+["Fabian","Latin","bean grower",0,""],["Fabio","Italian","bean grower",0,"fabian"],["Fenton","English","marsh settlement",0,""],
+["Fergus","Gaelic","man of vigour",0,""],["Fernando","Spanish","bold voyager",0,""],["Finch","English","the small bird",0,""],
+["Finnegan","Irish","fair",0,"finn"],["Flinders","Australian","for the navigator",0,""],["Flint","English","hard stone",0,""],
+["Ford","English","river crossing",0,""],["Forrest","French","of the woods",0,""],["Foster","English","forester",0,""],
+["Fox","English","the animal",0,""],["Francis","Latin","Frenchman",0,"francis"],["Frank","Germanic","free man",0,"francis"],
+["Franklin","English","free landholder",0,""],["Fraser","Scottish","strawberry flower",0,""],["Freddie","Germanic","peaceful ruler",0,"frederick"],
+["Frederick","Germanic","peaceful ruler",0,"frederick"],["Frost","English","freezing, hoar frost",0,""],["Gareth","Welsh","gentle",0,""],
+["Garrett","Germanic","spear strength",0,""],["Garrick","Germanic","spear ruler",0,""],["Gavin","Welsh","white hawk",0,""],
+["Geoffrey","Germanic","peace of God",0,"geoffrey"],["Gerald","Germanic","spear ruler",0,""],["Giles","Greek","young goat",0,""],
+["Gino","Italian","well born",0,""],["Giulio","Italian","youthful",0,"julius"],["Glenn","Gaelic","valley",0,""],
+["Goran","Slavic","mountain man",0,""],["Gordon","Scottish","great hill",0,""],["Grady","Irish","noble",0,""],
+["Graham","Scottish","gravelly homestead",0,""],["Granger","English","farm steward",0,""],["Grant","French","great, tall",0,""],
+["Gregory","Greek","watchful",0,""],["Griffin","Welsh","strong lord",0,""],["Gunnar","Norse","bold warrior",0,""],
+["Guy","French","guide",0,""],["Hadley","English","heather meadow",0,""],["Hank","Germanic","home ruler",0,"henry"],
+["Harley","English","hare meadow",0,""],["Harold","Norse","army ruler",0,""],["Hartley","English","stag meadow",0,""],
+["Hawke","English","the bird of prey",0,""],["Hayden","English","hay valley",0,""],["Heath","English","heathland",0,""],
+["Hector","Greek","holding fast",0,""],["Hendrix","Germanic","son of Hendrik",0,""],["Holden","English","deep valley",0,""],
+["Hollis","English","by the holly",0,""],["Horatio","Latin","timekeeper",0,""],["Hugh","Germanic","mind, spirit",0,"hugh"],
+["Idris","Welsh","ardent lord",0,""],["Igor","Russian","Ing's warrior",0,""],["Ivo","Germanic","yew wood",0,""],
+["Ivor","Norse","yew warrior",0,""],["Jace","Greek","healer",0,"jason"],["Jai","Sanskrit","victory",0,""],
+["Jarrah","Noongar","the eucalypt",0,""],["Jarvis","Germanic","spear servant",0,""],["Jason","Greek","healer",0,"jason"],
+["Javier","Spanish","the new house",0,"xavier"],["Jaxon","English","son of Jack",0,"jackson"],["Jerome","Greek","sacred name",0,""],
+["Jett","English","jet black, swift",0,""],["Jules","French","youthful",0,"julius"],["Julius","Latin","youthful",0,"julius"],
+["Justin","Latin","just, fair",0,""],["Kane","Irish","little battler",0,""],["Keaton","English","hawk town",0,""],
+["Keegan","Irish","little fiery one",0,""],["Keith","Scottish","wood",0,""],["Kellan","Irish","slender",0,""],
+["Kenneth","Gaelic","handsome, born of fire",0,""],["Kestrel","English","the small falcon",0,""],["Kevin","Irish","kind, gentle",0,""],
+["Kian","Irish","ancient",0,""],["Kieran","Irish","little dark one",0,""],["Killian","Irish","little church",0,""],
+["Kingsley","English","king's meadow",0,""],["Kirby","Norse","church settlement",0,""],["Kit","Greek","bearer of Christ",0,"christopher"],
+["Knox","Scottish","round hill",0,""],["Kurt","Germanic","bold counsel",0,""],["Kyle","Gaelic","narrow strait",0,""],
+["Lance","Germanic","land",0,""],["Landon","English","long hill",0,""],["Lane","English","narrow road",0,""],
+["Langley","English","long meadow",0,""],["Lars","Scandinavian","crowned with laurel",0,"laurence"],["Laurence","Latin","from Laurentum",0,"laurence"],
+["Lawson","English","son of Lawrence",0,""],["Leander","Greek","lion man",0,""],["Leif","Norse","heir, descendant",0,""],
+["Lennart","Germanic","brave as a lion",0,"leonard"],["Lennon","Irish","little cloak",0,""],["Leonard","Germanic","brave as a lion",0,"leonard"],
+["Leopold","Germanic","bold people",0,""],["Leroy","French","the king",0,""],["Lewis","Germanic","renowned warrior",0,"louis"],
+["Linus","Greek","flax",0,""],["Lionel","Latin","little lion",0,""],["Lloyd","Welsh","grey, sacred",0,""],
+["Lorcan","Irish","little fierce one",0,""],["Lorenzo","Italian","from Laurentum",0,"laurence"],["Lucian","Latin","light",0,""],
+["Luciano","Italian","light",0,"lucian"],["Ludwig","Germanic","renowned warrior",0,"louis"],["Lysander","Greek","liberator",0,""],
+["Maddox","Welsh","son of Madoc",0,""],["Magnus","Latin","great",0,""],["Malcolm","Gaelic","devotee of Columba",0,"callum"],
+["Mallory","French","unlucky, ill-fated",0,""],["Marcel","French","little warrior",0,"marcus"],["Marco","Italian","of Mars",0,"marcus"],
+["Marcus","Latin","of Mars",0,"marcus"],["Mario","Italian","of Mars",0,"marcus"],["Marius","Latin","of Mars",0,"marcus"],
+["Marlon","French","little hawk",0,""],["Marlow","English","driftwood by the lake",0,""],["Marshall","French","horse keeper",0,""],
+["Martin","Latin","of Mars",0,""],["Marvin","Welsh","sea friend",0,""],["Massimo","Italian","greatest",0,"max"],
+["Maurice","Latin","dark-skinned, Moorish",0,""],["Maxim","Latin","greatest",0,"max"],["Maximilian","Latin","greatest",0,"max"],
+["Maximus","Latin","greatest",0,"max"],["Maxwell","Scottish","Mack's stream",0,"max"],["Mercer","French","merchant",0,""],
+["Merrick","Welsh","fame, power",0,""],["Milan","Slavic","gracious, dear",0,""],["Miller","English","grinder of grain",0,""],
+["Milo","Germanic","merciful",0,""],["Milos","Slavic","gracious",0,""],["Mirko","Slavic","peace, glory",0,""],
+["Monty","French","from the mountain",0,""],["Morgan","Welsh","sea born",0,""],["Murphy","Irish","sea warrior",0,""],
+["Murray","Scottish","settlement by the sea",0,""],["Nash","English","at the ash tree",0,""],["Ned","English","wealthy guardian",0,"edward"],
+["Neil","Gaelic","champion",0,""],["Nicholas","Greek","victory of the people",0,"nicholas"],["Nico","Greek","victory of the people",0,"nicholas"],
+["Nikolai","Greek","victory of the people",0,"nicholas"],["Noel","French","Christmas",0,""],["Nolan","Irish","champion",0,""],
+["Oakes","English","by the oaks",0,""],["Oakley","English","oak meadow",0,""],["Octavian","Latin","the eighth",0,""],
+["Odin","Norse","fury, inspiration",0,""],["Oisin","Irish","little deer",0,""],["Oleg","Norse","holy, blessed",0,""],
+["Ollie","Latin","olive tree",0,""],["Omar","Arabic","flourishing, long-lived",0,""],["Orion","Greek","the hunter",0,""],
+["Orlando","Italian","famous land",0,"roland"],["Orson","Latin","bear cub",0,""],["Osborne","Norse","divine bear",0,""],
+["Otis","Germanic","wealth",0,"otto"],["Otto","Germanic","wealth, prosperity",0,"otto"],["Owen","Welsh","young warrior",0,""],
+["Pascal","French","of Easter",0,""],["Paterson","Australian","for the bush balladeer",0,""],["Paxton","English","peace town",0,""],
+["Penn","English","hill, enclosure",0,""],["Percival","French","pierce the valley",0,"percy"],["Percy","French","pierce the valley",0,"percy"],
+["Perry","English","pear tree",0,""],["Perseus","Greek","to destroy",0,""],["Phoenix","Greek","the risen bird",0,""],
+["Prescott","English","priest's cottage",0,""],["Preston","English","priest's town",0,""],["Quentin","Latin","the fifth",0,""],
+["Quinn","Irish","counsel, wisdom",0,""],["Quintus","Latin","the fifth",0,""],["Radek","Slavic","glad, eager",0,""],
+["Rafferty","Irish","flood-tide, abundance",0,""],["Ragnar","Norse","warrior of judgement",0,""],["Raiden","Japanese","thunder and lightning",0,""],
+["Rainer","Germanic","wise army",0,""],["Ralph","Norse","wolf counsel",0,"ralph"],["Raul","Spanish","wolf counsel",0,"ralph"],
+["Raymond","Germanic","wise protector",0,""],["Reece","Welsh","ardour, enthusiasm",0,"rhys"],["Reeve","English","bailiff",0,""],
+["Regan","Irish","little king",0,""],["Reggie","Germanic","ruler's counsel",0,"reginald"],["Reginald","Germanic","ruler's counsel",0,"reginald"],
+["Reid","English","red-haired",0,""],["Rene","French","reborn",0,""],["Renzo","Italian","from Laurentum",0,"laurence"],
+["Rex","Latin","king",0,""],["Rhett","Dutch","advice",0,""],["Rhys","Welsh","ardour, enthusiasm",0,"rhys"],
+["Richard","Germanic","brave ruler",0,"richard"],["Rick","Germanic","brave ruler",0,"richard"],["Ridge","English","the crest of a hill",0,""],
+["Rio","Spanish","river",0,""],["Ripley","English","strip of clearing",0,""],["Robert","Germanic","bright fame",0,"robert"],
+["Robin","Germanic","bright fame",0,"robert"],["Rocco","Italian","rest",0,""],["Roderick","Germanic","famous ruler",0,""],
+["Rodrigo","Spanish","famous ruler",0,"roderick"],["Roger","Germanic","famous spear",0,""],["Rohan","Sanskrit","ascending",0,""],
+["Roland","Germanic","famous land",0,"roland"],["Rolf","Germanic","wolf counsel",0,"ralph"],["Ronald","Norse","ruler's counsel",0,"ronald"],
+["Ronan","Irish","little seal",0,""],["Ronnie","Norse","ruler's counsel",0,"ronald"],["Roscoe","Norse","deer wood",0,""],
+["Rowan","Irish","little red one",0,""],["Roy","Gaelic","red",0,""],["Royce","English","son of Royse",0,""],
+["Rudy","Germanic","famous wolf",0,""],["Rufus","Latin","red-haired",0,""],["Rune","Norse","secret lore",0,""],
+["Rupert","Germanic","bright fame",0,"robert"],["Russell","French","little red one",0,""],["Ryder","English","horseman",0,""],
+["Sage","Latin","wise one; the herb",0,""],["Sawyer","English","woodcutter",0,""],["Scott","English","a Scot",0,""],
+["Selby","Norse","willow farm",0,""],["Sergio","Italian","attendant, servant",0,""],["Shepherd","English","sheep herder",0,""],
+["Stanley","English","stony meadow",0,""],["Sterling","English","of high quality",0,""],["Stuart","Scottish","steward",0,""],
+["Sullivan","Irish","dark eyes",0,""],["Sylvester","Latin","of the forest",0,"silas"],["Tadhg","Irish","poet",0,""],
+["Tanner","English","leather worker",0,""],["Tate","Norse","cheerful",0,""],["Taylor","English","tailor",0,""],
+["Thatcher","English","roof thatcher",0,""],["Thor","Norse","thunder",0,""],["Tiernan","Irish","little lord",0,""],
+["Todd","English","fox",0,""],["Torsten","Norse","Thor's stone",0,""],["Trent","English","the river Trent",0,""],
+["Trevor","Welsh","large settlement",0,""],["Tristan","Celtic","tumult, noise",0,""],["Troy","Irish","descendant of the foot soldier",0,""],
+["Tucker","English","cloth fuller",0,""],["Turner","English","lathe worker",0,""],["Tyler","English","tile maker",0,""],
+["Tyson","French","firebrand",0,""],["Valentine","Latin","strong, healthy",0,""],["Vaughn","Welsh","small",0,""],
+["Vernon","French","alder grove",0,""],["Victor","Latin","conqueror",0,"victor"],["Vince","Latin","conquering",0,"vincent"],
+["Wade","English","at the river crossing",0,""],["Walker","English","cloth walker",0,""],["Wallace","Scottish","foreigner, Welshman",0,""],
+["Walter","Germanic","ruler of the army",0,""],["Warren","Germanic","protector",0,""],["Wesley","English","west meadow",0,""],
+["Weston","English","west settlement",0,""],["Wilder","English","untamed",0,""],["Wilson","English","son of Will",0,"william"],
+["Winston","English","joyful stone",0,""],["Wolfgang","Germanic","wolf path",0,""],["Wyatt","English","brave in war",0,""],
+["Xander","Greek","defender of men",0,"alexander"],["Zephyr","Greek","the west wind",0,""]
+];
+
+/* ------------------------------------------------------------------
+   STATE
+------------------------------------------------------------------ */
+const START = 1500, TOP_N = 10, CONFIDENT = 3;
+let RATERS = ["Dad","Mum"];
+let S = null, me = 0, tab = "ours", lastUndo = null, seenPairs = new Set();
+
+function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function syncRaters(){
+  RATERS = [S.people[0].name.trim()||"Dad", S.people[1].name.trim()||"Mum"];
+}
+
+/* every surname this boy might end up carrying */
+function surnameOptions(){
+  const f = (S.people[0].surname||"").trim(), m = (S.people[1].surname||"").trim();
+  switch(S.babySurname){
+    case "father": return f?[f]:[];
+    case "mother": return m?[m]:[];
+    case "both":   { const j=[f,m].filter(Boolean).join("-"); return j?[j]:[]; }
+    default: {                      // undecided — show every combination worth saying aloud
+      const out=[];
+      if(f) out.push(f);
+      if(m && m!==f) out.push(m);
+      if(f && m && f!==m){ out.push(f+"-"+m); out.push(m+"-"+f); }
+      return out;
+    }
+  }
+}
+function fullNames(first){
+  const s = surnameOptions();
+  return s.length ? s.map(x=>first+" "+x) : [first];
+}
+
+function blank(){
+  const names = POOL.map((n,i)=>({
+    id:i, name:n[0], origin:n[1], meaning:n[2],
+    rank:n[3]||null, group:n[4]||null, custom:false
+  }));
+  return {
+    names,
+    r:[fresh(names),fresh(names)],   // per-rater elo + comparison counts
+    vetoes:[{},{}],
+    duels:[0,0],
+    matches:[],
+    people:[{name:"Dad",surname:"Smit"},{name:"Mum",surname:""}],
+    babySurname:"father",
+    setupDone:false,
+    demo:false
+  };
+}
+function fresh(names){ const m={}; names.forEach(n=>m[n.id]={e:START,n:0}); return m; }
+
+/* deterministic hidden taste profile so the simulated partner is consistent */
+function hash(a,b){
+  let h = (a+1)*2654435761 ^ (b*40503);
+  h = (h ^ (h>>>13)) * 1274126177; h = h ^ (h>>>16);
+  return ((h>>>0)%1000)/1000;
+}
+/* Couples agree far more than they disagree, so the simulated partner's taste is
+   a shared core plus a personal streak. Independent random taste would make a
+   match over a 500-name pool essentially impossible, which isn't the real world.
+   Part of that shared core is popularity itself — names are popular precisely
+   because a lot of people like them. */
+function popScore(n){
+  return n && n.rank ? 1 - (n.rank-1)/100*0.45 : 0.25 + hash(n?n.id:0,55)*0.30;
+}
+function taste(who,id){
+  return 0.45*popScore(S.names[id]) + 0.22*hash(id,17) + 0.33*hash(id, who*97+3);
+}
+
+function save(){ try{ localStorage.setItem("nameplate.v2", JSON.stringify(S)); }catch(e){} }
+function load(){
+  try{ const raw = localStorage.getItem("nameplate.v2"); if(raw) return JSON.parse(raw); }catch(e){}
+  return null;
+}
+
+/* ------------------------------------------------------------------
+   ELO
+------------------------------------------------------------------ */
+function k(n){ return n < 10 ? 32 : 20; }
+function settle(map,winId,loseId){
+  const w = map[winId], l = map[loseId];
+  const exp = 1/(1+Math.pow(10,(l.e-w.e)/400));
+  const kw = k(w.n), kl = k(l.n);
+  w.e += kw*(1-exp); l.e -= kl*(1-exp);
+  w.n++; l.n++;
+}
+
+/* ------------------------------------------------------------------
+   PAIRING — seed the unseen first, then match like with like
+------------------------------------------------------------------ */
+function pool(who){
+  return S.names.filter(n=>!S.vetoes[0][n.id] && !S.vetoes[1][n.id]);
+}
+function pickPair(){
+  const live = pool(me);
+  if(live.length < 2) return null;
+  const map = S.r[me];
+  const byN = live.slice().sort((a,b)=>(map[a.id].n-map[b.id].n) || Math.random()-.5);
+
+  for(let attempt=0; attempt<40; attempt++){
+    const a = byN[Math.floor(Math.random()*Math.min(byN.length, Math.max(6, byN.length*0.35)))];
+    let b;
+    /* never duel a name against its own spelling variant — Luca vs Luka
+       is a coin toss that teaches the ranking nothing */
+    const ok = x => x.id!==a.id && !(a.group && x.group===a.group);
+    if(Math.random() < 0.12){                       // wildcard, breaks local optima
+      const any = live.filter(ok);
+      b = any[Math.floor(Math.random()*any.length)];
+    }else{                                          // nearest rating = most information
+      const near = live.filter(ok)
+        .sort((x,y)=>Math.abs(map[x.id].e-map[a.id].e)-Math.abs(map[y.id].e-map[a.id].e))
+        .slice(0,7);
+      b = near[Math.floor(Math.random()*near.length)];
+    }
+    if(!b || b.id===a.id) continue;
+    const key = [a.id,b.id].sort((x,y)=>x-y).join("-");
+    if(seenPairs.has(key) && attempt < 30) continue;
+    seenPairs.add(key);
+    return Math.random()<.5 ? [a,b] : [b,a];
+  }
+  return [byN[0], byN[1]];
+}
+
+/* ------------------------------------------------------------------
+   PARTNER SIMULATION — they rate in the background at their own pace
+------------------------------------------------------------------ */
+function partnerTurn(){
+  const other = 1-me;
+  const live = pool(other);
+  if(live.length<2) return;
+  const map = S.r[other];
+  const a = live[Math.floor(Math.random()*live.length)];
+  const b = live[Math.floor(Math.random()*live.length)];
+  if(a.id===b.id) return;
+  const ta = taste(other,a.id), tb = taste(other,b.id);
+  const wobble = (Math.random()-.5)*0.45;
+  if(ta + wobble > tb) settle(map,a.id,b.id); else settle(map,b.id,a.id);
+  S.duels[other]++;
+}
+
+/* ------------------------------------------------------------------
+   RANKING + MATCHES
+------------------------------------------------------------------ */
+function ranked(who){
+  return pool(who).slice().sort((a,b)=>S.r[who][b.id].e - S.r[who][a.id].e);
+}
+function rankOf(who,id){
+  const r = ranked(who).findIndex(n=>n.id===id);
+  return r < 0 ? null : r+1;
+}
+function confident(who,id){ return S.r[who][id].n >= CONFIDENT; }
+
+/* "Both top ten" is the right promise for a small pile and far too strict for a
+   large one — over 500 names two people who genuinely agree would still almost
+   never collide. Scale the bar with the pile, floor it at ten. */
+function matchDepth(){
+  return Math.max(TOP_N, Math.round(pool(0).length * 0.05));
+}
+function checkMatches(){
+  const depth = matchDepth();
+  const a = ranked(0).slice(0,depth).map(n=>n.id);
+  const b = ranked(1).slice(0,depth).map(n=>n.id);
+  const fresh = [];
+  a.forEach(id=>{
+    if(b.includes(id) && confident(0,id) && confident(1,id) && !S.matches.includes(id)){
+      S.matches.push(id); fresh.push(id);
+    }
+  });
+  return fresh;
+}
+
+/* combined strength: a name is only as strong as whoever likes it least */
+function together(id){
+  return Math.min(S.r[0][id].e, S.r[1][id].e);
+}
+/* How often you two order the same pair the same way. Set-overlap metrics
+   ("share of my top 20 that's in hers") collapse toward zero as the pile grows;
+   pairwise concordance is scale-free, so it means the same thing at 76 names as
+   at 500. 50% is a coin toss, 100% is identical taste. */
+function agreement(){
+  const both = pool(0).filter(n=>confident(0,n.id) && confident(1,n.id));
+  if(both.length < 6) return 0;
+  let agree = 0, tot = 0;
+  for(let i=0;i<both.length;i++){
+    const a = both[i], b = both[(i*7+3)%both.length];
+    if(a.id === b.id) continue;
+    const da = S.r[0][a.id].e - S.r[0][b.id].e;
+    const db = S.r[1][a.id].e - S.r[1][b.id].e;
+    if(Math.abs(da) < 15 || Math.abs(db) < 15) continue;   // too close to call
+    tot++; if((da > 0) === (db > 0)) agree++;
+  }
+  return tot ? Math.round(agree/tot*100) : 0;
+}
+
+/* ------------------------------------------------------------------
+   RENDER — duel
+------------------------------------------------------------------ */
+let current = null;
+const $ = id=>document.getElementById(id);
+
+function drawDuel(){
+  current = pickPair();
+  if(!current){
+    $("nameA").textContent = "That's the lot";
+    $("meanA").textContent = "Every name has been struck out.";
+    $("nameB").textContent = "";
+    $("meanB").textContent = "";
+    return;
+  }
+  const [a,b] = current;
+  fill("A",a); fill("B",b);
+  $("plateA").className = "plate"; $("plateB").className = "plate";
+  $("cDuels").textContent = S.duels[me];
+}
+function fill(side,n){
+  $("name"+side).textContent = n.name;
+  $("orig"+side).textContent = n.origin;
+  $("mean"+side).textContent = n.meaning;
+}
+
+function choose(winSide){
+  if(!current) return;
+  const [a,b] = current;
+  const win = winSide==="A"?a:b, lose = winSide==="A"?b:a;
+  $("plate"+winSide).classList.add("win");
+  $("plate"+(winSide==="A"?"B":"A")).classList.add("lose");
+  settle(S.r[me], win.id, lose.id);
+  S.duels[me]++;
+  if(S.duels[me] % 2 === 0) partnerTurn();   // she rates roughly half as often as you look
+  partnerTurn();
+  const fresh = checkMatches();
+  save(); paintChrome();
+  setTimeout(()=>{
+    if(fresh.length){ takeover(fresh[0]); }
+    drawDuel();
+  }, 260);
+}
+
+function skip(){ drawDuel(); }
+
+/* long-press to veto */
+function wireVeto(side){
+  const el = $("plate"+side);
+  let timer=null, showTimer=null, fired=false;
+  const start = ()=>{
+    fired=false;
+    // only reveal the strike-out state well after a normal tap would have ended,
+    // so choosing a name never flashes as if it were being deleted
+    showTimer = setTimeout(()=>el.classList.add("vetoing"), 260);
+    timer = setTimeout(()=>{ fired=true; el.classList.remove("vetoing"); doVeto(side); }, 720);
+  };
+  const end = (e)=>{
+    clearTimeout(timer); clearTimeout(showTimer); el.classList.remove("vetoing");
+    if(fired){ if(e) e.preventDefault(); return; }
+  };
+  el.addEventListener("pointerdown", start);
+  el.addEventListener("pointerup", end);
+  el.addEventListener("pointerleave", end);
+  el.addEventListener("pointercancel", end);
+  el.addEventListener("click", (e)=>{ if(fired){ e.preventDefault(); fired=false; return; } choose(side); });
+  el.addEventListener("contextmenu", e=>e.preventDefault());
+}
+function doVeto(side){
+  const n = side==="A"?current[0]:current[1];
+  S.vetoes[me][n.id] = true;
+  lastUndo = {id:n.id, who:me};
+  S.matches = S.matches.filter(m=>m!==n.id);
+  save(); paintChrome(); drawDuel();
+  toast(`“${n.name}” struck out.`, "Undo", ()=>{
+    delete S.vetoes[lastUndo.who][lastUndo.id]; save(); paintChrome(); drawDuel();
+  });
+  if(navigator.vibrate) navigator.vibrate(18);
+}
+
+/* ------------------------------------------------------------------
+   RENDER — shortlist
+------------------------------------------------------------------ */
+const NOTES = {
+  ours:"Ranked by whoever likes each name <b>least</b> — a name only makes the top of this list when you're both keen. Names you've each rated fewer than three times stay hidden until the scores mean something.",
+  mine:"Your own order, built from every duel you've settled. <b>She can't see this</b> and you can't see hers — that's the point.",
+  out:"Struck out by one of you. A name here is dead, but you can see who killed it and argue your case."
+};
+function drawList(){
+  const body = $("listBody");
+  $("listNote").innerHTML = NOTES[tab];
+  body.innerHTML = "";
+  let rows = [];
+
+  if(tab === "ours"){
+    rows = S.names
+      .filter(n=>!S.vetoes[0][n.id] && !S.vetoes[1][n.id] && (confident(0,n.id)||confident(1,n.id)))
+      .sort((a,b)=>together(b.id)-together(a.id)).slice(0,40);
+  }else if(tab === "mine"){
+    rows = ranked(me).filter(n=>S.r[me][n.id].n>0).slice(0,40);
+  }else{
+    rows = S.names.filter(n=>S.vetoes[0][n.id]||S.vetoes[1][n.id]);
+  }
+
+  if(!rows.length){
+    body.innerHTML = `<div class="empty"><p>Nothing here yet.</p><small>Settle a few more duels</small></div>`;
+    return;
+  }
+
+  rows.forEach((n,i)=>{
+    const btn = document.createElement("button");
+    btn.className = "row" + (tab==="out" ? " vetoed" : "");
+    const bothKnown = confident(0,n.id) && confident(1,n.id);
+    let side = "";
+
+    if(tab === "out"){
+      const who = S.vetoes[0][n.id] ? RATERS[0] : RATERS[1];
+      side = `<span class="chip veto">${who} struck it</span>`;
+    }else{
+      const mineE = S.r[me][n.id].e, theirsE = S.r[1-me][n.id].e;
+      const scale = v => Math.max(4, Math.min(100, Math.round((v-1300)/450*100)));
+      side = `<div class="bars">
+        <div class="bar"><i>you</i><u><b style="width:${scale(mineE)}%"></b></u></div>
+        <div class="bar ${bothKnown?"":"pending"}"><i>${RATERS[1-me].slice(0,3).toLowerCase()}</i><u><b style="width:${bothKnown?scale(theirsE):100}%"></b></u></div>
+      </div>`;
+      if(S.matches.includes(n.id)) side = `<span class="chip match">Match</span>` + side;
+      else if(tab==="ours" && !bothKnown) side = `<span class="chip solo">Pending</span>` + side;
+    }
+
+    btn.innerHTML = `
+      <span class="row-rank">${tab==="out" ? "×" : String(i+1).padStart(2,"0")}</span>
+      <span class="row-main">
+        <span class="row-name">${n.name}</span>
+        <span class="row-sub">${n.origin} · ${n.meaning}</span>
+      </span>
+      <span class="row-side">${side}</span>
+      <span class="row-go">›</span>`;
+    btn.addEventListener("click", ()=>openSheet(n));
+    body.appendChild(btn);
+  });
+}
+
+/* ------------------------------------------------------------------
+   SHEETS + OVERLAYS
+------------------------------------------------------------------ */
+function openSheet(n){
+  const bothKnown = confident(0,n.id) && confident(1,n.id);
+  const wrap = document.createElement("div");
+  wrap.className = "sheet-wrap";
+  const struck = S.vetoes[0][n.id]||S.vetoes[1][n.id];
+  wrap.innerHTML = `
+    <div class="sheet" role="dialog" aria-label="${n.name}">
+      <button class="sheet-x" data-act="close" aria-label="Close">×</button>
+      <div>
+        <div class="sheet-name">${n.name}</div>
+        <div class="plate-origin" style="margin-top:8px">${n.origin}</div>
+      </div>
+      <dl class="kv">
+        <dt>Means</dt><dd class="serif">${n.meaning}</dd>
+        <dt>In&nbsp;Australia</dt><dd>${n.rank ? "#"+n.rank+" most popular last year" : "outside the top 100"}</dd>
+        <dt>In full</dt><dd class="serif">${fullNames(n.name).map(esc).join("<br>")}</dd>
+        <dt>Your rank</dt><dd>${S.r[me][n.id].n ? "#"+rankOf(me,n.id)+" of yours · "+S.r[me][n.id].n+" duels" : "not rated yet"}</dd>
+        <dt>${RATERS[1-me]}'s</dt><dd>${bothKnown ? "#"+rankOf(1-me,n.id)+" of hers · "+S.r[1-me][n.id].n+" duels" : "sealed until you've both rated it three times"}</dd>
+      </dl>
+      <div class="sheet-actions">
+        ${struck ? `<button class="ghost-btn" data-act="revive">Bring it back</button>`
+                 : `<button class="ghost-btn" data-act="veto">Strike it out</button>`}
+        <button class="ghost-btn" data-act="close">Close</button>
+      </div>
+    </div>`;
+  wrap.addEventListener("click", e=>{
+    const act = e.target.dataset ? e.target.dataset.act : null;
+    if(e.target === wrap || act === "close") wrap.remove();
+    if(act === "veto"){ S.vetoes[me][n.id]=true; S.matches=S.matches.filter(m=>m!==n.id); save(); paintChrome(); drawList(); wrap.remove(); }
+    if(act === "revive"){ delete S.vetoes[0][n.id]; delete S.vetoes[1][n.id]; save(); paintChrome(); drawList(); wrap.remove(); }
+  });
+  document.querySelector(".phone").appendChild(wrap);
+}
+
+function takeover(id){
+  const n = S.names.find(x=>x.id===id);
+  if(!n) return;
+  if(navigator.vibrate) navigator.vibrate([14,60,14]);
+  const el = document.createElement("div");
+  el.className = "takeover";
+  el.innerHTML = `
+    <div class="kicker">You both put it in your top ${matchDepth()}</div>
+    <div class="big">${n.name}</div>
+    <div class="rule"></div>
+    <div class="sub">${esc(fullNames(n.name)[0])} — ${n.origin}, “${n.meaning}”</div>
+    <button>Keep going</button>`;
+  el.querySelector("button").addEventListener("click", ()=>el.remove());
+  document.querySelector(".phone").appendChild(el);
+}
+
+const SUR_MODES = [
+  ["father","Father's"],["mother","Mother's"],
+  ["both","Both, hyphenated"],["undecided","Not decided yet"]
+];
+
+function openSettings(firstRun){
+  const wrap = document.createElement("div");
+  wrap.className = "sheet-wrap";
+  wrap.innerHTML = `
+    <div class="sheet" role="dialog" aria-label="Names and surnames">
+      ${firstRun ? "" : '<button class="sheet-x" data-act="close" aria-label="Close">×</button>'}
+      <div>
+        <div class="sheet-name" style="font-size:27px">${firstRun ? "Before you start" : "Names &amp; surnames"}</div>
+        <p class="sheet-lead">Who's rating, and the surname he'll carry — that's what the
+        say-it-aloud test is measured against. All of it can change later.</p>
+      </div>
+      <div class="who-block">
+        <div class="who-label">Father</div>
+        <div class="pair">
+          <input id="fName" class="small" placeholder="First name" value="${esc(S.people[0].name)}" autocomplete="off">
+          <input id="fSur" class="small" placeholder="Surname" value="${esc(S.people[0].surname)}" autocomplete="off">
+        </div>
+      </div>
+      <div class="who-block">
+        <div class="who-label">Mother</div>
+        <div class="pair">
+          <input id="mName" class="small" placeholder="First name" value="${esc(S.people[1].name)}" autocomplete="off">
+          <input id="mSur" class="small" placeholder="Surname" value="${esc(S.people[1].surname)}" autocomplete="off">
+        </div>
+      </div>
+      <div class="who-block">
+        <div class="who-label">The surname he'll carry</div>
+        <div class="chips" id="surChips">
+          ${SUR_MODES.map(([v,l])=>`<button data-v="${v}" aria-pressed="${S.babySurname===v}">${l}</button>`).join("")}
+        </div>
+      </div>
+      <div class="preview">
+        <div class="full-variants" id="setPreview"></div>
+        <small>How a name will read</small>
+      </div>
+      <button class="solid-btn" id="saveSet">${firstRun ? "Start duelling" : "Save"}</button>
+    </div>`;
+  document.querySelector(".phone").appendChild(wrap);
+
+  const q = s => wrap.querySelector(s);
+  let mode = S.babySurname;
+
+  function preview(){
+    const f = q("#fSur").value.trim(), m = q("#mSur").value.trim();
+    const stash = [S.people[0].surname, S.people[1].surname, S.babySurname];
+    S.people[0].surname = f; S.people[1].surname = m; S.babySurname = mode;
+    const sample = (ranked(me)[0] || {name:"Theodore"}).name;
+    q("#setPreview").innerHTML = fullNames(sample).map(x=>`<div class="full">${esc(x)}</div>`).join("");
+    S.people[0].surname = stash[0]; S.people[1].surname = stash[1]; S.babySurname = stash[2];
+  }
+  ["#fSur","#mSur"].forEach(s=>q(s).addEventListener("input", preview));
+  q("#surChips").addEventListener("click", e=>{
+    const b = e.target.closest("button[data-v]"); if(!b) return;
+    mode = b.dataset.v;
+    q("#surChips").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed", String(x===b)));
+    preview();
+  });
+  preview();
+
+  q("#saveSet").addEventListener("click", ()=>{
+    S.people[0] = {name:q("#fName").value.trim()||"Dad",  surname:q("#fSur").value.trim()};
+    S.people[1] = {name:q("#mName").value.trim()||"Mum",  surname:q("#mSur").value.trim()};
+    S.babySurname = mode;
+    S.setupDone = true;
+    syncRaters(); save(); paintChrome();
+    if(!$("screen-list").hidden) drawList();
+    wrap.remove();
+    if(firstRun) maybeCoach();
+  });
+  wrap.addEventListener("click", e=>{
+    if(firstRun) return;
+    if(e.target === wrap || (e.target.dataset && e.target.dataset.act === "close")) wrap.remove();
+  });
+}
+
+function openAddSheet(){
+  const lead = ranked(me)[0];
+  const wrap = document.createElement("div");
+  wrap.className = "sheet-wrap";
+  wrap.innerHTML = `
+    <div class="sheet" role="dialog" aria-label="Add a name">
+      <button class="sheet-x" data-act="close" aria-label="Close">×</button>
+      <div class="sheet-name" style="font-size:30px">Add a name</div>
+      <div class="field">
+        <label for="newName">The name</label>
+        <input id="newName" placeholder="Banjo" autocomplete="off" spellcheck="false">
+      </div>
+      <div class="field">
+        <label for="newMeaning">Why it's in (optional)</label>
+        <input id="newMeaning" class="small" placeholder="My grandfather's name" autocomplete="off">
+      </div>
+      <button class="solid-btn" id="addBtn" disabled>Put it in the pile</button>
+      <div class="preview">
+        <div class="full-variants" id="fullPreview">${
+          fullNames(lead ? lead.name : "Theodore").map(x=>`<div class="full">${esc(x)}</div>`).join("")
+        }</div>
+        <small>${lead ? "Your current leader, said in full" : "Said in full"}</small>
+      </div>
+      <button class="ghost-btn" data-act="close">Close</button>
+    </div>`;
+  document.querySelector(".phone").appendChild(wrap);
+
+  const nameIn = wrap.querySelector("#newName");
+  const whyIn  = wrap.querySelector("#newMeaning");
+  const addBtn = wrap.querySelector("#addBtn");
+  nameIn.focus();
+
+  nameIn.addEventListener("input", ()=>{
+    addBtn.disabled = !nameIn.value.trim();
+    const v = nameIn.value.trim();
+    wrap.querySelector("#fullPreview").innerHTML =
+      fullNames(v || (lead ? lead.name : "Theodore")).map(x=>`<div class="full">${esc(x)}</div>`).join("");
+  });
+  addBtn.addEventListener("click", ()=>{
+    const nm = nameIn.value.trim(); if(!nm) return;
+    if(S.names.some(n=>n.name.toLowerCase()===nm.toLowerCase())){
+      toast(`“${nm}” is already in the pile.`, null); return;
+    }
+    const id = Math.max(...S.names.map(n=>n.id))+1;
+    S.names.push({id,name:nm,origin:"Yours",meaning:whyIn.value.trim()||"added by "+RATERS[me],custom:true});
+    S.r.forEach(m=>m[id]={e:START,n:0});
+    save(); paintChrome(); drawList();
+    wrap.remove();
+    toast(`“${nm}” is in the pile.`, "Duel it now", ()=>go("duel"));
+  });
+  wrap.addEventListener("click", e=>{
+    if(e.target === wrap || (e.target.dataset && e.target.dataset.act === "close")) wrap.remove();
+  });
+}
+
+function coach(){
+  const el = document.createElement("div");
+  el.className = "takeover";
+  el.innerHTML = `
+    <div class="kicker">Two names at a time</div>
+    <div class="coach-lines">
+      <p><em>Tap</em> the name you like more. It wins.</p>
+      <p><em>Hold</em> a name to strike it out for good.</p>
+    </div>
+    <div class="rule"></div>
+    <div class="sub">Neither of you sees the other's ratings until you've both rated a name three times.</div>
+    <button>Start</button>`;
+  el.querySelector("button").addEventListener("click", ()=>{
+    el.remove();
+    try{ localStorage.setItem("nameplate.coached","1"); }catch(e){}
+  });
+  document.querySelector(".phone").appendChild(el);
+}
+
+let toastEl = null;
+function toast(msg, action, fn){
+  if(toastEl) toastEl.remove();
+  toastEl = document.createElement("div");
+  toastEl.className = "toast";
+  toastEl.innerHTML = `<span>${msg}</span>`;
+  if(action){
+    const b = document.createElement("button"); b.textContent = action;
+    b.addEventListener("click", ()=>{ fn(); toastEl.remove(); toastEl=null; });
+    toastEl.appendChild(b);
+  }
+  document.querySelector(".phone").appendChild(toastEl);
+  const mine = toastEl;
+  setTimeout(()=>{ if(mine.parentNode) mine.remove(); if(toastEl===mine) toastEl=null; }, 4200);
+}
+
+/* ------------------------------------------------------------------
+   CHROME
+------------------------------------------------------------------ */
+function paintChrome(){
+  $("nOurs").textContent = S.matches.length || "";
+  $("nMine").textContent = "";
+  $("nOut").textContent = S.names.filter(n=>S.vetoes[0][n.id]||S.vetoes[1][n.id]).length || "";
+  $("sDuels").textContent = S.duels[me];
+  $("sMatches").textContent = S.matches.length;
+  $("sAgree").textContent = agreement()+"%";
+  $("cDuels").textContent = S.duels[me];
+  $("demoLabel").textContent = S.demo ? `Demo data · ${S.duels[0]} duels pre-played` : `Your data · ${S.duels[me]} duels`;
+  $("whoA").textContent = RATERS[0]; $("whoB").textContent = RATERS[1];
+  $("raterMark").textContent = RATERS[me];
+}
+
+function go(name){
+  ["duel","list"].forEach(s=>{ $("screen-"+s).hidden = (s!==name); });
+  document.querySelector(".phone").classList.toggle("duelling", name==="duel");
+  if(name==="list") drawList();
+  paintChrome();
+}
+
+/* ------------------------------------------------------------------
+   SEED — open in a realistic mid-journey state, not an empty shell
+------------------------------------------------------------------ */
+function seedDemo(){
+  S = blank(); S.demo = true;
+  for(let i=0;i<1250;i++){
+    const live = S.names;
+    for(const who of [0,1]){
+      const a = live[Math.floor(Math.random()*live.length)];
+      const b = live[Math.floor(Math.random()*live.length)];
+      if(a.id===b.id) continue;
+      const ta = taste(who,a.id), tb = taste(who,b.id);
+      if(ta + (Math.random()-.5)*0.4 > tb) settle(S.r[who],a.id,b.id); else settle(S.r[who],b.id,a.id);
+      S.duels[who]++;
+    }
+  }
+  ["Hunter","Sonny"].forEach(nm=>{
+    const n = S.names.find(x=>x.name===nm); if(n) S.vetoes[1][n.id] = true;
+  });
+  checkMatches();
+}
+
+/* ------------------------------------------------------------------
+   WIRING
+------------------------------------------------------------------ */
+wireVeto("A"); wireVeto("B");
+$("skipBtn").addEventListener("click", skip);
+$("doneBtn").addEventListener("click", ()=>go("list"));
+$("raterMark").addEventListener("click", ()=>switchTo(1-me));
+$("backBtn").addEventListener("click", ()=>go("duel"));
+$("addRow").addEventListener("click", openAddSheet);
+$("setBtn").addEventListener("click", ()=>openSettings(false));
+document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click", ()=>{
+  tab = b.dataset.tab;
+  document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected", String(x===b)));
+  drawList();
+}));
+$("whoA").addEventListener("click", ()=>switchTo(0));
+$("whoB").addEventListener("click", ()=>switchTo(1));
+function switchTo(i){
+  me = i;
+  $("whoA").setAttribute("aria-pressed", String(i===0));
+  $("whoB").setAttribute("aria-pressed", String(i===1));
+  $("raterMark").textContent = RATERS[i];
+  seenPairs = new Set();
+  paintChrome(); drawDuel(); if(!$("screen-list").hidden) drawList();
+}
+$("resetBtn").addEventListener("click", ()=>{
+  S = blank(); seenPairs=new Set(); save(); paintChrome(); drawDuel();
+  toast("Cleared. Every name starts level.", null);
+});
+$("wipeBtn").addEventListener("click", ()=>{
+  S = blank(); seenPairs=new Set(); save(); paintChrome(); drawDuel(); go("duel");
+});
+
+/* boot */
+function maybeCoach(){
+  let coached = false;
+  try{ coached = !!localStorage.getItem("nameplate.coached"); }catch(e){}
+  if(!coached) coach();
+}
+
+S = load();
+if(!S || !S.names){ seedDemo(); save(); }
+/* migrate any state saved before surnames were split per parent */
+if(!S.people){
+  S.people = [{name:"Dad",surname:S.surname||"Smit"},{name:"Mum",surname:""}];
+  S.babySurname = "father"; S.setupDone = false; delete S.surname; save();
+}
+syncRaters();
+$("raterMark").textContent = RATERS[me];
+paintChrome(); drawDuel(); go("duel");
+if(!S.setupDone) openSettings(true); else maybeCoach();
+})();
+</script>
+
+</html>
