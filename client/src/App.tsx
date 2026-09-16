@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { api, SESSION_EXPIRED_EVENT } from "./api";
 import type { Me, Settings } from "./types";
-import { ClaimDevice } from "./screens/ClaimDevice";
+import { PinScreen } from "./screens/PinScreen";
 import { SetScreen } from "./screens/SetScreen";
 import { Shortlist } from "./screens/Shortlist";
 import { ThemesScreen } from "./screens/ThemesScreen";
@@ -27,13 +27,14 @@ export function App() {
     api.getMe().then(setMe);
   }, []);
 
-  // Sessions expire after 5 minutes of inactivity (server/src/identity.js,
-  // owner's revision to the old permanent-device-claim model). Re-check who's
-  // signed in whenever the app regains focus — reopening after the phone was
-  // locked or backgrounded is exactly when a session is most likely to have
-  // lapsed — and whenever any request comes back 401 mid-use. Both land back
-  // on "which one of you is this?" automatically instead of a stuck screen
-  // or a raw error.
+  // Sessions now slide for 30 days (server/identity.py, CO-4 §3 -- PINs
+  // solve the "stuck as the wrong person" problem the old short session
+  // existed for, so there's no reason to force a re-entry every few
+  // minutes). Re-check who's signed in whenever the app regains focus —
+  // reopening after the phone was locked or backgrounded is exactly when a
+  // session is most likely to have lapsed — and whenever any request comes
+  // back 401 mid-use. Both land back on the PIN screen automatically instead
+  // of a stuck screen or a raw error.
   useEffect(() => {
     const refresh = () => api.getMe().then(setMe).catch(() => {});
     const onVisible = () => {
@@ -54,8 +55,8 @@ export function App() {
     api.getSettings().then(setSettings);
   }, [me?.claimed]);
 
-  async function handleClaim(userId: number) {
-    const updated = await api.claim(userId);
+  async function handleGate(pin: string) {
+    const updated = await api.gate(pin);
     setMe(updated);
   }
 
@@ -69,7 +70,7 @@ export function App() {
   return (
     <div className="shell">
       {me === undefined ? null : !me.claimed ? (
-        <ClaimDevice candidates={me.candidates} onClaim={handleClaim} />
+        <PinScreen onGate={handleGate} />
       ) : !settings ? null : firstRunPending ? (
         <SetupSheet settings={settings} firstRun onSaved={handleSettingsSaved} />
       ) : (

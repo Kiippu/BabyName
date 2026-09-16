@@ -38,12 +38,14 @@
   color:var(--brass-bright);white-space:nowrap;
 }
 
-/* claim screen — not in the prototype (it faked identity with a demo switcher,
-   spec §8 forbids shipping that); styled to match the takeover's ink-overlay language */
-.claim-options{display:flex;flex-direction:column;gap:12px;width:100%;max-width:280px}
-.claim-btn{
-  border:1px solid var(--hair);border-radius:10px;padding:16px;color:var(--ink);
-  font-family:var(--f-display);font-size:22px;
+/* PIN screen (CO-4 §3) — replaces the old claim picker; not in the
+   prototype (that faked identity with a demo switcher, spec §8 forbids
+   shipping that), styled to match the takeover's ink-overlay language */
+.pin-input{
+  width:100%;max-width:220px;border:1px solid var(--hair);border-radius:10px;
+  padding:16px;color:var(--ink);background:transparent;
+  font-family:var(--f-data);font-size:28px;letter-spacing:.5em;text-align:center;
+  caret-color:var(--brass-bright);
 }
-.claim-btn:not(:disabled):hover{background:var(--plate-2)}
-.claim-btn:disabled{opacity:.35;cursor:not-allowed}
+.pin-input:focus{outline:none;border-color:var(--brass-bright)}
+.pin-input:disabled{opacity:.35}

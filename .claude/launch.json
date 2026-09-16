@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev", "--workspace", "server"],
       "port": 3000
+    },
+    {
+      "name": "nameplate-client",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--workspace", "client"],
+      "port": 5173
     }
   ]
 }

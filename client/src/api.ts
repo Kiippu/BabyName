@@ -14,15 +14,11 @@ import type {
   ThemePack,
 } from "./types";
 
-export interface MatchEvent extends NameCard {
-  matchDepth: number;
-}
-
-// Sessions are short-lived and slide forward on use (server/src/identity.js)
-// — but if the app sits untouched for 5+ minutes and then makes a request,
-// the server comes back 401. Rather than every screen having to know what
-// that means, broadcast it once here so App.tsx can react centrally by
-// dropping back to "which one of you is this?" instead of a raw error.
+// Sessions slide forward on use (server/identity.py) — but if the app sits
+// untouched for 30+ days and then makes a request, the server comes back
+// 401. Rather than every screen having to know what that means, broadcast it
+// once here so App.tsx can react centrally by dropping back to the PIN
+// screen instead of a raw error.
 export const SESSION_EXPIRED_EVENT = "nameplate:session-expired";
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
@@ -41,8 +37,17 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 
 export const api = {
   getMe: () => request<Me>("/api/me"),
-  claim: (userId: number) =>
-    request<Me>("/api/me", { method: "POST", body: JSON.stringify({ userId }) }),
+  // POST /api/gate replaces POST /api/me (CO-4 §1.1/§3): a credential now,
+  // not a bare claim. The response is {userId, label, surname} -- no
+  // `claimed` field, since the server only ever sends that on success --
+  // so it's added here rather than round-tripping through getMe() again.
+  gate: async (pin: string) => {
+    const body = await request<{ userId: number; label: string; surname: string }>("/api/gate", {
+      method: "POST",
+      body: JSON.stringify({ pin }),
+    });
+    return { ...body, claimed: true } as Me;
+  },
   getList: (tab: ListTab) => request<ListRow[]>(`/api/list?tab=${tab}`),
   getStats: () => request<Stats>("/api/stats"),
   getSettings: () => request<Settings>("/api/settings"),
@@ -63,11 +68,3 @@ export const api = {
   setThemeEnabled: (id: number, enabled: boolean) =>
     request<ThemePack[]>(`/api/themes/${id}`, { method: "PUT", body: JSON.stringify({ enabled }) }),
 };
-
-/** Opens the SSE channel for match takeovers (spec §5/§7). Returns a closer. */
-export function openMatchStream(onMatch: (match: MatchEvent) => void): () => void {
-  const source = new EventSource("/api/stream", { withCredentials: true });
-  const handleMatch = (e: MessageEvent) => onMatch(JSON.parse(e.data));
-  source.addEventListener("match", handleMatch);
-  return () => source.close();
-}

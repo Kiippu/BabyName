@@ -5,17 +5,14 @@ export interface NameCard {
   meaning: string;
 }
 
-export interface Candidate {
-  id: number;
-  label: string;
-}
-
+// CO-4 §3/§5: the PIN gate replaces the picker -- there's nothing to pick
+// from any more, the PIN itself is the claim. candidates is gone from the
+// payload accordingly.
 export interface Me {
   userId: number | null;
   label: string | null;
   surname: string | null;
   claimed: boolean;
-  candidates: Candidate[];
 }
 
 // Change Order 1 ("Shortlist"): dropped the Elo/duel/veto model entirely —

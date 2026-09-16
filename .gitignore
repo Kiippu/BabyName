@@ -1,5 +1,9 @@
 node_modules/
-client/dist/
+
+# CO-4 §7: committing build output is normally poor practice; here it's the
+# deploy mechanism, since PythonAnywhere can't run Node to build this
+# itself. Rebuild locally (npm run build --workspace client) and commit the
+# result whenever the client changes.
 
 # The whole directory, not just *.db -- data/backup-pre-round-wipe/ holds a
 # nested nameplate.db-wal that a plain data/*.db pattern would miss entirely.

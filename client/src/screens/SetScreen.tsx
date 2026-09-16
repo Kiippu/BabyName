@@ -68,11 +68,13 @@ export function SetScreen({ onOpenShortlist }: { onOpenShortlist?: () => void })
   const [layout, setLayout] = useState<Slot[]>([]);
   const [locking, setLocking] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [pollStopped, setPollStopped] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<DragState | null>(null);
 
   function applyRound(payload: RoundPayload) {
     setRound(payload);
+    setPollStopped(false);
     if (payload.waiting || !payload.names) {
       setLayout([]);
     } else {
@@ -96,10 +98,26 @@ export function SetScreen({ onOpenShortlist }: { onOpenShortlist?: () => void })
   // until something forces a re-check. Re-fetch immediately whenever the
   // page becomes visible/focused again, on top of the steady-state poll, so
   // reopening the app is enough — no manual reload required.
+  //
+  // CO-4 §4: 3s -> 5s (nothing here is worth 0.3 requests/second against the
+  // PythonAnywhere free-tier CPU budget), plus a hard stop after 10 minutes
+  // -- a phone left awake on this screen overnight is the one realistic way
+  // to burn through 100 CPU-seconds/day. The "Check again" button below
+  // resumes it.
+  const POLL_MS = 5000;
+  const POLL_STOP_AFTER_MS = 10 * 60 * 1000;
   useEffect(() => {
-    if (!round?.waiting) return;
+    if (!round?.waiting || pollStopped) return;
+    const startedAt = Date.now();
     const refresh = () => api.getRound().then(applyRound).catch(() => {});
-    const t = setInterval(refresh, 3000);
+    const t = setInterval(() => {
+      if (Date.now() - startedAt >= POLL_STOP_AFTER_MS) {
+        clearInterval(t);
+        setPollStopped(true);
+        return;
+      }
+      refresh();
+    }, POLL_MS);
     const onVisible = () => {
       if (document.visibilityState === "visible") refresh();
     };
@@ -112,7 +130,7 @@ export function SetScreen({ onOpenShortlist }: { onOpenShortlist?: () => void })
       window.removeEventListener("focus", refresh);
       window.removeEventListener("pageshow", refresh);
     };
-  }, [round?.waiting, round?.roundId]);
+  }, [round?.waiting, round?.roundId, pollStopped]);
 
   if (!round) return null;
 
@@ -131,6 +149,11 @@ export function SetScreen({ onOpenShortlist }: { onOpenShortlist?: () => void })
         <div className="meter">
           <b style={{ width: `${pct}%` }} />
         </div>
+        {pollStopped && (
+          <button className="linkish" onClick={() => api.getRound().then(applyRound).catch(() => {})}>
+            Check again
+          </button>
+        )}
         {onOpenShortlist && (
           <button className="linkish" onClick={onOpenShortlist}>
             Browse the shortlist while you wait
