@@ -54,3 +54,40 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+
+// CO-4 §12: push and notificationclick. tag + renotify:true means a second
+// notification (e.g. "round finished" followed shortly by "round is in")
+// replaces the first in the tray instead of stacking -- there's only ever
+// one thing worth showing at a time. The body text itself never contains a
+// name from the pile (see push.py/app.py) -- a notification is visible on a
+// locked phone, and that's exactly the blind-reveal boundary this app exists
+// to enforce.
+self.addEventListener("push", (event) => {
+  let data = { title: "Nameplate", body: "" };
+  try {
+    if (event.data) data = { ...data, ...event.data.json() };
+  } catch {
+    // Malformed payload -- fall back to the bare title rather than dropping
+    // the notification entirely.
+  }
+  event.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: "/icons/icon-192.png",
+      tag: "nameplate-round",
+      renotify: true,
+    })
+  );
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  event.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientList) => {
+      for (const c of clientList) {
+        if ("focus" in c) return c.focus();
+      }
+      return self.clients.openWindow("/");
+    })
+  );
+});

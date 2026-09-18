@@ -10,6 +10,7 @@ from flask import Flask, g, jsonify, request, send_from_directory
 
 import list as list_module  # module name matches list.js; aliased to avoid shadowing the builtin
 import names
+import push
 import rounds
 import themes
 from db import get_db, init_app as init_db_app
@@ -43,6 +44,7 @@ def create_app():
     app = Flask(__name__)
     init_db_app(app)
     app.register_blueprint(gate_bp)
+    app.register_blueprint(push.bp)
 
     @app.before_request
     def gate_check():
@@ -108,8 +110,31 @@ def create_app():
         if not round_id or not isinstance(set_index, int) or isinstance(set_index, bool) or set_index < 0 or kept_ids is None:
             return jsonify({"error": "roundId, setIndex, and keptIds are required"}), 400
 
-        result = rounds.lock_set(get_db(), g.user_id, round_id, set_index, kept_ids)
+        conn = get_db()
+        result = rounds.lock_set(conn, g.user_id, round_id, set_index, kept_ids)
         if result["sealed"]:
+            # CO-4 §12: both trigger points live here, both notifying the
+            # OTHER parent (the one who just sealed already sees the result
+            # in this response, or on the waiting screen). Sent after
+            # lock_set's own transaction has committed and never blocks the
+            # response -- send_push swallows every failure itself. No name
+            # from the pile ever goes in the body: counts and round numbers
+            # only, or a locked-phone notification would leak a keep before
+            # both parents have sealed.
+            partner_id = rounds.other_user_id(g.user_id)
+            if result["roundClosed"]:
+                push.send_push(
+                    partner_id,
+                    "Nameplate",
+                    f"Round {result['number']} is in — {result['throughCount']} names got through.",
+                )
+            else:
+                my_label = rounds.user_label(conn, g.user_id)
+                push.send_push(
+                    partner_id,
+                    "Nameplate",
+                    f"{my_label} has finished round {result['number']}. Your thirty are waiting.",
+                )
             return jsonify({"sealed": True})
         return jsonify({"nextSet": rounds.round_payload(get_db(), g.user_id)})
 

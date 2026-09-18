@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../api";
 import { fullNames } from "../nameVariants";
+import { isPushSubscribed, pushSupported, subscribeToPush, unsubscribeFromPush } from "../push";
 import { Sheet } from "./Sheet";
-import type { BabySurnameMode, Settings } from "../types";
+import type { BabySurnameMode, Me, Settings } from "../types";
 
 const SUR_MODES: { value: BabySurnameMode; label: string }[] = [
   { value: "father", label: "Father's" },
@@ -13,13 +14,21 @@ const SUR_MODES: { value: BabySurnameMode; label: string }[] = [
 
 const PREVIEW_SAMPLE = "Theodore";
 
+// CO-4 §12: "granted" — pushed on; "off" — supported but not subscribed;
+// "denied" — Chrome will never show the permission dialog again for this
+// origin, so the toggle explains rather than pretending to work;
+// "unsupported" — not Chrome/Android, or no service worker.
+type PushToggleState = "checking" | "granted" | "off" | "denied" | "unsupported";
+
 export function SetupSheet({
   settings,
+  me,
   firstRun,
   onClose,
   onSaved,
 }: {
   settings: Settings;
+  me: Me;
   firstRun: boolean;
   onClose?: () => void;
   onSaved: (settings: Settings) => void;
@@ -30,6 +39,33 @@ export function SetupSheet({
   const [motherSurname, setMotherSurname] = useState(settings.mother.surname);
   const [babySurname, setBabySurname] = useState<BabySurnameMode>(settings.babySurname);
   const [saving, setSaving] = useState(false);
+
+  const partnerName = (me.userId === 1 ? settings.mother.name : settings.father.name) || "your partner";
+  const [pushState, setPushState] = useState<PushToggleState>("checking");
+
+  useEffect(() => {
+    if (!pushSupported()) {
+      setPushState("unsupported");
+      return;
+    }
+    if (Notification.permission === "denied") {
+      setPushState("denied");
+      return;
+    }
+    isPushSubscribed().then((on) => setPushState(on ? "granted" : "off"));
+  }, []);
+
+  // The permission prompt only fires from inside a real click handler --
+  // Chrome ignores Notification.requestPermission() called any other way.
+  async function togglePush() {
+    if (pushState === "granted") {
+      await unsubscribeFromPush();
+      setPushState("off");
+      return;
+    }
+    const result = await subscribeToPush();
+    setPushState(result === "granted" ? "granted" : result);
+  }
 
   const preview = fullNames(PREVIEW_SAMPLE, {
     father: { name: fatherName, surname: fatherSurname },
@@ -125,6 +161,23 @@ export function SetupSheet({
         </div>
         <small>How a name will read</small>
       </div>
+      {pushState !== "unsupported" && (
+        <div className="who-block">
+          <div className="who-label">Notifications</div>
+          {pushState === "denied" ? (
+            <p className="section-note">
+              Notifications are blocked for this app in Chrome. To turn them on, open Chrome&rsquo;s
+              site settings for this app and allow notifications, then come back here.
+            </p>
+          ) : (
+            <div className="chips">
+              <button aria-pressed={pushState === "granted"} disabled={pushState === "checking"} onClick={togglePush}>
+                Tell me when {partnerName} finishes a round
+              </button>
+            </div>
+          )}
+        </div>
+      )}
       <button className="solid-btn" disabled={saving} onClick={save}>
         {firstRun ? "Start sorting" : "Save"}
       </button>

@@ -72,7 +72,7 @@ export function App() {
       {me === undefined ? null : !me.claimed ? (
         <PinScreen onGate={handleGate} />
       ) : !settings ? null : firstRunPending ? (
-        <SetupSheet settings={settings} firstRun onSaved={handleSettingsSaved} />
+        <SetupSheet settings={settings} me={me} firstRun onSaved={handleSettingsSaved} />
       ) : (
         <>
           {view === "shortlist" ? (
@@ -91,6 +91,7 @@ export function App() {
           {showSettings && (
             <SetupSheet
               settings={settings}
+              me={me}
               firstRun={false}
               onClose={() => setShowSettings(false)}
               onSaved={handleSettingsSaved}

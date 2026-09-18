@@ -368,20 +368,31 @@ def ack_round(conn, user_id, round_id):
     return round_payload(conn, user_id)
 
 
+def user_label(conn, user_id):
+    row = conn.execute(USER_LABEL_SQL, (user_id,)).fetchone()
+    return row["name"] if row else "Your partner"
+
+
 def _settle_round(conn, round_):
     """A name survives to the next round only if BOTH parents kept it in
     this round; everything else is out permanently. Always called from
     inside lock_set's transaction -- sqlite3 has no nested transactions
-    either, same constraint the Node original notes."""
+    either, same constraint the Node original notes. Returns the through
+    count (CO-4 §12: the push notification needs it and it can't be
+    recomputed after sealing without re-deriving this same set)."""
     kept_by_a = {r["id"] for r in conn.execute(KEPT_BY_SQL, (round_["id"], 1)).fetchall()}
     kept_by_b = {r["id"] for r in conn.execute(KEPT_BY_SQL, (round_["id"], 2)).fetchall()}
+    through_count = 0
     for row in conn.execute(NAMES_IN_ROUND_SQL, (round_["id"],)).fetchall():
         name_id = row["id"]
         survived = name_id in kept_by_a and name_id in kept_by_b
+        if survived:
+            through_count += 1
         prior = conn.execute(NAME_STATE_SQL, (name_id,)).fetchone()
         rounds_survived = (prior["rounds_survived"] if prior else 0) + (1 if survived else 0)
         conn.execute(UPSERT_NAME_STATE_SQL, (name_id, rounds_survived, None if survived else round_["number"]))
     conn.execute(SEAL_ROUND_SQL, (round_["id"],))
+    return through_count
 
 
 def lock_set(conn, user_id, round_id, set_index, kept_ids):
@@ -412,5 +423,10 @@ def lock_set(conn, user_id, round_id, set_index, kept_ids):
 
         partner_done = len(conn.execute(SET_INDEXES_DONE_SQL, (round_id, other_user_id(user_id))).fetchall())
         if partner_done >= SETS_PER_ROUND:
-            _settle_round(conn, round_)
-        return {"sealed": True}
+            # CO-4 §12's second push trigger. through_count and number are
+            # handed back rather than re-queried at the call site -- the
+            # round is sealed by the time app.py sees this, so re-deriving
+            # "how many survived" would mean redoing _settle_round's own work.
+            through_count = _settle_round(conn, round_)
+            return {"sealed": True, "roundClosed": True, "number": round_["number"], "throughCount": through_count}
+        return {"sealed": True, "roundClosed": False, "number": round_["number"]}

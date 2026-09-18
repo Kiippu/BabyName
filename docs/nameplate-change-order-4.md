@@ -512,6 +512,8 @@ from a phone.)
 7. **Build, commit `dist/`, deploy, add the static mappings.** Grep the bundle for a `world.json`
    name (§3).
 8. **`sw.js`**: cache-first for `/assets/*`. Install on both phones from the home screen.
+8b. **Push notifications** (§12) — after the install, because the subscription belongs to the
+    installed app. Run the allowlist test in §12 first; it is a go/no-go.
 9. **Backup endpoint, monthly reminder, first backup taken.**
 10. **Delete** the Node server, `stream.js`, the four npm dependencies, and the LAN instructions in
     the README.
@@ -535,6 +537,77 @@ Ranked by cost of discovering late.
 6. **The 3-second poll with no cap**, on a phone left awake overnight.
 7. **The monthly expiry.** §8.
 8. **Re-enabling WAL** because it's what you'd do anywhere else. §5, rule 5.
+
+---
+
+## 12. Push notifications
+
+Added after the rest of this document, once the deployment target was settled. **Both phones are
+Android**, which removes every hard part of web push — Chrome is the only browser to support, and
+its push endpoint sits under an allowlisted domain.
+
+### Why this is possible on a host with no background workers
+
+The usual blocker is that push needs a process watching for something to happen, and the free tier
+has no always-on tasks, no scheduled tasks, and no support for threading or Celery (*measured*).
+None of that is needed here, because **the moment worth notifying is already an inbound HTTP
+request**:
+
+| Trigger | The request that carries it | Who gets notified | Copy |
+|---|---|---|---|
+| A parent finishes their fifth set and starts waiting | their final `POST /api/set` | **the other parent** | *"Kory's finished round 7. Your thirty are waiting."* |
+| The second parent seals, and the round closes | their final `POST /api/set` | **both** | *"Round 7 is in — 7 names got through."* |
+
+Send inline, inside the handler, before responding. No queue, no worker, no cron. The second
+trigger is the one that matters: the round result is the payoff this app is built around, and today
+it is invisible until someone happens to open their phone.
+
+### What it takes
+
+```sql
+CREATE TABLE IF NOT EXISTS push_subscriptions (
+  id         INTEGER PRIMARY KEY,
+  user_id    INTEGER NOT NULL REFERENCES users(id),
+  endpoint   TEXT NOT NULL UNIQUE,
+  p256dh     TEXT NOT NULL,
+  auth       TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+```
+
+- **`pywebpush`** on the server; VAPID keys generated once. Private key goes in the WSGI file
+  beside `NAMEPLATE_SECRET_KEY` (§7); the public key is compiled into the client, where it belongs.
+- **A `push` handler in `sw.js`** calling `showNotification`, plus a `notificationclick` handler
+  that focuses the existing window rather than opening a second one.
+- **A toggle in the settings sheet**, not a prompt on load — permission must follow a user gesture,
+  and a permission dialog on first launch is the fastest way to get permanently denied.
+- **Delete the row on 404 or 410** from the push service. Subscriptions expire, and stale rows are
+  the usual cause of "push stopped working" months later.
+- **3-second timeout, wrapped in try/except.** A push that fails must never fail someone's seal.
+  With one web worker, a blocking call holds the whole site for its duration — irrelevant for two
+  users, but don't let it hang.
+
+### Go/no-go before you build it
+
+Free-tier outbound traffic is allowlisted, and the endpoint host is chosen by the browser, not by
+you. Chrome hands out `fcm.googleapis.com`, which falls under the allowlisted `.googleapis.com` —
+but confirm the proxy actually matches the subdomain before writing any of the above. From a Bash
+console:
+
+```python
+import requests; requests.post("https://fcm.googleapis.com/", timeout=5)
+```
+
+A response from the host — any status — means you're through. A 403 from the proxy means you're
+not, and PythonAnywhere accepts allowlist requests for free accounts.
+
+### Where it goes
+
+**After step 8** of the build order — the subscription belongs to the installed app, so install the
+PWA on both phones first, then subscribe from inside it. Slot it as step 8b, before backups.
+
+One consequence worth having: with push working, nobody has a reason to sit on the waiting screen,
+which turns §4's 10-minute poll cap from a compromise into a non-event.
 
 ---
 

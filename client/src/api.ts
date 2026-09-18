@@ -67,4 +67,9 @@ export const api = {
   getThemes: () => request<ThemePack[]>("/api/themes"),
   setThemeEnabled: (id: number, enabled: boolean) =>
     request<ThemePack[]>(`/api/themes/${id}`, { method: "PUT", body: JSON.stringify({ enabled }) }),
+  // CO-4 §12.
+  subscribePush: (subscription: { endpoint: string; keys: { p256dh: string; auth: string } }) =>
+    request<{ ok: true }>("/api/push/subscribe", { method: "POST", body: JSON.stringify(subscription) }),
+  unsubscribePush: (endpoint: string) =>
+    request<{ ok: true }>("/api/push/subscribe", { method: "DELETE", body: JSON.stringify({ endpoint }) }),
 };

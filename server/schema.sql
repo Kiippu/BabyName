@@ -149,3 +149,16 @@ CREATE TABLE IF NOT EXISTS round_acks (
 
 -- keys: baby_surname ('father'|'mother'|'both'|'undecided'), setup_done
 CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT);
+
+-- CO-4 §12: one row per (user, browser) push subscription. endpoint is
+-- unique so re-subscribing the same browser upserts in place rather than
+-- duplicating; a stale row (push service returns 404/410) is deleted by
+-- send_push itself -- see push.py.
+CREATE TABLE IF NOT EXISTS push_subscriptions (
+  id         INTEGER PRIMARY KEY,
+  user_id    INTEGER NOT NULL REFERENCES users(id),
+  endpoint   TEXT NOT NULL UNIQUE,
+  p256dh     TEXT NOT NULL,
+  auth       TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
