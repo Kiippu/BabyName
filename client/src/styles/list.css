@@ -46,6 +46,8 @@
 }
 .section-note b{color:var(--ink-soft);font-weight:600}
 
+.sort-chips{padding:0 18px 14px}
+
 .row{
   display:grid;grid-template-columns:30px 1fr auto auto;align-items:center;gap:11px;
   padding:13px 18px;border-bottom:1px solid var(--hair-soft);width:100%;text-align:left;

@@ -14,6 +14,37 @@ const TABS: { key: ListTab; label: string }[] = [
   { key: "out", label: "Out" },
 ];
 
+// Only the "Out" tab gets a sort control — "Still in" already has a single
+// meaningful order (rounds survived, then selectivity) with no reason to
+// second-guess it, but "Out" mixes names eliminated at wildly different
+// points, and different questions ("what fell recently?" vs. "what almost
+// made it?") want different orders.
+type OutSort = "eliminatedIn" | "name" | "roundsSurvived";
+const OUT_SORTS: { key: OutSort; label: string }[] = [
+  { key: "eliminatedIn", label: "Round" },
+  { key: "name", label: "Name" },
+  { key: "roundsSurvived", label: "Kept #" },
+];
+
+function sortOutRows(rows: ListRow[], sort: OutSort): ListRow[] {
+  const sorted = [...rows];
+  switch (sort) {
+    case "name":
+      sorted.sort((a, b) => a.name.localeCompare(b.name));
+      break;
+    case "roundsSurvived":
+      // Most rounds survived before falling first — the "how close did it
+      // get" question.
+      sorted.sort((a, b) => b.roundsSurvived - a.roundsSurvived || a.name.localeCompare(b.name));
+      break;
+    case "eliminatedIn":
+    default:
+      // Matches the server's default order: most recently fallen first.
+      sorted.sort((a, b) => (b.eliminatedIn ?? 0) - (a.eliminatedIn ?? 0) || a.name.localeCompare(b.name));
+  }
+  return sorted;
+}
+
 function note(tab: ListTab) {
   if (tab === "in") {
     return (
@@ -46,6 +77,7 @@ export function Shortlist({
 }) {
   const [tab, setTab] = useState<ListTab>("in");
   const [rows, setRows] = useState<Partial<Record<ListTab, ListRow[]>>>({});
+  const [outSort, setOutSort] = useState<OutSort>("eliminatedIn");
   const [stats, setStats] = useState<Stats | undefined>(undefined);
   const [showAdd, setShowAdd] = useState(false);
   const [detailId, setDetailId] = useState<number | null>(null);
@@ -75,7 +107,7 @@ export function Shortlist({
     setToast({ message: `“${name}” is already in the pile.` });
   }
 
-  const currentRows = rows[tab];
+  const currentRows = tab === "out" && rows.out ? sortOutRows(rows.out, outSort) : rows[tab];
 
   return (
     <>
@@ -104,8 +136,31 @@ export function Shortlist({
             </button>
           ))}
         </div>
+        <div className="stats">
+          <div className="stat">
+            <b>{stats?.rounds ?? 0}</b>
+            <span>Rounds</span>
+          </div>
+          <div className="stat">
+            <b>{stats?.stillIn ?? 0}</b>
+            <span>Still in</span>
+          </div>
+          <div className="stat">
+            <b>{stats?.agreement ?? 0}%</b>
+            <span>Agreement</span>
+          </div>
+        </div>
         <div className="scroll">
           <p className="section-note">{note(tab)}</p>
+          {tab === "out" && (
+            <div className="chips sort-chips">
+              {OUT_SORTS.map((s) => (
+                <button key={s.key} aria-pressed={outSort === s.key} onClick={() => setOutSort(s.key)}>
+                  {s.label}
+                </button>
+              ))}
+            </div>
+          )}
           <button className="addrow" onClick={() => setShowAdd(true)}>
             <svg viewBox="0 0 24 24">
               <path d="M12 5v14M5 12h14" />
@@ -137,20 +192,6 @@ export function Shortlist({
               <span className="row-go">›</span>
             </button>
           ))}
-          <div className="stats">
-            <div className="stat">
-              <b>{stats?.rounds ?? 0}</b>
-              <span>Rounds</span>
-            </div>
-            <div className="stat">
-              <b>{stats?.stillIn ?? 0}</b>
-              <span>Still in</span>
-            </div>
-            <div className="stat">
-              <b>{stats?.agreement ?? 0}%</b>
-              <span>Agreement</span>
-            </div>
-          </div>
         </div>
       </section>
       {showAdd && (
