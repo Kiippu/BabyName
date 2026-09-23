@@ -86,7 +86,15 @@ export function Shortlist({
           </svg>
           Back to the round
         </button>
-        <span className="topbar-mark">{me.label}</span>
+        <div className="topbar-actions">
+          <span className="topbar-mark">{me.label}</span>
+          <button className="topbar-btn" onClick={onOpenSettings}>
+            Settings
+          </button>
+          <button className="topbar-btn" onClick={onOpenThemes}>
+            Themes
+          </button>
+        </div>
       </header>
       <section className="screen">
         <div className="tabs" role="tablist">
@@ -142,14 +150,6 @@ export function Shortlist({
               <b>{stats?.agreement ?? 0}%</b>
               <span>Agreement</span>
             </div>
-          </div>
-          <div className="pad">
-            <button className="linkish" onClick={onOpenSettings}>
-              Names & surnames
-            </button>
-            <button className="linkish" onClick={onOpenThemes}>
-              Manage themes
-            </button>
           </div>
         </div>
       </section>

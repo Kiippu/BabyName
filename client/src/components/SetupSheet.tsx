@@ -166,8 +166,11 @@ export function SetupSheet({
           <div className="who-label">Notifications</div>
           {pushState === "denied" ? (
             <p className="section-note">
-              Notifications are blocked for this app in Chrome. To turn them on, open Chrome&rsquo;s
-              site settings for this app and allow notifications, then come back here.
+              Notifications are blocked for this app. Chrome won&rsquo;t ask again automatically &mdash;
+              turn them back on yourself: open Android Settings &rsaquo; Apps &rsaquo; Nameplate &rsaquo;
+              Notifications and allow them (if there&rsquo;s no Nameplate entry there, try Chrome&rsquo;s
+              own menu &rsaquo; Settings &rsaquo; Site settings &rsaquo; find this site &rsaquo;
+              Notifications instead), then come back and try the toggle again.
             </p>
           ) : (
             <div className="chips">

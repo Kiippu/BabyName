@@ -1,8 +1,8 @@
 /* Lifted from nameplate-prototype.html's list-screen + top-nav CSS. */
 
 .topbar{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;padding:calc(14px + env(safe-area-inset-top)) 18px 12px;border-bottom:1px solid var(--hair);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  gap:8px 12px;padding:calc(14px + env(safe-area-inset-top)) 18px 12px;border-bottom:1px solid var(--hair);
   flex:0 0 auto;background:var(--plate);
 }
 .topbar-mark{
@@ -10,6 +10,17 @@
   color:var(--muted);padding:5px 9px;border:1px solid var(--hair);border-radius:999px;
   background:var(--plate-2);
 }
+/* Discoverability fix: Names & surnames / Manage themes used to live at the
+   bottom of the (often long) shortlist scroll, where a first-time user could
+   easily never see them. Pinned in the topbar instead of a bottom nav bar --
+   the build spec forbids bottom-anchored chrome (see .foot/.shell comments). */
+.topbar-actions{display:flex;align-items:center;gap:7px}
+.topbar-btn{
+  font-family:var(--f-data);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);padding:6px 10px;border:1px solid var(--hair);border-radius:999px;
+  background:var(--plate-2);transition:color .15s,border-color .15s;
+}
+.topbar-btn:hover{color:var(--claret);border-color:var(--claret)}
 .backbtn{
   display:flex;align-items:center;gap:7px;min-height:40px;padding:6px 12px 6px 8px;
   margin-left:-8px;border-radius:8px;
