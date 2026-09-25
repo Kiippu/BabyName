@@ -65,7 +65,8 @@ ELIGIBLE_THEMES_SQL = """
       UNION ALL
       SELECT s.root, t.id FROM themes t JOIN sub s ON t.parent_id = s.id
     )
-    SELECT t.id, t.slug, t.title, t.kind, t.weight, COUNT(DISTINCT n.id) AS unseen
+    SELECT t.id, t.slug, t.title, t.kind, t.weight,
+           COUNT(DISTINCT COALESCE(n.variant_family, 'id:' || n.id)) AS unseen
     FROM themes t
     JOIN packs p        ON p.id = t.pack_id
     JOIN sub            ON sub.root = t.id
@@ -79,6 +80,13 @@ ELIGIBLE_THEMES_SQL = """
     GROUP BY t.id
     HAVING unseen >= :needed
 """
+# `unseen` counts variant FAMILIES, not names. THEMED_DRAW_SQL below returns at
+# most one name per family, so counting raw names let a theme qualify that
+# could not actually fill the draw: round 25 (Germanic, 25 Sep 2026) needed
+# 21 newcomers, the theme had >= 21 unseen names but only 19 families, and the
+# round was built with 28 names -- set 5 had 4 cards and could never be
+# locked in. This is the one deliberate departure from "copy the CTE verbatim".
+#
 # Clash-free draw from a theme (and, for a region, everything under it):
 # GROUP BY the variant family allows at most one of Luca/Luka etc. per draw.
 THEMED_DRAW_SQL = """
@@ -189,6 +197,38 @@ def weighted_theme_pick(themes):
     return themes[-1]
 
 
+UNSEEN_WITH_FAMILY_SQL = """
+    SELECT n.id, n.variant_family FROM names n
+    WHERE NOT EXISTS (SELECT 1 FROM name_state ns WHERE ns.name_id = n.id)
+    ORDER BY RANDOM()
+"""
+FAMILY_OF_SQL = "SELECT variant_family FROM names WHERE id = ?"
+
+
+def top_up(conn, already, count):
+    """Up to `count` unseen names not already in `already`, at most one per
+    variant family and never a family already present -- so a top-up can't
+    put Luca next to Luka either."""
+    taken = set(already)
+    families = set()
+    for name_id in taken:
+        row = conn.execute(FAMILY_OF_SQL, (name_id,)).fetchone()
+        if row and row["variant_family"]:
+            families.add(row["variant_family"])
+    picked = []
+    for row in conn.execute(UNSEEN_WITH_FAMILY_SQL).fetchall():
+        if len(picked) >= count:
+            break
+        fam = row["variant_family"]
+        if row["id"] in taken or (fam and fam in families):
+            continue
+        picked.append(row["id"])
+        taken.add(row["id"])
+        if fam:
+            families.add(fam)
+    return picked
+
+
 def _assemble_round(conn):
     """Rolls a fresh round: survivors of the last sealed round, topped up
     with newcomers from the deck, shuffled together -- never a "veterans
@@ -219,6 +259,12 @@ def _assemble_round(conn):
                 newcomers = [r["id"] for r in conn.execute(THEMED_DRAW_SQL, {"themeId": theme_id, "needed": need}).fetchall()]
             else:
                 newcomers = [r["id"] for r in conn.execute(NEWCOMER_IDS_SQL, (need,)).fetchall()]
+            # Belt and braces: a round must be exactly ROUND_SIZE names or its
+            # last set is short, and lock_set rejects any set that isn't
+            # SET_SIZE -- which strands both parents mid-round. Whatever the
+            # draw above came back with, top up from the whole unseen deck.
+            if len(newcomers) < need:
+                newcomers += top_up(conn, survivors + newcomers, need - len(newcomers))
 
         round_names = shuffle(survivors + newcomers)
 

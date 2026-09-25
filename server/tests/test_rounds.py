@@ -140,3 +140,27 @@ def test_lock_set_rejects_resubmitting_a_set(conn):
     with pytest.raises(rounds.ApiError) as exc_info:
         rounds.lock_set(conn, 1, payload["roundId"], payload["setIndex"], keep_ids)
     assert exc_info.value.status == 409
+
+
+def test_every_eligible_theme_can_fill_the_draw_it_qualified_for(conn):
+    """Round 25 regression (25 Sep 2026): Germanic qualified for a 21-name
+    draw on raw name count but only had 19 variant families, so the round was
+    built with 28 names and set 5 could never be locked. Whatever `needed`
+    is, a theme ELIGIBLE_THEMES_SQL returns must actually yield that many."""
+    for needed in (6, 12, 21, 30):
+        for t in conn.execute(rounds.ELIGIBLE_THEMES_SQL, {"previousThemeId": None, "needed": needed}).fetchall():
+            got = conn.execute(rounds.THEMED_DRAW_SQL, {"themeId": t["id"], "needed": needed}).fetchall()
+            assert len(got) == needed, f"{t['slug']} qualified for {needed} but drew {len(got)}"
+
+
+def test_assembled_round_is_always_five_full_sets(conn):
+    for _ in range(25):  # 25 x 30 < 846: stays clear of the deck running out
+        row = rounds.get_current_round(conn)
+        sizes = [r[0] for r in conn.execute(
+            "SELECT COUNT(*) FROM round_names WHERE round_id = ? GROUP BY set_index ORDER BY set_index", (row["id"],))]
+        assert sizes == [rounds.SET_SIZE] * rounds.SETS_PER_ROUND, sizes
+        # seal it with nobody keeping anything so the next round draws fresh
+        with immediate(conn):
+            for r in conn.execute(rounds.NAMES_IN_ROUND_SQL, (row["id"],)).fetchall():
+                conn.execute(rounds.UPSERT_NAME_STATE_SQL, (r["id"], 0, row["number"]))
+            conn.execute(rounds.SEAL_ROUND_SQL, (row["id"],))

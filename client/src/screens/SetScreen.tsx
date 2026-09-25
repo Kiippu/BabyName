@@ -163,6 +163,29 @@ export function SetScreen({ onOpenShortlist }: { onOpenShortlist?: () => void })
     );
   }
 
+  // Guard against a payload with no cards that is neither waiting nor a
+  // result -- or a set short of cards (round 25, 25 Sep 2026: a short draw
+  // left set 5 with 4 names). Either way the sorting screen would be a dead
+  // end, so show a way out instead of an empty list.
+  if (!round.names || round.names.length < 6 || round.setIndex >= round.setsTotal) {
+    return (
+      <div className="wait">
+        <span className="kick">Round {round.number}</span>
+        <h2>This set didn't load properly</h2>
+        <p>Try again in a moment. If it keeps happening, the round needs a repair on the server.</p>
+        {error && <p>{error}</p>}
+        <button className="linkish" onClick={() => api.getRound().then(applyRound).catch((e) => setError(e instanceof Error ? e.message : "Something went wrong."))}>
+          Check again
+        </button>
+        {onOpenShortlist && (
+          <button className="linkish" onClick={onOpenShortlist}>
+            Go to the shortlist
+          </button>
+        )}
+      </div>
+    );
+  }
+
   const k = keepCount(layout);
 
   function onCardPointerDown(e: React.PointerEvent<HTMLDivElement>, idx: number) {
