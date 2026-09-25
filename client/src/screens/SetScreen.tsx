@@ -46,6 +46,24 @@ function moveTo(layout: Slot[], from: number, to: number): Slot[] | null {
   return next;
 }
 
+// In-progress sort for the current set, kept at module level so it survives
+// SetScreen unmounting while the shortlist is open. Memory only: a reload
+// starts the set fresh, same as before.
+let draft: { key: string; layout: Slot[] } | null = null;
+
+function draftKey(round: RoundPayload): string {
+  return `${round.roundId}:${round.setIndex}`;
+}
+
+/** The saved layout, if it's for this exact set and the same six cards. */
+function restoreDraft(round: RoundPayload): Slot[] | null {
+  if (!draft || draft.key !== draftKey(round) || !round.names) return null;
+  const saved = draft.layout.flatMap((s) => (s.kind === "card" ? [s.card.id] : []));
+  const fresh = new Set(round.names.map((c) => c.id));
+  if (saved.length !== fresh.size || !saved.every((id) => fresh.has(id))) return null;
+  return draft.layout;
+}
+
 /**
  * The set screen — build order step 3 (nameplate-change-order.md). Six cards
  * in one non-scrolling column, split by a cut line into Keep (above) and Out
@@ -54,7 +72,9 @@ function moveTo(layout: Slot[], from: number, to: number): Slot[] | null {
  * ("open it before writing code" / "the drag implementation ... are all
  * intended to carry over"). The prototype's `.bench` dev toolbar and `Reset`
  * button are intentionally NOT ported — spec §6: "Set screen: no chrome at
- * all beyond the prompt line and the lock-in button."
+ * all beyond the prompt line and the lock-in button." One exception, added on
+ * request: a Shortlist pill in the header, so you can check the list
+ * mid-set (see `draft` above for how the half-sorted set survives the trip).
  *
  * Seal -> waiting -> round result (step 4) lives across this file and
  * RoundResult.tsx: this component owns the set-sorting UI and the "waiting
@@ -78,9 +98,19 @@ export function SetScreen({ onOpenShortlist }: { onOpenShortlist?: () => void })
     if (payload.waiting || !payload.names) {
       setLayout([]);
     } else {
-      setLayout([{ kind: "cut" }, ...payload.names.map((card) => ({ kind: "card" as const, card }))]);
+      setLayout(
+        restoreDraft(payload) ?? [{ kind: "cut" }, ...payload.names.map((card) => ({ kind: "card" as const, card }))]
+      );
     }
   }
+
+  // Remember the half-sorted set so a trip to the shortlist and back
+  // doesn't throw it away.
+  useEffect(() => {
+    if (round && !round.waiting && layout.length) {
+      draft = { key: draftKey(round), layout };
+    }
+  }, [round, layout]);
 
   useEffect(() => {
     api
@@ -310,6 +340,11 @@ export function SetScreen({ onOpenShortlist }: { onOpenShortlist?: () => void })
           )}{" "}
           · Set <b>{round.setIndex + 1}</b> of <b>{round.setsTotal}</b>
         </span>
+        {onOpenShortlist && (
+          <button className="topbar-btn" onClick={onOpenShortlist}>
+            Shortlist
+          </button>
+        )}
       </div>
       <p className="ask">
         Drag up at least <em>{MIN_KEEP}</em> worth keeping. Anything left below is out.

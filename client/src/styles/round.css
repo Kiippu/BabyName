@@ -8,7 +8,10 @@
 
 .set-screen{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
 
-.head{flex:0 0 auto;padding:12px 18px 8px;display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.head{flex:0 0 auto;padding:12px 18px 8px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+/* Shortlist pill (the one exception to spec §6's "no chrome" rule, added on
+   request so the list is reachable mid-set). Styled by list.css's .topbar-btn. */
+.head .topbar-btn{flex:0 0 auto}
 .where{font-family:var(--f-data);font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
 .where b{color:var(--ink);font-weight:600}
 .ask{font-family:var(--f-display);font-size:17.5px;line-height:1.3;padding:0 18px 10px;margin:0;text-wrap:balance}
