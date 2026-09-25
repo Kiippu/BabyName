@@ -16,10 +16,47 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <title>Nameplate</title>
-  <script type="module" crossorigin src="/assets/index-BUoOY363.js"></script>
+<!-- Splash: inlined (not in src/styles) so it paints on the very first frame,
+     before the JS bundle and tokens.css load — hence hardcoded hexes mirroring
+     tokens.css (--paper / --ink / --brass-bright). Lifted by src/splash.ts. -->
+<style>
+#splash{
+  position:fixed;inset:0;z-index:100;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  background:#ECEDEF;color:#16181D;text-align:center;
+  transition:opacity .45s ease, visibility 0s linear .45s;
+}
+#splash.out{opacity:0;visibility:hidden;pointer-events:none}
+#splash .splash-mark{
+  font-family:"Bodoni Moda","Didot","Times New Roman",serif;
+  font-size:clamp(44px,15vw,72px);font-weight:500;line-height:.95;letter-spacing:-.02em;
+  animation:splash-settle .7s cubic-bezier(.2,.9,.3,1);
+}
+#splash .splash-rule{width:46px;height:1px;background:#B8862B}
+#splash .splash-kicker{
+  font-family:"IBM Plex Mono","SFMono-Regular",Menlo,monospace;
+  font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#B8862B;
+}
+@keyframes splash-settle{from{letter-spacing:.22em;opacity:0}to{letter-spacing:-.02em;opacity:1}}
+@media (prefers-color-scheme: dark){
+  #splash{background:#0D0F13;color:#ECEDEF}
+  #splash .splash-rule{background:#EFC26A}
+  #splash .splash-kicker{color:#EFC26A}
+}
+@media (prefers-reduced-motion: reduce){
+  #splash, #splash *{animation:none!important;transition:none!important}
+}
+</style>
+  <script type="module" crossorigin src="/assets/index-CxE7qbct.js"></script>
   <link rel="stylesheet" crossorigin href="/assets/index-Wu3dHs6y.css">
 </head>
 <body>
+<div id="splash" role="status" aria-label="Loading Nameplate">
+  <div class="splash-mark">Nameplate</div>
+  <div class="splash-rule"></div>
+  <div class="splash-kicker">Baby names, together</div>
+</div>
 <div id="root"></div>
 </body>
 </html>

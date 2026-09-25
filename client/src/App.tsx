@@ -6,6 +6,7 @@ import { SetScreen } from "./screens/SetScreen";
 import { Shortlist } from "./screens/Shortlist";
 import { ThemesScreen } from "./screens/ThemesScreen";
 import { SetupSheet } from "./components/SetupSheet";
+import { hideSplash } from "./splash";
 
 // Change Order 1, build step 5: the shortlist is now wired up. Per spec §6's
 // "zero chrome" rule for the set screen itself, Shortlist is only reachable
@@ -22,9 +23,25 @@ export function App() {
   const [settings, setSettings] = useState<Settings | undefined>(undefined);
   const [view, setView] = useState<View>("round");
   const [showSettings, setShowSettings] = useState(false);
+  // Initial /me or /settings load failed (server down, no network). Without
+  // this the shell would render nothing forever once the splash lifted.
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
-    api.getMe().then(setMe);
+    api.getMe().then(setMe).catch(() => setLoadError(true));
+  }, []);
+
+  // Splash (index.html + splash.ts): lift it once the first real screen has
+  // its data — the PIN screen needs only /me, setup and the set screen also
+  // need settings. The 8s timeout means an unreachable server can never trap
+  // the user behind it.
+  const firstScreenReady = me !== undefined && (!me.claimed || settings !== undefined);
+  useEffect(() => {
+    if (firstScreenReady || loadError) hideSplash();
+  }, [firstScreenReady, loadError]);
+  useEffect(() => {
+    const t = setTimeout(hideSplash, 8000);
+    return () => clearTimeout(t);
   }, []);
 
   // Sessions now slide for 30 days (server/identity.py, CO-4 §3 -- PINs
@@ -52,7 +69,7 @@ export function App() {
 
   useEffect(() => {
     if (!me?.claimed) return;
-    api.getSettings().then(setSettings);
+    api.getSettings().then(setSettings).catch(() => setLoadError(true));
   }, [me?.claimed]);
 
   async function handleGate(pin: string) {
@@ -69,7 +86,13 @@ export function App() {
 
   return (
     <div className="shell">
-      {me === undefined ? null : !me.claimed ? (
+      {loadError && !firstScreenReady ? (
+        <div className="takeover">
+          <div className="kicker">Can't reach Nameplate</div>
+          <div className="sub">Check your connection, then try again.</div>
+          <button onClick={() => window.location.reload()}>Try again</button>
+        </div>
+      ) : me === undefined ? null : !me.claimed ? (
         <PinScreen onGate={handleGate} />
       ) : !settings ? null : firstRunPending ? (
         <SetupSheet settings={settings} me={me} firstRun onSaved={handleSettingsSaved} />

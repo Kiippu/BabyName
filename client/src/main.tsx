@@ -27,9 +27,13 @@ if ("serviceWorker" in navigator) {
   // blank set screen with an empty layout ("Set 6 of 5", "Keep -1 of 3")
   // instead of the round-result screen. Reload once when control changes so
   // a stale open tab self-heals instead of needing a manual force-quit.
+  // Skip the reload on a first-ever visit, though: there's no stale bundle
+  // then (clients.claim() is just taking over a fresh page), and reloading
+  // would replay the cold-launch splash a second time.
+  const hadController = !!navigator.serviceWorker.controller;
   let refreshedOnce = false;
   navigator.serviceWorker.addEventListener("controllerchange", () => {
-    if (refreshedOnce) return;
+    if (!hadController || refreshedOnce) return;
     refreshedOnce = true;
     window.location.reload();
   });

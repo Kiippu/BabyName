@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { whenSplashGone } from "../splash";
 
 // CO-4 §3: replaces ClaimDevice.tsx. There's no picker any more -- the PIN
 // itself is the claim, so this is a single 6-digit numeric field rather than
@@ -10,6 +11,22 @@ export function PinScreen({ onGate }: { onGate: (pin: string) => Promise<void> }
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  // Only autofocus once the cold-launch splash is gone. Focusing while it's
+  // still covering the screen would pop the Android keyboard up behind it.
+  const [splashGone, setSplashGone] = useState(!document.getElementById("splash"));
+
+  useEffect(() => {
+    if (splashGone) return;
+    let live = true;
+    whenSplashGone().then(() => {
+      if (!live) return;
+      setSplashGone(true);
+      inputRef.current?.focus();
+    });
+    return () => {
+      live = false;
+    };
+  }, [splashGone]);
 
   async function submit(value: string) {
     if (value.length !== 6 || pending) return;
@@ -44,7 +61,7 @@ export function PinScreen({ onGate }: { onGate: (pin: string) => Promise<void> }
         type="text"
         inputMode="numeric"
         autoComplete="one-time-code"
-        autoFocus
+        autoFocus={splashGone}
         maxLength={6}
         value={pin}
         disabled={pending}
