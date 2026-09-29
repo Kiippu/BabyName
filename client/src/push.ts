@@ -29,10 +29,29 @@ async function currentSubscription(): Promise<PushSubscription | null> {
   return registration.pushManager.getSubscription();
 }
 
+async function sendToServer(subscription: PushSubscription): Promise<void> {
+  const json = subscription.toJSON();
+  if (!json.endpoint || !json.keys?.p256dh || !json.keys?.auth) {
+    throw new Error("push subscription is missing its endpoint or keys");
+  }
+  await api.subscribePush({ endpoint: json.endpoint, keys: { p256dh: json.keys.p256dh, auth: json.keys.auth } });
+}
+
+// "On" means the SERVER holds this browser's subscription, not just that the
+// browser has one. The old check only asked the browser, so a subscribe whose
+// server half failed still showed the toggle as on forever while nothing was
+// ever sent. Re-posting is an idempotent upsert, so this also self-heals a
+// row lost to a DB restore or a pruned 404/410.
 export async function isPushSubscribed(): Promise<boolean> {
-  if (!pushSupported()) return false;
+  if (!pushSupported() || Notification.permission !== "granted") return false;
   const sub = await currentSubscription();
-  return sub !== null;
+  if (!sub) return false;
+  try {
+    await sendToServer(sub);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 // Must be called from inside a click handler -- Chrome silently ignores
@@ -54,11 +73,14 @@ export async function subscribeToPush(): Promise<PushPermission> {
       applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
     }));
 
-  const json = subscription.toJSON();
-  if (!json.endpoint || !json.keys?.p256dh || !json.keys?.auth) {
-    throw new Error("push subscription is missing its endpoint or keys");
+  try {
+    await sendToServer(subscription);
+  } catch (err) {
+    // Don't leave a browser-only subscription behind -- it's what made the
+    // toggle look on while the server had nothing to push to.
+    await subscription.unsubscribe().catch(() => {});
+    throw err;
   }
-  await api.subscribePush({ endpoint: json.endpoint, keys: { p256dh: json.keys.p256dh, auth: json.keys.auth } });
   return "granted";
 }
 

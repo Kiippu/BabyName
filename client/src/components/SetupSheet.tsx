@@ -42,6 +42,7 @@ export function SetupSheet({
 
   const partnerName = (me.userId === 1 ? settings.mother.name : settings.father.name) || "your partner";
   const [pushState, setPushState] = useState<PushToggleState>("checking");
+  const [pushError, setPushError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!pushSupported()) {
@@ -58,13 +59,19 @@ export function SetupSheet({
   // The permission prompt only fires from inside a real click handler --
   // Chrome ignores Notification.requestPermission() called any other way.
   async function togglePush() {
+    setPushError(null);
     if (pushState === "granted") {
       await unsubscribeFromPush();
       setPushState("off");
       return;
     }
-    const result = await subscribeToPush();
-    setPushState(result === "granted" ? "granted" : result);
+    try {
+      const result = await subscribeToPush();
+      setPushState(result === "granted" ? "granted" : result);
+    } catch {
+      setPushState("off");
+      setPushError("Couldn't turn notifications on — the server didn't accept it. Try again in a moment.");
+    }
   }
 
   const preview = fullNames(PREVIEW_SAMPLE, {
@@ -179,6 +186,7 @@ export function SetupSheet({
               </button>
             </div>
           )}
+          {pushError && <p className="section-note">{pushError}</p>}
         </div>
       )}
       <button className="solid-btn" disabled={saving} onClick={save}>

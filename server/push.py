@@ -9,6 +9,8 @@ committed, so a push failure can never roll back or block a seal.
 
 import json
 import os
+import sys
+import traceback
 
 from flask import Blueprint, g, jsonify, request
 from pywebpush import WebPushException, webpush
@@ -53,6 +55,20 @@ def unsubscribe():
     return jsonify({"ok": True})
 
 
+@bp.get("/api/push/status")
+def status():
+    """Diagnostic: is the server able to push to me at all? Answers the two
+    questions the phone can't see -- is VAPID configured, and does the
+    server actually hold a subscription for this user."""
+    conn = get_db()
+    try:
+        count = len(conn.execute(SUBS_FOR_USER_SQL, (g.user_id,)).fetchall())
+        table_ok = True
+    except Exception:
+        count, table_ok = 0, False
+    return jsonify({"vapidConfigured": vapid_configured(), "tableExists": table_ok, "subscriptions": count})
+
+
 def send_push(user_id, title, body):
     """Best-effort notify of one user's subscriptions. Must NEVER raise into
     the caller -- POST /api/set's seal has already committed by the time this
@@ -62,17 +78,32 @@ def send_push(user_id, title, body):
     try:
         _send_push(user_id, title, body)
     except Exception:
-        pass
+        # Still never raises -- but it does say so. Silently swallowing here
+        # made "push doesn't work" undiagnosable: a missing table, a bad key
+        # and a blocked proxy all looked identical. stderr lands in
+        # PythonAnywhere's error log.
+        _log(f"send_push to user {user_id} failed:\n{traceback.format_exc()}")
+
+
+def _log(msg):
+    print(f"[push] {msg}", file=sys.stderr, flush=True)
+
+
+def vapid_configured():
+    return bool(os.environ.get("NAMEPLATE_VAPID_PRIVATE") and os.environ.get("NAMEPLATE_VAPID_SUB"))
 
 
 def _send_push(user_id, title, body):
     private_key = os.environ.get("NAMEPLATE_VAPID_PRIVATE")
     sub = os.environ.get("NAMEPLATE_VAPID_SUB")
     if not private_key or not sub:
-        return  # not configured (local dev) -- silently a no-op, not an error
+        _log("NAMEPLATE_VAPID_PRIVATE / NAMEPLATE_VAPID_SUB not set -- skipping (set them in the WSGI file)")
+        return
 
     conn = get_db()
     rows = conn.execute(SUBS_FOR_USER_SQL, (user_id,)).fetchall()
+    if not rows:
+        _log(f"user {user_id} has no push subscriptions -- nothing to send")
     expired_ids = []
     for row in rows:
         subscription_info = {
@@ -93,9 +124,11 @@ def _send_push(user_id, title, body):
             # transient 5xx, a timeout) is left alone; only a definitive
             # "this endpoint is gone" response prunes the row.
             status = exc.response.status_code if exc.response is not None else None
+            _log(f"push service refused subscription {row['id']} (HTTP {status}): {exc}")
             if status in (404, 410):
                 expired_ids.append(row["id"])
         except Exception:
+            _log(f"push to subscription {row['id']} failed:\n{traceback.format_exc()}")
             continue
 
     if expired_ids:
