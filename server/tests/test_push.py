@@ -5,6 +5,8 @@ into a 500. Runs against a throwaway database, never data/nameplate.db.
 """
 
 import pytest
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import ec
 from pywebpush import WebPushException
 from werkzeug.security import generate_password_hash
 
@@ -13,6 +15,15 @@ import push
 from app import create_app
 from init_db import create_schema, ensure_settings, ensure_users
 from transaction import immediate
+
+
+def _pem_key(indent=""):
+    """A real P-256 private key as PEM, the way the WSGI file holds it."""
+    key = ec.generate_private_key(ec.SECP256R1())
+    pem = key.private_bytes(
+        serialization.Encoding.PEM, serialization.PrivateFormat.PKCS8, serialization.NoEncryption()
+    ).decode()
+    return "\n".join(indent + line for line in pem.splitlines())
 
 
 @pytest.fixture
@@ -89,7 +100,7 @@ def test_send_push_never_raises_on_webpush_failure(client, monkeypatch):
     _sign_in(client)
     client.post("/api/push/subscribe", json={"endpoint": "https://fcm.googleapis.com/x", "keys": {"p256dh": "a", "auth": "b"}})
 
-    monkeypatch.setenv("NAMEPLATE_VAPID_PRIVATE", "not-a-real-key")
+    monkeypatch.setenv("NAMEPLATE_VAPID_PRIVATE", _pem_key())
     monkeypatch.setenv("NAMEPLATE_VAPID_SUB", "mailto:test@example.com")
 
     def boom(*args, **kwargs):
@@ -104,7 +115,7 @@ def test_send_push_deletes_subscription_on_410(client, monkeypatch):
     _sign_in(client)
     client.post("/api/push/subscribe", json={"endpoint": "https://fcm.googleapis.com/x", "keys": {"p256dh": "a", "auth": "b"}})
 
-    monkeypatch.setenv("NAMEPLATE_VAPID_PRIVATE", "not-a-real-key")
+    monkeypatch.setenv("NAMEPLATE_VAPID_PRIVATE", _pem_key())
     monkeypatch.setenv("NAMEPLATE_VAPID_SUB", "mailto:test@example.com")
 
     class FakeResponse:
@@ -120,3 +131,28 @@ def test_send_push_deletes_subscription_on_410(client, monkeypatch):
     rows = conn.execute("SELECT * FROM push_subscriptions WHERE user_id = 1").fetchall()
     conn.close()
     assert rows == []
+
+
+def test_pem_private_key_is_accepted_and_signs(client, monkeypatch):
+    """Regression: the WSGI file holds a PEM block, which pywebpush's own
+    string handling can't parse -- every send failed with an ASN.1 error."""
+    _sign_in(client)
+    client.post("/api/push/subscribe", json={"endpoint": "https://fcm.googleapis.com/x", "keys": {"p256dh": "a", "auth": "b"}})
+    monkeypatch.setenv("NAMEPLATE_VAPID_PRIVATE", _pem_key(indent="    "))
+    monkeypatch.setenv("NAMEPLATE_VAPID_SUB", "mailto:test@example.com")
+
+    seen = {}
+
+    def capture(**kwargs):
+        seen.update(kwargs)
+        # Signing is where a bad key or sub would blow up.
+        kwargs["vapid_private_key"].sign({**kwargs["vapid_claims"], "aud": "https://fcm.googleapis.com"})
+
+    monkeypatch.setattr(push, "webpush", capture)
+    push.send_push(1, "Nameplate", "test")
+    assert seen, "webpush was never called -- key loading failed"
+
+    status = client.get("/api/push/status").get_json()
+    assert status["vapidConfigured"] is True
+    assert status["subscriptions"] == 1
+    assert len(status["vapidPublicKey"]) == 87

@@ -13,6 +13,9 @@ import sys
 import traceback
 
 from flask import Blueprint, g, jsonify, request
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import ec
+from py_vapid import Vapid, b64urlencode
 from pywebpush import WebPushException, webpush
 
 from db import get_db
@@ -66,7 +69,12 @@ def status():
         table_ok = True
     except Exception:
         count, table_ok = 0, False
-    return jsonify({"vapidConfigured": vapid_configured(), "tableExists": table_ok, "subscriptions": count})
+    return jsonify({
+        "vapidConfigured": vapid_configured(),
+        "vapidPublicKey": vapid_public_key(),
+        "tableExists": table_ok,
+        "subscriptions": count,
+    })
 
 
 def send_push(user_id, title, body):
@@ -89,16 +97,50 @@ def _log(msg):
     print(f"[push] {msg}", file=sys.stderr, flush=True)
 
 
+def _load_vapid(private_key):
+    """Accept the private key as PEM (what the WSGI file holds -- a
+    triple-quoted -----BEGIN PRIVATE KEY----- block) or as a bare base64url
+    raw/DER string. pywebpush hands a plain string to Vapid.from_string,
+    which only understands the bare forms: a PEM string fails there with
+    "ASN.1 parsing error", on every send. Lines are stripped because a
+    triple-quoted block in the WSGI file easily picks up indentation."""
+    if "BEGIN" in private_key:
+        pem = "\n".join(line.strip() for line in private_key.strip().splitlines()).encode()
+        key = serialization.load_pem_private_key(pem, password=None)
+        if not isinstance(key, ec.EllipticCurvePrivateKey):
+            raise ValueError("NAMEPLATE_VAPID_PRIVATE is not an EC (P-256) key")
+        return Vapid(key)
+    return Vapid.from_string(private_key.strip())
+
+
+def vapid_public_key():
+    """The applicationServerKey matching the server's private key -- must
+    equal VAPID_PUBLIC_KEY in client/src/push.ts, or the push service
+    rejects every send (403) for subscriptions made with the other key."""
+    private_key = os.environ.get("NAMEPLATE_VAPID_PRIVATE")
+    if not private_key:
+        return None
+    try:
+        raw = _load_vapid(private_key).public_key.public_bytes(
+            serialization.Encoding.X962, serialization.PublicFormat.UncompressedPoint
+        )
+        return b64urlencode(raw)
+    except Exception as exc:
+        return f"unreadable: {exc}"
+
+
 def vapid_configured():
     return bool(os.environ.get("NAMEPLATE_VAPID_PRIVATE") and os.environ.get("NAMEPLATE_VAPID_SUB"))
 
 
 def _send_push(user_id, title, body):
     private_key = os.environ.get("NAMEPLATE_VAPID_PRIVATE")
-    sub = os.environ.get("NAMEPLATE_VAPID_SUB")
+    sub = (os.environ.get("NAMEPLATE_VAPID_SUB") or "").strip()
     if not private_key or not sub:
         _log("NAMEPLATE_VAPID_PRIVATE / NAMEPLATE_VAPID_SUB not set -- skipping (set them in the WSGI file)")
         return
+
+    vapid = _load_vapid(private_key)
 
     conn = get_db()
     rows = conn.execute(SUBS_FOR_USER_SQL, (user_id,)).fetchall()
@@ -114,7 +156,7 @@ def _send_push(user_id, title, body):
             webpush(
                 subscription_info=subscription_info,
                 data=json.dumps({"title": title, "body": body}),
-                vapid_private_key=private_key,
+                vapid_private_key=vapid,
                 vapid_claims={"sub": sub},
                 timeout=3,
             )
