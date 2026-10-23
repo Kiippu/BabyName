@@ -61,7 +61,7 @@ export function RoundResult({
   }
   if (!result) return null;
 
-  const { through, mineOnly, theirsOnly, out, partnerLabel, totalNames, number, nextThemeHint } = result;
+  const { through, mineOnly, theirsOnly, out, partnerLabel, totalNames, number, nextThemeHint, finalNext } = result;
 
   return (
     <div className="result">
@@ -88,7 +88,7 @@ export function RoundResult({
           <div className="rgroup">
             <h3>Nothing got through</h3>
             <p className="rnote">
-              You didn't keep a single name in common. It happens — the next thirty are queued.
+              You didn't keep a single name in common. It happens — the next round is queued.
             </p>
           </div>
         )}
@@ -144,7 +144,7 @@ export function RoundResult({
           </button>
         )}
         <button className="primary" disabled={continuing} onClick={handleContinue}>
-          {continuing ? "Starting…" : `Start round ${number + 1}`}
+          {continuing ? "Starting…" : finalNext ? "See your final names" : `Start round ${number + 1}`}
         </button>
       </div>
     </div>

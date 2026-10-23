@@ -164,3 +164,150 @@ def test_assembled_round_is_always_five_full_sets(conn):
             for r in conn.execute(rounds.NAMES_IN_ROUND_SQL, (row["id"],)).fetchall():
                 conn.execute(rounds.UPSERT_NAME_STATE_SQL, (r["id"], 0, row["number"]))
             conn.execute(rounds.SEAL_ROUND_SQL, (row["id"],))
+
+
+# --- CO-1 endgame (round 43, 23 Oct 2026) ----------------------------------
+# The deck ran out at round 43: 10 survivors + the last 17 unseen names made a
+# 27-name round whose set 5 had 3 cards, and lock_set's "exactly 6" check
+# stranded both parents on it. These cover the endgame that replaced it.
+
+
+def _exhaust_deck(conn, survivors, unseen):
+    """Leaves exactly `survivors` names standing and `unseen` names in the
+    deck; everything else is marked out in a (fictional) round 0. Picks one
+    name per variant family so top_up can always deal the whole remainder."""
+    rows = conn.execute("SELECT id, variant_family FROM names ORDER BY id").fetchall()
+    fams, pick = set(), []
+    for r in rows:
+        if r["variant_family"] and r["variant_family"] in fams:
+            continue
+        if r["variant_family"]:
+            fams.add(r["variant_family"])
+        pick.append(r["id"])
+        if len(pick) == survivors + unseen:
+            break
+    keep_in, keep_unseen = set(pick[:survivors]), set(pick[survivors:])
+    with immediate(conn):
+        for r in rows:
+            if r["id"] in keep_in:
+                conn.execute(rounds.UPSERT_NAME_STATE_SQL, (r["id"], 3, None))
+            elif r["id"] not in keep_unseen:
+                conn.execute(rounds.UPSERT_NAME_STATE_SQL, (r["id"], 0, 0))
+    return keep_in, keep_unseen
+
+
+def _set_sizes(conn, round_id):
+    return [r["n"] for r in conn.execute(rounds.SET_SIZES_SQL, (round_id,)).fetchall()]
+
+
+def _play_round(conn, keep_count=None):
+    """Both parents keep the same names (the first `keep_count` of each set,
+    default: the most allowed) in every set of the open round."""
+    p = rounds.round_payload(conn, 1)
+    round_id = p["roundId"]
+    for set_index in range(p["setsTotal"]):
+        ids = [r["id"] for r in conn.execute(rounds.NAMES_IN_SET_SQL, (round_id, set_index)).fetchall()]
+        lo, hi = rounds.keep_bounds(len(ids), rounds.round_is_endgame(conn, round_id))
+        n = hi if keep_count is None else max(lo, min(hi, keep_count))
+        for user_id in (1, 2):
+            rounds.lock_set(conn, user_id, round_id, set_index, ids[:n])
+    for user_id in (1, 2):
+        rounds.ack_round(conn, user_id, round_id)
+    return round_id
+
+
+def test_set_sizes_are_even_and_full_rounds_unchanged():
+    assert rounds.set_sizes(30) == [6, 6, 6, 6, 6]
+    assert rounds.set_sizes(27) == [6, 6, 5, 5, 5]
+    assert rounds.set_sizes(13) == [5, 4, 4]
+    assert rounds.set_sizes(7) == [4, 3]
+    assert rounds.set_sizes(4) == [4]
+
+
+def test_keep_bounds():
+    assert rounds.keep_bounds(6, False) == (3, 6)
+    assert rounds.keep_bounds(6, True) == (3, 3)
+    assert rounds.keep_bounds(4, True) == (3, 3)
+    assert rounds.keep_bounds(3, True) == (2, 2)
+    assert rounds.keep_bounds(2, True) == (1, 1)
+
+
+def test_deck_running_out_deals_an_even_endgame_round(conn):
+    _exhaust_deck(conn, survivors=10, unseen=17)
+    p = rounds.round_payload(conn, 1)
+    assert _set_sizes(conn, p["roundId"]) == [6, 6, 5, 5, 5]
+    assert p["endgame"] is True
+    assert p["setsTotal"] == 5
+    assert (p["minKeep"], p["maxKeep"]) == (3, 3)
+
+
+def test_round_43_shape_short_last_set_can_be_locked(conn):
+    """The exact live state: sets of 6,6,6,6,3 dealt before the endgame
+    existed, sets 1-4 already locked by both. Set 5 must now lock with 2."""
+    _, unseen = _exhaust_deck(conn, survivors=10, unseen=17)
+    ids = [r["id"] for r in conn.execute(rounds.SURVIVOR_IDS_SQL).fetchall()] + sorted(unseen)
+    with immediate(conn):
+        round_id = conn.execute(rounds.INSERT_ROUND_SQL, (43, None)).lastrowid
+        for i, name_id in enumerate(ids):
+            conn.execute(rounds.INSERT_ROUND_NAME_SQL, (round_id, i // 6, name_id))
+    assert _set_sizes(conn, round_id) == [6, 6, 6, 6, 3]
+    for set_index in range(4):
+        set_ids = [r["id"] for r in conn.execute(rounds.NAMES_IN_SET_SQL, (round_id, set_index)).fetchall()]
+        for user_id in (1, 2):
+            rounds.lock_set(conn, user_id, round_id, set_index, set_ids[:3])
+
+    p = rounds.round_payload(conn, 1)
+    assert p["setIndex"] == 4 and len(p["names"]) == 3
+    assert (p["minKeep"], p["maxKeep"]) == (2, 2)
+    last = [n["id"] for n in p["names"]]
+    with pytest.raises(rounds.ApiError):
+        rounds.lock_set(conn, 1, round_id, 4, last)  # all 3: over the cap
+    assert rounds.lock_set(conn, 1, round_id, 4, last[:2]) == {"sealed": True, "roundClosed": False, "number": 43}
+    result = rounds.lock_set(conn, 2, round_id, 4, last[:2])
+    assert result["roundClosed"] is True and result["throughCount"] == 14
+
+
+def test_endgame_rejects_more_than_the_cap(conn):
+    _exhaust_deck(conn, survivors=10, unseen=17)
+    p = rounds.round_payload(conn, 1)
+    with pytest.raises(rounds.ApiError) as exc_info:
+        rounds.lock_set(conn, 1, p["roundId"], 0, [n["id"] for n in p["names"][:4]])
+    assert exc_info.value.status == 400
+
+
+def test_endgame_always_terminates_in_a_final_three(conn):
+    """Two parents who keep the maximum every set and always agree -- the
+    "generous parents could stall it" case CO-1 warns about."""
+    _exhaust_deck(conn, survivors=10, unseen=17)
+    for _ in range(10):
+        p = rounds.round_payload(conn, 1)
+        if p.get("final"):
+            break
+        _play_round(conn)
+    else:
+        pytest.fail("endgame never reached a final")
+    assert 1 <= len(p["finalists"]) <= rounds.FINAL_SIZE
+    assert rounds.round_payload(conn, 2).get("final") is True
+    # no extra round was assembled once it was over
+    assert conn.execute("SELECT COUNT(*) AS n FROM rounds WHERE sealed_at IS NULL").fetchone()["n"] == 0
+
+
+def test_recap_flags_when_the_next_screen_is_the_final(conn):
+    _exhaust_deck(conn, survivors=4, unseen=0)
+    p = rounds.round_payload(conn, 1)
+    assert _set_sizes(conn, p["roundId"]) == [4]
+    round_id = p["roundId"]
+    ids = [n["id"] for n in p["names"]]
+    for user_id in (1, 2):
+        rounds.lock_set(conn, user_id, round_id, 0, ids[:3])
+    assert rounds.get_round_result(conn, 1, round_id)["finalNext"] is True
+
+
+def test_adding_a_name_after_the_final_reopens_play(conn):
+    import names
+    _exhaust_deck(conn, survivors=3, unseen=0)
+    assert rounds.round_payload(conn, 1).get("final") is True
+    assert names.add_name(conn, 1, "Zebedee", "")["ok"]
+    p = rounds.round_payload(conn, 1)
+    assert not p.get("final")
+    assert len(p["names"]) == 4 and p["endgame"] is True

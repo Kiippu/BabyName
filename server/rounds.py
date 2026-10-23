@@ -6,12 +6,15 @@ the *why*) follows the original closely on purpose, since this file carries
 CO-1/CO-2/CO-3's business rules, not just its own.
 """
 
+import math
 import random
+import sqlite3
 
 from transaction import immediate
 
 # Change Order 1: a round is 5 sets of 6 names -- 30 names per round per
-# person, each name appearing exactly once.
+# person, each name appearing exactly once. Once the deck runs out a round
+# holds whatever is left, dealt by set_sizes() below.
 SETS_PER_ROUND = 5
 SET_SIZE = 6
 ROUND_SIZE = SETS_PER_ROUND * SET_SIZE
@@ -19,6 +22,35 @@ ROUND_SIZE = SETS_PER_ROUND * SET_SIZE
 # testing): keeps are no longer optional. A parent must keep at least this
 # many of the 6 before a set can be locked in.
 MIN_KEEP = 3
+# Change Order 1, "The endgame": once the deck is empty the pool can only
+# shrink, but two generous parents could stall it -- so keeps are capped at 3
+# per set (and always at least one fewer than the set holds, so a short set
+# still loses a name). Combined with MIN_KEEP that makes a run-off set "keep
+# exactly 3" (or exactly 2 of a 3-name set). When FINAL_SIZE or fewer names
+# are left and nothing new can be dealt, the app stops and shows them.
+ENDGAME_KEEP_CAP = 3
+FINAL_SIZE = 3
+
+
+def set_sizes(total):
+    """How `total` names split into sets: as few sets as possible, no set
+    bigger than SET_SIZE, sizes as even as they can be (27 -> 6,6,5,5,5;
+    13 -> 5,4,4). A full 30 is still exactly 5 x 6. Only the endgame ever
+    sees anything other than 30."""
+    if total <= 0:
+        return []
+    n_sets = math.ceil(total / SET_SIZE)
+    base, extra = divmod(total, n_sets)
+    return [base + 1 if i < extra else base for i in range(n_sets)]
+
+
+def keep_bounds(set_size, endgame):
+    """(min, max) keeps allowed for one set. Outside the endgame a set is
+    always 6 and the rule is the owner's "keep at least 3", uncapped."""
+    if not endgame:
+        return min(MIN_KEEP, set_size), set_size
+    hi = max(1, min(ENDGAME_KEEP_CAP, set_size - 1))
+    return min(MIN_KEEP, hi), hi
 
 
 class ApiError(Exception):
@@ -159,6 +191,47 @@ NAMES_IN_ROUND_FULL_SQL = """
     WHERE rn.round_id = ?
 """
 USER_LABEL_SQL = "SELECT name FROM users WHERE id = ?"
+SET_SIZES_SQL = "SELECT set_index, COUNT(*) AS n FROM round_names WHERE round_id = ? GROUP BY set_index ORDER BY set_index"
+ROUND_NAME_COUNT_SQL = "SELECT COUNT(*) AS n FROM round_names WHERE round_id = ?"
+ENDGAME_FLAG_SQL = "SELECT endgame FROM rounds WHERE id = ?"
+SET_ENDGAME_FLAG_SQL = "UPDATE rounds SET endgame = 1 WHERE id = ?"
+LAST_ROUND_SQL = "SELECT id, number FROM rounds ORDER BY number DESC LIMIT 1"
+FINALISTS_SQL = """
+    SELECT n.id, n.name, n.origin, n.meaning, ns.rounds_survived AS heldCount
+    FROM name_state ns
+    JOIN names n ON n.id = ns.name_id
+    WHERE ns.eliminated_in IS NULL
+    ORDER BY ns.rounds_survived DESC, n.name ASC
+"""
+
+
+def sets_in_round(conn, round_id):
+    """Number of sets this round was dealt into -- 5 for every normal round,
+    fewer once the deck has run out (see set_sizes)."""
+    return len(conn.execute(SET_SIZES_SQL, (round_id,)).fetchall())
+
+
+def round_is_endgame(conn, round_id):
+    """True once the deck is empty for this round. Recorded on the round at
+    assembly (rounds.endgame, added by migrate_endgame.py) so it can't flip
+    mid-round if someone adds a name; a round dealt short is the endgame by
+    definition, which also covers a round dealt before the column existed
+    (round 43, 15 Oct 2026). A database that hasn't been migrated yet still
+    works -- it just falls back to the short-round rule alone."""
+    if conn.execute(ROUND_NAME_COUNT_SQL, (round_id,)).fetchone()["n"] < ROUND_SIZE:
+        return True
+    try:
+        row = conn.execute(ENDGAME_FLAG_SQL, (round_id,)).fetchone()
+    except sqlite3.OperationalError:
+        return False
+    return bool(row and row["endgame"])
+
+
+def deck_is_empty(conn, in_play):
+    """Nothing left that could be dealt next to `in_play` -- same family rule
+    as top_up, so a stranded Luka whose Luca is still in doesn't hold the
+    endgame off forever."""
+    return not top_up(conn, in_play, 1)
 
 
 def other_user_id(user_id):
@@ -259,28 +332,68 @@ def _assemble_round(conn):
                 newcomers = [r["id"] for r in conn.execute(THEMED_DRAW_SQL, {"themeId": theme_id, "needed": need}).fetchall()]
             else:
                 newcomers = [r["id"] for r in conn.execute(NEWCOMER_IDS_SQL, (need,)).fetchall()]
-            # Belt and braces: a round must be exactly ROUND_SIZE names or its
-            # last set is short, and lock_set rejects any set that isn't
-            # SET_SIZE -- which strands both parents mid-round. Whatever the
-            # draw above came back with, top up from the whole unseen deck.
+            # Belt and braces: whatever the draw above came back with, top up
+            # from the whole unseen deck. If even that can't reach ROUND_SIZE
+            # the deck is out and this round is the endgame (below) -- dealt
+            # into fewer, evenly sized sets rather than a short last set.
             if len(newcomers) < need:
                 newcomers += top_up(conn, survivors + newcomers, need - len(newcomers))
 
         round_names = shuffle(survivors + newcomers)
+        # Change Order 1's endgame: the deck is out, so this round (and every
+        # one after it) is a run-off -- fewer than 30 names, split into as
+        # many sets as it needs, keeps capped.
+        endgame = len(round_names) < ROUND_SIZE or deck_is_empty(conn, round_names)
 
         number = (conn.execute(MAX_ROUND_NUMBER_SQL).fetchone()["n"] or 0) + 1
         cur = conn.execute(INSERT_ROUND_SQL, (number, theme_id))
         round_id = cur.lastrowid
-        for i, name_id in enumerate(round_names):
-            conn.execute(INSERT_ROUND_NAME_SQL, (round_id, i // SET_SIZE, name_id))
+        i = 0
+        for set_index, size in enumerate(set_sizes(len(round_names))):
+            for name_id in round_names[i : i + size]:
+                conn.execute(INSERT_ROUND_NAME_SQL, (round_id, set_index, name_id))
+            i += size
+        if endgame:
+            try:
+                conn.execute(SET_ENDGAME_FLAG_SQL, (round_id,))
+            except sqlite3.OperationalError:
+                pass  # not migrated yet; round_is_endgame falls back on size
 
         return conn.execute(OPEN_ROUND_SQL).fetchone()
 
 
+def is_final(conn):
+    """Change Order 1: "When 3 or fewer names remain, stop and show them."
+    Only once nothing new can be dealt -- a name added from the shortlist
+    re-opens play with one more round."""
+    survivors = [r["id"] for r in conn.execute(SURVIVOR_IDS_SQL).fetchall()]
+    return len(survivors) <= FINAL_SIZE and deck_is_empty(conn, survivors)
+
+
 def get_current_round(conn):
-    """The round currently in play, assembling a new one if none is open."""
+    """The round currently in play, assembling a new one if none is open.
+    None means the game is over (is_final) -- nothing is assembled."""
     row = conn.execute(OPEN_ROUND_SQL).fetchone()
-    return row if row else _assemble_round(conn)
+    if row:
+        return row
+    if is_final(conn):
+        return None
+    return _assemble_round(conn)
+
+
+def final_payload(conn):
+    last = conn.execute(LAST_ROUND_SQL).fetchone()
+    return {
+        "roundId": last["id"] if last else 0,
+        "number": last["number"] if last else 0,
+        "setIndex": 0,
+        "setsTotal": 0,
+        "names": None,
+        "waiting": False,
+        "final": True,
+        "finalists": [to_card(r) for r in conn.execute(FINALISTS_SQL).fetchall()],
+        "themeTitle": None,
+    }
 
 
 def round_payload(conn, user_id):
@@ -293,11 +406,12 @@ def round_payload(conn, user_id):
     """
     pending = conn.execute(PENDING_RESULT_ROUND_SQL, (user_id,)).fetchone()
     if pending:
+        pending_sets = sets_in_round(conn, pending["id"])
         return {
             "roundId": pending["id"],
             "number": pending["number"],
-            "setIndex": SETS_PER_ROUND,
-            "setsTotal": SETS_PER_ROUND,
+            "setIndex": pending_sets,
+            "setsTotal": pending_sets,
             "names": None,
             "waiting": False,
             "resultReady": True,
@@ -305,14 +419,17 @@ def round_payload(conn, user_id):
         }
 
     round_ = get_current_round(conn)
+    if round_ is None:
+        return final_payload(conn)
+    sets_total = sets_in_round(conn, round_["id"])
     done = len(conn.execute(SET_INDEXES_DONE_SQL, (round_["id"], user_id)).fetchall())
-    if done >= SETS_PER_ROUND:
+    if done >= sets_total:
         partner_sets_done = len(conn.execute(SET_INDEXES_DONE_SQL, (round_["id"], other_user_id(user_id))).fetchall())
         return {
             "roundId": round_["id"],
             "number": round_["number"],
             "setIndex": done,
-            "setsTotal": SETS_PER_ROUND,
+            "setsTotal": sets_total,
             "names": None,
             "waiting": True,
             "partnerSetsDone": partner_sets_done,
@@ -320,14 +437,19 @@ def round_payload(conn, user_id):
         }
 
     names = shuffle([to_live_card(r) for r in conn.execute(NAMES_IN_SET_SQL, (round_["id"], done)).fetchall()])
+    endgame = round_is_endgame(conn, round_["id"])
+    min_keep, max_keep = keep_bounds(len(names), endgame)
     return {
         "roundId": round_["id"],
         "number": round_["number"],
         "setIndex": done,
-        "setsTotal": SETS_PER_ROUND,
+        "setsTotal": sets_total,
         "names": names,
         "waiting": False,
         "themeTitle": round_["theme_title"],
+        "endgame": endgame,
+        "minKeep": min_keep,
+        "maxKeep": max_keep,
     }
 
 
@@ -371,6 +493,9 @@ def get_round_result(conn, user_id, round_id):
         "out": out,
         "partnerLabel": partner["name"] if partner else "your partner",
         "nextThemeHint": _compute_next_theme_hint(conn, round_),
+        # Nothing left to deal and 3 or fewer standing: the button on this
+        # recap leads to the final names, not "Start round N+1".
+        "finalNext": conn.execute(ROUND_BY_NUMBER_SQL, (round_["number"] + 1,)).fetchone() is None and is_final(conn),
     }
 
 
@@ -453,22 +578,26 @@ def lock_set(conn, user_id, round_id, set_index, kept_ids):
         if conn.execute(ALREADY_SUBMITTED_SQL, (round_id, set_index, user_id)).fetchone():
             raise ApiError("That set was already locked in.", 409)
         names = conn.execute(NAMES_IN_SET_SQL, (round_id, set_index)).fetchall()
-        if len(names) != SET_SIZE:
+        if not names:
             raise ApiError("That set doesn't exist.", 400)
+        sets_total = sets_in_round(conn, round_id)
+        min_keep, max_keep = keep_bounds(len(names), round_is_endgame(conn, round_id))
 
         kept = set(kept_ids)
         set_keeps = sum(1 for n in names if n["id"] in kept)
-        if set_keeps < MIN_KEEP:
-            raise ApiError(f"Keep at least {MIN_KEEP} names before locking in.", 400)
+        if set_keeps < min_keep:
+            raise ApiError(f"Keep at least {min_keep} names before locking in.", 400)
+        if set_keeps > max_keep:
+            raise ApiError(f"It's a run-off now: keep at most {max_keep} from this set.", 400)
         for n in names:
             conn.execute(INSERT_SET_RESULT_SQL, (round_id, set_index, user_id, n["id"], 1 if n["id"] in kept else 0, set_keeps))
 
         my_done = len(conn.execute(SET_INDEXES_DONE_SQL, (round_id, user_id)).fetchall())
-        if my_done < SETS_PER_ROUND:
+        if my_done < sets_total:
             return {"sealed": False}
 
         partner_done = len(conn.execute(SET_INDEXES_DONE_SQL, (round_id, other_user_id(user_id))).fetchall())
-        if partner_done >= SETS_PER_ROUND:
+        if partner_done >= sets_total:
             # CO-4 §12's second push trigger. through_count and number are
             # handed back rather than re-queried at the call site -- the
             # round is sealed by the time app.py sees this, so re-deriving

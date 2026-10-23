@@ -26,6 +26,12 @@ def main(apply):
         print("No open round. Nothing to repair.")
         return 0
 
+    if rounds.round_is_endgame(conn, rnd["id"]):
+        # Since the endgame landed (round 43, Oct 2026) a short or uneven
+        # round is how the deck running out is meant to look, not damage.
+        print(f"Round {rnd['number']} is an endgame round: its set sizes are deliberate. Nothing to do.")
+        return 0
+
     in_round = [r["id"] for r in conn.execute(rounds.NAMES_IN_ROUND_SQL, (rnd["id"],)).fetchall()]
     plan = []
     for set_index in range(rounds.SETS_PER_ROUND):

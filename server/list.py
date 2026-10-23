@@ -2,6 +2,8 @@
 spec §6 "Shortlist"), Change Order 1 "Shortlist ordering":
     ORDER BY rounds_survived DESC, selectivity DESC
 selectivity = avg over kept sets of (6 - set_keeps) / 5 -- the tiebreaker for
+(generalised to (size - set_keeps) / (size - 1) so the endgame's smaller sets
+score on the same 0-1 scale; for a normal 6-name set it is identical)
 names that have all survived the same number of rounds. It rewards being
 kept out of a set where the keeper was picky (few of that set's other five
 also survived), which rounds_survived alone can't distinguish. Computed over
@@ -12,10 +14,13 @@ sealed_at; once a round is sealed its outcome is common knowledge).
 """
 
 SELECTIVITY_SQL = """
-    SELECT name_id, AVG((6.0 - set_keeps) / 5.0) AS selectivity
-    FROM set_results
-    WHERE kept = 1
-    GROUP BY name_id
+    SELECT sr.name_id,
+           AVG(CASE WHEN sz.n > 1 THEN (sz.n - sr.set_keeps) * 1.0 / (sz.n - 1) ELSE 0 END) AS selectivity
+    FROM set_results sr
+    JOIN (SELECT round_id, set_index, COUNT(*) AS n FROM round_names GROUP BY round_id, set_index) sz
+      ON sz.round_id = sr.round_id AND sz.set_index = sr.set_index
+    WHERE sr.kept = 1
+    GROUP BY sr.name_id
 """
 
 STILL_IN_SQL = f"""

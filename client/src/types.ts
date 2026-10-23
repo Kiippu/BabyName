@@ -77,6 +77,15 @@ export interface RoundPayload {
   // Change Order 2 §2: the theme this round's newcomers were drawn from, or
   // null (no newcomers needed, or the deck was exhausted for a themed draw).
   themeTitle: string | null;
+  // CO-1 endgame (round 43, Oct 2026). Sent with every live set: how many of
+  // THIS set may be kept. Normal rounds: at least 3 of 6, uncapped. Once the
+  // deck is out (endgame) sets can be smaller and keeps are capped.
+  endgame?: boolean;
+  minKeep?: number;
+  maxKeep?: number;
+  // Game over: nothing left to deal and 3 or fewer names standing.
+  final?: boolean;
+  finalists?: RoundResultName[];
 }
 
 // Build order step 4 ("Seal -> waiting -> round result"). See
@@ -110,6 +119,8 @@ export interface RoundResultPayload {
   // actual committed one if that round has already been assembled. Null
   // when no theme applies (e.g. no newcomers needed, or deck exhausted).
   nextThemeHint: string | null;
+  // The next screen is the final names rather than another round.
+  finalNext?: boolean;
 }
 
 export interface SetLockResult {

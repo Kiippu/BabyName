@@ -20,8 +20,12 @@ interface DragState {
 // testing): keeps are no longer optional. A parent must keep at least this
 // many of the 6 before the set can be locked in — "in real life a name must
 // be chosen," not left to a zero-effort skip. Mirrors MIN_KEEP in
-// server/src/rounds.js; the server is the enforcement of record, this is
+// server/rounds.py; the server is the enforcement of record, this is
 // just the UI gate so the button never fires a doomed request.
+//
+// CO-1 endgame (round 43, Oct 2026): once the deck is out, sets can hold
+// fewer than 6 and keeps are capped, so the server sends this set's own
+// minKeep/maxKeep. MIN_KEEP is only the fallback for an older payload.
 const MIN_KEEP = 3;
 
 // Another revision to the original change order (owner's live call,
@@ -193,11 +197,17 @@ export function SetScreen({ onOpenShortlist }: { onOpenShortlist?: () => void })
     );
   }
 
+  if (round.final) {
+    return <FinalNames round={round} onOpenShortlist={onOpenShortlist} />;
+  }
+
   // Guard against a payload with no cards that is neither waiting nor a
-  // result -- or a set short of cards (round 25, 25 Sep 2026: a short draw
-  // left set 5 with 4 names). Either way the sorting screen would be a dead
-  // end, so show a way out instead of an empty list.
-  if (!round.names || round.names.length < 6 || round.setIndex >= round.setsTotal) {
+  // result. Short sets are legitimate since the endgame (round 43, Oct
+  // 2026) -- the server says how many to keep -- so only a set that can't
+  // satisfy its own keep rule is a dead end here.
+  const minKeep = round.minKeep ?? MIN_KEEP;
+  const maxKeep = round.maxKeep ?? round.names?.length ?? 6;
+  if (!round.names || round.names.length === 0 || round.names.length < minKeep || round.setIndex >= round.setsTotal) {
     return (
       <div className="wait">
         <span className="kick">Round {round.number}</span>
@@ -347,7 +357,19 @@ export function SetScreen({ onOpenShortlist }: { onOpenShortlist?: () => void })
         )}
       </div>
       <p className="ask">
-        Drag up at least <em>{MIN_KEEP}</em> worth keeping. Anything left below is out.
+        {minKeep === maxKeep ? (
+          <>
+            {round.endgame && "Run-off. "}Keep exactly <em>{minKeep}</em>. Anything left below is out.
+          </>
+        ) : maxKeep < round.names.length ? (
+          <>
+            Keep <em>{minKeep}</em> to <em>{maxKeep}</em>. Anything left below is out.
+          </>
+        ) : (
+          <>
+            Drag up at least <em>{minKeep}</em> worth keeping. Anything left below is out.
+          </>
+        )}
       </p>
       <div className="pips">
         {Array.from({ length: round.setsTotal }, (_, i) => (
@@ -356,13 +378,18 @@ export function SetScreen({ onOpenShortlist }: { onOpenShortlist?: () => void })
       </div>
       <div className="list" ref={listRef}>
         <div className="zlabel keep">
-          <span>{k === 0 ? "Keep" : k < MIN_KEEP ? `Keep · ${k} of ${MIN_KEEP}` : `Keep · ${k}`}</span>
+          <span>{k === 0 ? "Keep" : k < minKeep ? `Keep · ${k} of ${minKeep}` : `Keep · ${k}`}</span>
           <i />
         </div>
         {layout.map((slot, idx) =>
           slot.kind === "cut" ? (
             <Fragment key="cut">
-              {k === 0 && <div className="empty">Drag at least {MIN_KEEP} names up here</div>}
+              {k === 0 && (
+                <div className="empty">
+                  Drag {minKeep === maxKeep ? "" : "at least "}
+                  {minKeep} name{minKeep === 1 ? "" : "s"} up here
+                </div>
+              )}
               <div className="zlabel out" data-cut="1">
                 <i />
                 <span>Out</span>
@@ -396,14 +423,62 @@ export function SetScreen({ onOpenShortlist }: { onOpenShortlist?: () => void })
       </div>
       {error && <div className="set-error">{error}</div>}
       <div className="foot">
-        <button className="primary" disabled={locking || k < MIN_KEEP} onClick={handleLock}>
+        <button className="primary" disabled={locking || k < minKeep || k > maxKeep} onClick={handleLock}>
           {locking
             ? "Locking in…"
-            : k < MIN_KEEP
-              ? `Keep ${MIN_KEEP - k} more to continue`
-              : `Lock in ${k}`}
+            : k < minKeep
+              ? `Keep ${minKeep - k} more to continue`
+              : k > maxKeep
+                ? `Only ${maxKeep} can stay — drop ${k - maxKeep}`
+                : `Lock in ${k}`}
         </button>
       </div>
+    </div>
+  );
+}
+
+/**
+ * CO-1 endgame, last step: "When 3 or fewer names remain, stop and show
+ * them." Same ink hero and brass rows as the round result, so it reads as
+ * the ending of that sequence rather than a new kind of screen.
+ */
+function FinalNames({ round, onOpenShortlist }: { round: RoundPayload; onOpenShortlist?: () => void }) {
+  const names = round.finalists ?? [];
+  const heading =
+    names.length === 0
+      ? "Nothing made it"
+      : names.length === 1
+        ? "One name left standing"
+        : `Your final ${names.length === 2 ? "two" : "three"}`;
+  return (
+    <div className="result">
+      <div className="rhero">
+        <span className="kick">After {round.number} rounds</span>
+        <h2>{heading}</h2>
+        <span className="tally">
+          {names.length === 0 ? "the run-off knocked everything out" : "kept by both of you, all the way through"}
+        </span>
+      </div>
+      <div className="rbody">
+        <div className="rgroup win">
+          {names.map((n, i) => (
+            <div className="rrow win" key={n.id} style={{ animationDelay: `${0.12 * i + 0.2}s` }}>
+              <span className="n">{n.name}</span>
+              <span className="tag">kept {n.heldCount}</span>
+            </div>
+          ))}
+          <p className="rnote">
+            Thought of another one? Add it from the shortlist and it gets a round of its own against these.
+          </p>
+        </div>
+      </div>
+      {onOpenShortlist && (
+        <div className="foot">
+          <button className="primary" onClick={onOpenShortlist}>
+            Open the shortlist
+          </button>
+        </div>
+      )}
     </div>
   );
 }

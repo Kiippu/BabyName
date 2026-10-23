@@ -133,7 +133,7 @@ def create_app():
                 push.send_push(
                     partner_id,
                     "Nameplate",
-                    f"{my_label} has finished round {result['number']}. Your thirty are waiting.",
+                    f"{my_label} has finished round {result['number']}. Your names are waiting.",
                 )
             return jsonify({"sealed": True})
         return jsonify({"nextSet": rounds.round_payload(get_db(), g.user_id)})

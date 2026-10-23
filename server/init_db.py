@@ -57,6 +57,9 @@ def _add_columns(conn):
     round_cols = _column_names(conn, "rounds")
     if "theme_id" not in round_cols:
         conn.execute("ALTER TABLE rounds ADD COLUMN theme_id INTEGER REFERENCES themes(id)")
+    # CO-1 endgame: set once at assembly when the deck is out (rounds.py).
+    if "endgame" not in round_cols:
+        conn.execute("ALTER TABLE rounds ADD COLUMN endgame INTEGER NOT NULL DEFAULT 0")
 
     # CO-4 §3: pin_hash is in schema.sql's CREATE TABLE now, which only
     # helps a brand-new database -- a database that already has a users
